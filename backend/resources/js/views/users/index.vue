@@ -1,15 +1,43 @@
 <template>
     <div class="app-container" v-loading="loading">
         <div class="container">
+            <el-form ref="form" :model="search" label-width="80px" ><!--size="small"-->
+                <el-row :gutter="80" >
+                    <el-col :span="8">
+                        <el-form-item label="用户名">
+                            <el-input v-model="search.username"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="注册时间">
+                            <el-date-picker
+                                v-model="search.time"
+                                type="datetimerange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期">
+                            </el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                    </el-col>
+                </el-row>
+
+                <el-row justify="center" type="flex">
+                    <el-button type="primary" icon="el-icon-search" @click="getAllUsers" size="small">搜索</el-button>
+                    <el-button type="warning" icon="el-icon-circle-plus-outline" @click="$message.error('不要着急，攻城狮小哥哥还是开发中...')" size="small">导入</el-button>
+                </el-row>
+            </el-form>
+        </div>
+
+        <div class="container"  style="margin-top:20px;">
             <div class="handle-box">
                 <el-button type="primary" @click="handleAddUsers" v-permission="'users/create'" size="small">创建用户</el-button>
             </div>
 
             <el-table :data="users_list" style="width: 100%;margin-top:30px;" border >
                 <el-table-column align="center" label="ID" prop="id"></el-table-column>
-                <el-table-column align="header-center" label="商户名称" prop="account"></el-table-column>
                 <el-table-column align="header-center" label="用户名" prop="username"></el-table-column>
-                <el-table-column align="header-center" label="用户组" prop="user_group_name"></el-table-column>
                 <el-table-column align="header-center" label="昵称" prop="nickname"></el-table-column>
                 <el-table-column align="header-center" label="上次登录IP" prop="last_ip"></el-table-column>
                 <el-table-column align="header-center" label="上次登录时间" prop="last_time"></el-table-column>
@@ -26,9 +54,6 @@
 
         <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Users':'New Users'">
             <el-form :model="users" label-width="15%" label-position="right">
-                <el-form-item label="商户">
-                    <el-input v-model="users.client_id" placeholder="商户" />
-                </el-form-item>
                 <el-form-item label="用户名">
                     <el-input v-model="users.username" placeholder="用户名" />
                 </el-form-item>
@@ -63,9 +88,7 @@
 
     const defaultUsers = {
         id:'',
-        client_id:'1',
         username: '',
-        user_group_id: '1',
         nickname: '',
         password:'',
         status:true,
@@ -81,6 +104,10 @@
                 listQuery: {
                     page: 1,
                     limit: 20
+                },
+                search:{
+                    username:'',
+                    time:[],
                 },
                 dialogVisible: false,
                 dialogType: 'new',
@@ -102,7 +129,6 @@
                 this.loading =  true;
 
                 let data = this.listQuery;
-                data.parent_id = this.parent_id;
                 let result = await getAllUsers(data);
 
                 if( result.data.code == 1 ){
@@ -127,7 +153,7 @@
                 this.loading =  false;
             },
             handleDelete( scope ){
-                this.$confirm('此操作将永久删除该配置, 是否继续?', '提示', {
+                this.$confirm('此操作将永久删除该会员, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -181,11 +207,6 @@
                 })
             },
         },
-        watch: {
-            parent_id(){
-                this.getAllUsers();
-            }
-        }
     }
 </script>
 

@@ -26,8 +26,8 @@ class CreateTableConfig extends Migration
             $table->timestamps();
         });
 
-        $this->_permission();
-        $this->_data();
+//        $this->_permission();
+//        $this->_data();
     }
 
     private function _permission()

@@ -30,7 +30,7 @@ class CreateTableNotices extends Migration
             $table->index(['is_show', 'sort']);
         });
 
-        $this->_permission();
+        //$this->_permission();
     }
 
     private function _permission()

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Common\Models\Notices;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class NoticesController extends Controller
 {

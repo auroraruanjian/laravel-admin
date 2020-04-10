@@ -30,7 +30,7 @@ class CreateTableAdminLoginLog extends Migration
             $table->index(['ip', 'created_at']);
         });
 
-        $this->_permission();
+        //$this->_permission();
     }
 
     private function _permission()

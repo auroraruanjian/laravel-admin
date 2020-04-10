@@ -31,17 +31,13 @@ class UsersController extends Controller
 
         $userslist = Users::select([
             'users.id',
-            'clients.account',
             'users.username',
-            'user_group.name as user_group_name',
             'users.nickname',
             'users.status',
             'users.last_ip',
             'users.last_time',
             'users.created_at'
         ])
-            ->leftJoin('merchants','merchants.id','users.merchants_id')
-            ->leftJoin('user_group','user_group.id','users.user_group_id')
             ->orderBy('id', 'asc')
             ->skip($start)
             ->take($limit)
@@ -59,11 +55,9 @@ class UsersController extends Controller
     public function postCreate(Request $request)
     {
         $users                  = new Users();
-        $users->client_id       = $request->get('client_id');
         $users->username        = $request->get('username','');
         $users->nickname        = $request->get('nickname','');
         $users->password        = $request->get('password','');
-        $users->user_group_id   = $request->get('user_group_id');
         $users->status          = (int)$request->get('status',0)?true:false;
 
         if( $users->save() ){
@@ -84,6 +78,7 @@ class UsersController extends Controller
         }
 
         $users = $users->toArray();
+        $users['password'] = '******';
 
         return $this->response(1, 'success', $users);
     }
@@ -98,11 +93,9 @@ class UsersController extends Controller
             return $this->response(0, '配置不存在失败');
         }
 
-        $users->client_id       = $request->get('client_id');
         $users->username        = $request->get('username','');
         $users->nickname        = $request->get('nickname','');
         $users->password        = $request->get('password','');
-        $users->user_group_id   = $request->get('user_group_id');
         $users->status          = (int)$request->get('status',0)?true:false;
 
         if ($users->save()) {
