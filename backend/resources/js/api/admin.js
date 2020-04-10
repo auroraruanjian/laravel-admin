@@ -39,3 +39,11 @@ export function deleteAdmin( id ){
         params:{id:id},
     });
 }
+
+export function changePassword( data ){
+    return fetch({
+        url: 'admin/changePassword',
+        method: 'put',
+        data
+    });
+}

@@ -8,6 +8,7 @@ use Common\Models\AdminRolePermissions;
 use Common\Models\AdminUser;
 use Common\Models\AdminUserHasRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -174,5 +175,28 @@ class AdminController extends Controller
                 'wechat_status' => !empty($user->unionid)?true:false,
             ]
         ];
+    }
+
+    /**
+     * 修改密码
+     */
+    public function putChangepassword(Request $request)
+    {
+        $user = AdminUser::find(Auth()->id());
+
+        if ($user) {
+            $old_password = $request->get('old_password');
+
+            if (!Hash::check($old_password, $user->password)) {
+                return $this->response(0,'原密码输入不正确！');
+            }
+
+            $user->password = bcrypt($request->get('new_password'));
+
+            $user->save();
+
+            return $this->response(1,'密码修改成功！');
+        }
+        return $this->response(0,'密码修改失败！');
     }
 }

@@ -37,7 +37,7 @@
                         <el-dropdown-item>Docs</el-dropdown-item>
                     </a>
                     -->
-                    <el-link @click.native="changePasswd" :underline="false">
+                    <el-link @click.native="password.dialog = true" :underline="false">
                         <el-dropdown-item>
                             修改密码
                         </el-dropdown-item>
@@ -64,6 +64,24 @@
             </el-dropdown>
         </div>
 
+        <el-dialog :visible.sync="password.dialog" title="修改密码" width="500px" @close="password.dialog=false">
+            <el-form :model="password.form" label-width="18%" label-position="right" :rules="password.rules" ref="passwordForm" >
+                <el-form-item label="原密码" prop="old_password">
+                    <el-input v-model="password.form.old_password" type="password" auto-complete="off" />
+                </el-form-item>
+                <el-form-item label="新密码" prop="new_password">
+                    <el-input v-model="password.form.new_password" type="password" auto-complete="off"/>
+                </el-form-item>
+                <el-form-item label="确认密码" prop="confirm_password">
+                    <el-input v-model="password.form.confirm_password" type="password" auto-complete="off"/>
+                </el-form-item>
+            </el-form>
+            <div style="text-align:right;margin-top:10px;">
+                <el-button type="success" @click="changePasswd" :loading="password.loading">修改</el-button>
+                <el-button type="danger" @click="password.dialog=false">取消</el-button>
+            </div>
+        </el-dialog>
+
         <el-dialog :visible.sync="wechat.wechat_visible" title="微信绑定" width="320px" @close="wechat_close">
             <div style="text-align: center;" v-loading="wechat.qrcode_loading">
                 <img :src="wechat.qrcode" >
@@ -82,6 +100,7 @@
     import Screenfull from '@/components/Screenfull'
     import QRCode  from 'qrcode'
     import { wechat_login,unbind_wechat } from '@/api/auth'
+    import { changePassword } from '@/api/admin'
 
     export default {
         components: {
@@ -100,6 +119,7 @@
             }),
         },
         data(){
+            let _this = this;
             return {
                 wechat:{
                     interval:null,
@@ -108,6 +128,43 @@
                     state:'',
                     mode:'web',
                     qrcode_loading:'',
+                },
+                password:{
+                    dialog:false,
+                    loading:false,
+                    rules:{
+                        old_password: [
+                            { required: true, type: "string", message: '原密码类型不正确！', trigger: 'blur' },
+                            { min: 8, max: 32, message: '长度在 8 到 32 个字符!', trigger: 'blur' }
+                        ],
+                        new_password: [
+                            { required: true, type: "string", message: '新密码类型不正确！', trigger: 'blur' },
+                            { min: 8, max: 32, message: '长度在 8 到 32 个字符!', trigger: 'blur' },
+                            {validator(rule, value, callback) {
+                                if (value == _this.password.form.old_password) {
+                                    callback(new Error('新密码不可和原密码相同!'))
+                                } else {
+                                    callback()
+                                }
+                            }, trigger: 'blur' }
+                        ],
+                        confirm_password: [
+                            { required: true, type: "string", message: '确认密码类型不正确！', trigger: 'blur' },
+                            { min: 8, max: 32, message: '长度在 8 到 32 个字符!', trigger: 'blur' },
+                            {validator(rule, value, callback) {
+                                if (value !== _this.password.form.new_password) {
+                                    callback(new Error('请检查确认密码和新密码是否相同!'))
+                                } else {
+                                    callback()
+                                }
+                            }, trigger: 'blur' }
+                        ],
+                    },
+                    form:{
+                        old_password: '',
+                        new_password: '',
+                        confirm_password: '',
+                    }
                 },
             };
         },
@@ -127,7 +184,31 @@
                     console.log(e);
                 });
             },
-            changePasswd(){},
+            changePasswd(){
+                //console.log(this.password.form);
+                this.$refs['passwordForm'].validate((valid) => {
+                    if (valid) {
+                        this.password.loading = true;
+                        changePassword( this.password.form ).then( response =>{
+                            let type = 'error';
+                            if( response.data.code == 1 ){
+                                type = 'success';
+
+                                this.password.dialog = false;
+                                this.password.form.old_password = '';
+                                this.password.form.new_password = '';
+                                this.password.form.confirm_password = '';
+                            }
+
+                            this.$message({
+                                message: response.data.msg,
+                                type
+                            });
+                            this.password.loading = false;
+                        });
+                    }
+                });
+            },
             async wechatState(){
                 let _this = this;
 
