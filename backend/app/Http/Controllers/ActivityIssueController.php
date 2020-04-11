@@ -216,7 +216,7 @@ class ActivityIssueController extends Controller
         $code = $request->get('code');
 
         $effect = DB::update("UPDATE activity_issue SET extra= jsonb_set(extra::jsonb,'{code}',:code::text::jsonb) where id=:id",[
-            'code'  => str_pad($code,3,STR_PAD_LEFT),
+            'code'  => str_pad($code,3,'0',STR_PAD_LEFT),
             'id'    => $id
         ]);
 
