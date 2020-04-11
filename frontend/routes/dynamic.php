@@ -11,7 +11,7 @@ try {
 }
 
 // 上面匹配失败了，现在来尝试动态配置路由
-$pathinfo = strtolower(preg_replace('#/+#', '/', $request->path())); // delete unnecessary slashes
+$pathinfo = preg_replace('#/+#', '/', $request->path()); // delete unnecessary slashes
 if ($pathinfo == '/' || $pathinfo[0] == '_') {
     return;  // 下划线前缀开头的跳过
 }
