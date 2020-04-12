@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' //这个样式必须引入
+// import 'nprogress/nprogress.css' //这个样式必须引入
 import store from '@/store';
 
 // import index from '@/views/default/index';

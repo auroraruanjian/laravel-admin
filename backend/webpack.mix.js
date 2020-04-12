@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer-sunburst').BundleAnalyzerPlugin;
 
 /*
  |--------------------------------------------------------------------------
@@ -13,21 +14,35 @@ const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
  |
  */
 
-mix.js('resources/js/app.js','')
-    .sass('resources/sass/app.scss', 'public/css', { implemention: require('node-sass') });
-
-mix.sourceMaps();
-
 if( mix.inProduction()){
     mix.version([]);
+    mix.sourceMaps();
 }
 
 mix.extract([
+    'tiny-cookie',
     'vue',
     'vuex',
     'vue-router',
-    'axios'
+    'axios',
+    'nprogress',
+    'screenfull',
 ],'vendor');
+
+mix.js('resources/js/app.js','');
+
+mix.styles([
+    'node_modules/nprogress/nprogress.css',
+    'node_modules/element-ui/lib/theme-chalk/index.css',
+    'node_modules/element-ui/packages/theme-chalk/src/index',
+    'node_modules/font-awesome/css/font-awesome.css',
+    'node_modules/vue-particle-line/dist/vue-particle-line.css',
+    // '../sass/index.scss',
+], 'public/css/app.css');
+
+mix.options({
+    //extractVueStyles: true
+});
 
 const webpack_config = {
     resolve: {
@@ -60,6 +75,7 @@ const webpack_config = {
             initialChunksWithEntry: true,
             '/vendor': 'js/vendor.js'
         }),
+        new BundleAnalyzerPlugin()
     ],
     optimization:[],
 };

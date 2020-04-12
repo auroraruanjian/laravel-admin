@@ -12,12 +12,12 @@ import router from '@/router';
 import store from '@/store';
 import VueCookie from 'vue-cookie' ;
 
-import 'normalize.css/normalize.css' // a modern alternative to CSS resets
+// import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+//import 'element-ui/lib/theme-chalk/index.css';
 
 import vueParticleLine from 'vue-particle-line'
-import 'vue-particle-line/dist/vue-particle-line.css'
+// import 'vue-particle-line/dist/vue-particle-line.css'
 Vue.use(vueParticleLine)
 
 import '../sass/index.scss' // global css
