@@ -1,26 +1,17 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import {Message} from 'element-ui';
-import NProgress from 'nprogress' // progress bar
-// import 'nprogress/nprogress.css' //这个样式必须引入
 import store from '@/store';
-
-// import index from '@/views/default/index';
 
 Vue.use(VueRouter);
 
-NProgress.inc(0.2)
-NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false })
-
-
 /* Layout */
-import layout from '@/views/layout'
+import layout from '@/views-m/layout'
 
-import index from '@/views/index/index';
+import index from '@/views-m/index/index';
 
 // 懒加载组件
-const login = () => import('@/views/user/login'),
-      page404 = () => import('@/views/error/404');
+const login = () => import('@/views-m/user/login'),
+      page404 = () => import('@/views-m/error/404');
 
 const router = new VueRouter({
     routes:[
@@ -51,7 +42,14 @@ const router = new VueRouter({
                 },
             ]
         }
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition;
+        } else {
+            return { x: 0, y: 0 };
+        }
+    }
 });
 
 router.beforeEach(async (to, from, next) =>  {
@@ -90,9 +88,5 @@ router.beforeEach(async (to, from, next) =>  {
         }
     }
 });
-
-router.afterEach(() => {
-    NProgress.done()
-})
 
 export default router

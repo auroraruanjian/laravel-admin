@@ -13,5 +13,11 @@
 Auth::routes();
 
 Route::get('/', function () {
+    $os = new apanly\BrowserDetector\Os();
+    $os_name = $os->getIsmobile();
+
+    if ($os_name) {
+        return view('index-m');
+    }
     return view('index');
 });

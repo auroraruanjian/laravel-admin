@@ -7,9 +7,13 @@ const userInfoLS = () => {
 
 const state = {
     id: 0,
+    token: '',
     username: '',
     nickname: '',
-    token: '',
+    last_ip: '',
+    last_time: '',
+    draw_time: 0,
+    draw_count: 0,
 }
 
 const mutations = {
@@ -30,6 +34,14 @@ const mutations = {
         state.last_time = data.last_time;
         state.id        = data.id;
     },
+    SET_DRAW : ( state , data ) => {
+        if( typeof data.draw_time != "undefined" && data.draw_time !=null ){
+            state.draw_time  = data.draw_time;
+        }
+        if( typeof data.draw_count != "undefined" && data.draw_count !=null ) {
+            state.draw_count = data.draw_count;
+        }
+    }
 }
 
 const actions = {
@@ -61,6 +73,7 @@ const actions = {
             getUserInfo().then( (response) => {
                 if( response.data.code == 1 ){
                     commit('SET_USERINFO', response.data.data);
+                    commit('SET_DRAW', response.data.data);
                 }
 
                 resolve(response.data.data)
@@ -77,17 +90,15 @@ const actions = {
         })
     },
     // 登出
-    LogOut({ commit, state }) {
+    logout({ commit, state }) {
         return new Promise((resolve, reject) => {
-            logout(state.token)
-                .then(() => {
-                    this.dispatch('user/resetToken');
-                    resolve(response)
-                })
-                .catch(error => {
-                    reject(error);
-                });
-        });
+            logout().then( (response) => {
+                this.dispatch('user/resetToken');
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            })
+        })
     },
 }
 

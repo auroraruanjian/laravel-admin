@@ -27,7 +27,7 @@ class ActivityController extends Controller
      */
     public function getDraw(Request $request)
     {
-        $activity_id = (int)$request->get('id');
+        $activity_id = (int)$request->get('id',1);
 
         $now = (string)Carbon::now();
 
@@ -55,7 +55,7 @@ class ActivityController extends Controller
             return $this->response(0,'对不起，活动配置错误！');
         }
 
-        // TODO：检查抽奖次数
+        // 检查抽奖次数
         $draw_count = ActivityRecord::where([
                 ['user_id','=',auth()->id()],
                 ['created_at','>=',$activity_issue->start_at],
@@ -106,7 +106,7 @@ class ActivityController extends Controller
     /**
      * 获取抽奖记录
      */
-    public function getRecord(Request $request)
+    public function postRecord(Request $request)
     {
         $ident = $request->get('ident');
         $page  = (int)$request->get('page', 1);
@@ -124,11 +124,14 @@ class ActivityController extends Controller
             ['activity_record.user_id','=',auth()->id()]
         ];
 
-        // 时间
-        $time = $request->get('time');
-        if( is_array($time) && count($time) == 2 ){
-            array_push($where,['activity_record.created_at','>=',$time[0]]);
-            array_push($where,['activity_record.created_at','<=',$time[1]]);
+        $start_at = $request->get('start_at');
+        if( !empty($start_at) ){
+            $where[] = ['activity_record.created_at','>=',$start_at];
+        }
+
+        $end_at = $request->get('end_at');
+        if( !empty($end_at) ){
+            $where[] = ['activity_record.created_at','<=',$end_at];
         }
 
         $filed = [

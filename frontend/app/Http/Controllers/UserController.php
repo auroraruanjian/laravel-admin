@@ -57,7 +57,7 @@ class UserController extends Controller
                 'last_time' => $user->last_time,
                 'last_ip'   => $user->last_ip,
                 'draw_time' => $user->draw_time,
-                'drat_count'=> $draw_count,
+                'draw_count'=> $draw_count,
             ]
         ];
     }

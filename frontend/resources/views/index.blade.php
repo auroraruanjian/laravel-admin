@@ -6,7 +6,7 @@
     <title>Laravel</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/vendor.css') }}">
 </head>
 <body>
     <div id="app"></div>
