@@ -84,9 +84,11 @@ router.beforeEach(async (to, from, next) => {
     // start progress bar
     NProgress.start()
 
-    let tokenStore = JSON.parse(window.localStorage.getItem('token'));
+    let tokenStore = window.localStorage.getItem('token');
 
     if( tokenStore ){
+        tokenStore = JSON.parse(tokenStore);
+
         if (to.path === '/login') {
             next({path:'/'});
         }else{

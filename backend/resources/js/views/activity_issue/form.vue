@@ -318,8 +318,8 @@
             // 重新生成号码规则
             reNewTicketsRule(){
                 // 获取活动周期
-                let day = Math.abs((this.postForm.activity_at[1] - this.postForm.activity_at[0]))/(1000*60*60*24);
-                let middle_value = Math.floor(this.postForm.extra.tickets_total / day) - 1;
+                let day = parseInt(Math.abs((this.postForm.activity_at[1] - this.postForm.activity_at[0]))/(1000*60*60*24));
+                let middle_value = parseInt(Math.floor(this.postForm.extra.tickets_total / day));
 
                 // 重置数据
                 this.postForm.extra.tickets_rule = [];
