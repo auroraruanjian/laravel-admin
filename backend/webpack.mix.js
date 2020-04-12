@@ -75,7 +75,7 @@ const webpack_config = {
             initialChunksWithEntry: true,
             '/vendor': 'js/vendor.js'
         }),
-        new BundleAnalyzerPlugin()
+        //new BundleAnalyzerPlugin()
     ],
     optimization:[],
 };
