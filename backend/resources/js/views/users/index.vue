@@ -25,7 +25,18 @@
 
                 <el-row justify="center" type="flex">
                     <el-button type="primary" icon="el-icon-search" @click="getAllUsers" size="small">搜索</el-button>
-                    <el-button type="warning" icon="el-icon-circle-plus-outline" @click="$message.error('不要着急，攻城狮小哥哥还是开发中...')" size="small">导入</el-button>
+
+                    <el-upload
+                        style="margin-left: 10px;"
+                        class="import_file"
+                        action="/users/import"
+                        :show-file-list="false"
+                        :on-success="handleImportSuccess"
+                        :data="imagePostData"
+                        :file-list="fileList"
+                        :before-upload="beforeImportUpload">
+                        <el-button type="warning" icon="el-icon-circle-plus-outline" size="small">导入</el-button>
+                    </el-upload>
                 </el-row>
             </el-form>
         </div>
@@ -112,6 +123,10 @@
                 dialogVisible: false,
                 dialogType: 'new',
                 loading:false,
+                imagePostData:{
+                    '_token': document.head.querySelector('meta[name="csrf-token"]').content,
+                },
+                fileList:[],
             };
         },
         computed: {
@@ -206,6 +221,31 @@
                     type: type
                 })
             },
+            handleImportSuccess(res,file,fileList){
+                console.log(res);
+                console.log(file);
+                console.log(fileList);
+                this.$notify({
+                    title: '成功',
+                    message: res.msg,
+                    type: 'success'
+                });
+            },
+            beforeImportUpload(file){
+                let fileExt = file.name.substring(file.name.lastIndexOf("."),file.name.length);
+
+                let isLt10M = file.size / 1024 / 1024 < 10;
+
+                if (fileExt!='.txt'&&fileExt!='.xls'&&fileExt!='.xlsx') {
+                    this.$message.error('只允许导入Excel表格和Txt文本!');
+                    return false;
+                }
+                if (!isLt10M) {
+                    this.$message.error('上传的文件不允许超过 10M!');
+                    return false;
+                }
+                return isLt10M;
+            }
         },
     }
 </script>

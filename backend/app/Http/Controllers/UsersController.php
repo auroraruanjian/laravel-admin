@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Common\Imports\UsersImport;
 use Common\Models\Users;
 use Illuminate\Http\Request;
+use DB;
+use League\Flysystem\Config;
 
 class UsersController extends Controller
 {
@@ -113,5 +116,77 @@ class UsersController extends Controller
         }else{
             return $this->response(0,'删除失败！');
         }
+    }
+
+    public function postImport(Request $request)
+    {
+        $file = $request->file('file');
+
+        // 是否上传成功
+        if (! $file->isValid()) {
+            return $this->response(0, '上传失败!');
+        }
+
+        // 是否符合文件类型 getClientOriginalExtension 获得文件后缀名
+        $fileExtension = $file->getClientOriginalExtension();
+        if(! in_array($fileExtension, ['txt', 'xls', 'xlsx'])) {
+            return $this->response(0, '文件格式错误!');
+        }
+
+        // 判断大小是否符合 10M
+        $tmpFile = $file->getRealPath();
+        if (filesize($tmpFile) >= 1024*1024*10) {
+            return $this->response(0, '文件大小超过10M!');
+        }
+
+        // 是否是通过http请求表单提交的文件
+        if (! is_uploaded_file($tmpFile)) {
+            return $this->response(0, '上传失败！');
+        }
+
+        // 根据后缀导入文件
+        $import_data = [];
+        if( $fileExtension == 'txt' ){
+            $password = bcrypt('123456');
+            foreach(file($tmpFile) as $key => $item){
+                // TODO 验证用户名是否合法
+
+
+                $item = explode(',',$item);
+                $import_data[] = "('".$item[0]."','".$password."',".trim($item[1]).")";
+            }
+
+            if( count($import_data) == 0 ){
+                return $this->response(0, '没有可导入数据！');
+            }
+
+            $import_sql = implode(',',$import_data);
+
+            try{
+                $affect = DB::statement("
+                    INSERT INTO users (username,password,draw_time) VALUES
+                    {$import_sql}
+                    ON CONFLICT(username) 
+                    DO UPDATE SET draw_time = users.draw_time + EXCLUDED.draw_time 
+                ");
+            }catch (\Exception $e){
+                return $this->response(0, '系统异常！');
+            }
+
+            if( $affect > 0 ){
+                return $this->response(1, '导入成功！');
+            }
+        }elseif( $fileExtension == 'xls' || $fileExtension == 'xlsx' ){
+            $fileName = 'tmp/tmp.'. $fileExtension;
+
+            // 需要移动到系统导入，导入完删除文件
+            if (\Storage::disk('public')->put($fileName, file_get_contents($tmpFile)) ){
+                \Excel::import(new UsersImport(),''.config('filesystems.disks.public.root').'/'.$fileName);
+                \Storage::disk('public')->delete($fileName);
+                return $this->response(1, '导入成功！');
+            }
+        }
+
+        return $this->response(0, '导入失败！');
     }
 }

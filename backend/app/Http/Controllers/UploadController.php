@@ -44,7 +44,7 @@ class UploadController extends Controller
             return $this->response(0, '上传失败！');
         }
 
-        // 5.每天一个文件夹,分开存储, 生成一个随机文件名
+        // 5.
         $origin_name = explode('.',$file->getClientOriginalName());
         $fileName = $path.'/'.$origin_name[0].'.'. $fileExtension;
         if (Storage::disk('public')->put($fileName, file_get_contents($tmpFile)) ){
