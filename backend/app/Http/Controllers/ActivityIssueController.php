@@ -72,7 +72,26 @@ class ActivityIssueController extends Controller
 
     public function postCreate(Request $request)
     {
-        //'activity_id'   => '',
+        $activity_issue = new ActivityIssue();
+        $activity_issue->activity_id = 1;
+
+        foreach( $this->filed as $filed => $default_val ){
+            if( $filed == 'start_at'){
+                $activity_issue->$filed = $request->get('activity_at')[0] ?? (string)Carbon::now()->startOfWeek();
+            }elseif( $filed == 'end_at'){
+                $activity_issue->$filed = $request->get('activity_at')[1] ?? (string)Carbon::now()->endOfWeek();
+            }elseif( $filed == 'extra'){
+                $activity_issue->$filed = json_encode($request->get($filed,$default_val));
+            }else{
+                $activity_issue->$filed = $request->get($filed,$default_val);
+            }
+        }
+
+        if ($activity_issue->save()) {
+            return $this->response(1, '创建成功');
+        } else {
+            return $this->response(0, '创建失败');
+        }
     }
 
     public function getEdit(Request $request)

@@ -10,7 +10,7 @@
             <div class="container">
                 <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
                     <div class="createPost-main-container">
-                        <el-form-item label-width="120px" label="活动标题:" class="postInfo-container-item" >
+                        <el-form-item label-width="120px" v-if="this.isEdit" label="活动标题:" class="postInfo-container-item" >
                             <el-input
                                 placeholder="请输入标题"
                                 :disabled="true"
@@ -26,10 +26,10 @@
                                 end-placeholder="结束日期">
                             </el-date-picker>
                         </el-form-item>
-                        <el-form-item v-if="typeof postForm.extra!='undefined'" label-width="120px" label="奖券总量（千）:" class="postInfo-container-item">
+                        <el-form-item label-width="120px" label="奖券总量（千）:" class="postInfo-container-item">
                             <el-input-number v-model="postForm.extra.tickets_total" :min="1" :max="1000" label="千为单位"></el-input-number>
                         </el-form-item>
-                        <el-form-item v-if="typeof postForm.extra!='undefined'" label-width="120px" label="奖品:" class="postInfo-container-item">
+                        <el-form-item label-width="120px" label="奖品:" class="postInfo-container-item">
                             <el-table
                                 :data="postForm.extra.prize_level"
                                 stripe
@@ -94,7 +94,7 @@
                             </el-table>
                             <el-button type="primary" size="small" @click="addRow('prize_level')">增加<i class="el-icon-circle-plus el-icon--right"></i></el-button>
                         </el-form-item>
-                        <el-form-item v-if="typeof postForm.extra!='undefined'" label-width="120px" label="号码分配规则:" class="postInfo-container-item">
+                        <el-form-item label-width="120px" label="号码分配规则:" class="postInfo-container-item">
                             <el-table
                                 :data="postForm.extra.tickets_rule"
                                 stripe
@@ -153,22 +153,6 @@
     import { postCreate, getEdit, putEdit } from '@/api/activity_issue'
     import { deleteDeleteFile } from '@/api/upload'
 
-    const defaultForm ={
-        id:'',
-        activity_at:()=>{
-            let now = new Date();
-            let nowTime = now.getTime() ;
-            let day = now.getDay();
-            let one_day = 24*60*60*1000;
-            return [new Date(nowTime - (day-1)*one_day),new Date(nowTime + (7-day)*one_day)]
-        },
-        extra: {
-            tickets_total: 100,
-            prize_level: {},
-            tickets_rule: {},
-        }
-    };
-
     export default {
         name: "activity_issue_form",
         components: { Tinymce, Sticky },
@@ -180,10 +164,24 @@
         },
         data(){
             let id = this.$route.params && this.$route.params.id;
+
+            let now = new Date();
+            let nowTime = now.getTime() ;
+            let day = now.getDay();
+            let one_day = 24*60*60*1000;
+
             return {
                 loading:false,
                 title:'',
-                postForm: {},
+                postForm: {
+                    id:'',
+                    activity_at:[new Date(nowTime - (day-1)*one_day),new Date(nowTime + (7-day)*one_day)],
+                    extra: {
+                        tickets_total: 100,
+                        prize_level: [],
+                        tickets_rule: [],
+                    }
+                },
                 rules: {
 
                 },
