@@ -30,19 +30,6 @@
                             <el-input-number v-model="postForm.extra.tickets_total" :min="1" :max="1000" label="千为单位"></el-input-number>
                         </el-form-item>
                         <el-form-item v-if="typeof postForm.extra!='undefined'" label-width="120px" label="奖品:" class="postInfo-container-item">
-                            <el-upload
-                                class="upload-demo"
-                                action="/upload"
-                                :on-preview="handlePreview"
-                                :on-remove="handleRemove"
-                                :on-success="handleUploadSuccess"
-                                :before-upload="beforeAvatarUpload"
-                                :data="imagePostData"
-                                :file-list="fileList"
-                                list-type="picture">
-                                <el-button size="small" type="primary">点击上传<i class="el-icon-upload el-icon--right"></i></el-button>
-                                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-                            </el-upload>
                             <el-table
                                 :data="postForm.extra.prize_level"
                                 stripe
@@ -78,6 +65,19 @@
                                                 :value="item.name">
                                             </el-option>
                                         </el-select>
+                                        <el-upload
+                                            class="upload-demo"
+                                            action="/upload"
+                                            :on-preview="handlePreview"
+                                            :on-remove="handleRemove"
+                                            :on-success="handleUploadSuccess"
+                                            :before-upload="beforeAvatarUpload"
+                                            :data="imagePostData"
+                                            :show-file-list="false"
+                                            :file-list="fileList"
+                                            list-type="picture">
+                                            <el-button size="small" type="primary" @click="startUpload(scope)">点击上传<i class="el-icon-upload el-icon--right"></i></el-button>
+                                        </el-upload>
                                     </template>
                                 </el-table-column>
                                 <el-table-column
@@ -196,6 +196,7 @@
                 imagePath:'',
                 fileList:[],
                 id:id,
+                last_upload_index:0,
             };
         },
         computed: {
@@ -401,7 +402,7 @@
                     url:file.url
                 });
                  */
-                this.fileList = filelist;
+                this.postForm.extra.prize_level[this.last_upload_index].prize_img = file.name;
                 // = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file) {
@@ -416,6 +417,9 @@
                     this.$message.error('上传图片大小不能超过 2MB!');
                 }
                 return (isJPG || isPNG) && isLt2M;
+            },
+            startUpload( scope ){
+                this.last_upload_index = scope.$index;
             }
         }
     }
@@ -480,5 +484,11 @@
         border-radius: 3px;
         width:70px;
         height:70px;
+    }
+    .upload-demo{
+        box-sizing: border-box;
+        display: inline-block;
+        position: relative;
+        margin-left: 15px;
     }
 </style>
