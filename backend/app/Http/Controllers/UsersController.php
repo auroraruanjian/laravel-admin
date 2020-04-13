@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Common\Imports\UsersImport;
+use Common\Models\ActivityIssue;
 use Common\Models\Users;
 use Illuminate\Http\Request;
 use DB;
@@ -22,7 +23,7 @@ class UsersController extends Controller
 
     public function postIndex(Request $request)
     {
-        $page  = (int)$request->get('page', 1);
+        $page  = (int)$request->get('page',0);
         $limit = (int)$request->get('limit');
 
         $start = ($page - 1) * $limit;
@@ -32,6 +33,36 @@ class UsersController extends Controller
             'users_list' => [],
         ];
 
+        $where = [];
+
+        $username = $request->get('username');
+        if( !empty($username) ){
+            $where[] = ['users.username','=',$username];
+        }
+
+        $time = $request->get('time');
+        if( !empty($time[0]) ){
+            $where[] = ['users.created_at','>=',$time[0]];
+        }
+        if( !empty($time[1]) ){
+            $where[] = ['users.created_at','<=',$time[1]];
+        }
+
+        $now = (string)\Carbon\Carbon::now();
+
+        // 检查活动状态以及活动是否存在
+        $activity_issue = ActivityIssue::select([
+            'id',
+            'start_at',
+            'end_at',
+        ])
+            ->where([
+                ['activity_id','=',1],
+                ['start_at','<=',$now],
+                ['end_at','>=',$now],
+            ])
+            ->first();
+
         $userslist = Users::select([
             'users.id',
             'users.username',
@@ -39,14 +70,29 @@ class UsersController extends Controller
             'users.status',
             'users.last_ip',
             'users.last_time',
-            'users.created_at'
+            'users.draw_time',
+            'users.created_at',
+            DB::raw("count(activity_record.id) as draw_count")
         ])
+            ->leftJoin('activity_record',function($join) use ($activity_issue){
+                $join->on('activity_record.user_id','=','users.id');
+                if( !empty($activity_issue) ){
+                    $join->where([
+                        ['activity_record.created_at','>=',$activity_issue->start_at],
+                        ['activity_record.created_at','<=',$activity_issue->end_at]
+                    ]);
+                }
+            });
+
+        if( !empty($where) ) $userslist = $userslist->where($where);
+
+        $userslist = $userslist->groupBy('users.id')
             ->orderBy('id', 'asc')
             ->skip($start)
             ->take($limit)
             ->get();
 
-        $data['total'] = Users::count();
+        $data['total'] = Users::where($where)->count();
 
         if (!$userslist->isEmpty()) {
             $data['users_list'] = $userslist->toArray();

@@ -50,6 +50,8 @@
                 <el-table-column align="center" label="ID" prop="id"></el-table-column>
                 <el-table-column align="header-center" label="用户名" prop="username"></el-table-column>
                 <el-table-column align="header-center" label="昵称" prop="nickname"></el-table-column>
+                <el-table-column align="header-center" label="抽奖次数" prop="draw_time"></el-table-column>
+                <el-table-column align="header-center" label="已抽奖次数" prop="draw_count"></el-table-column>
                 <el-table-column align="header-center" label="上次登录IP" prop="last_ip"></el-table-column>
                 <el-table-column align="header-center" label="上次登录时间" prop="last_time"></el-table-column>
                 <el-table-column align="center" label="Operations">
@@ -143,7 +145,7 @@
             async getAllUsers(){
                 this.loading =  true;
 
-                let data = this.listQuery;
+                let data = Object.assign(this.search,this.listQuery);
                 let result = await getAllUsers(data);
 
                 if( result.data.code == 1 ){
@@ -226,6 +228,7 @@
                 console.log(file);
                 console.log(fileList);
                 if( res.code == 1 ){
+                    this.getAllUsers();
                     this.$notify({
                         title: '成功',
                         message: res.msg,
