@@ -99,14 +99,15 @@ class ActivityIssueController extends Controller
 
         $activity_issue['extra'] = json_decode($activity_issue['extra'],true);
 
-        foreach(\Storage::disk('public')->files('activity') as $file_name){
+        foreach(\Storage::disk('public')->files('activity/'.$id) as $file_name){
+            $fllePath = explode('/',$file_name);
             $activity_issue['file_list'][] = [
-                'name'  => explode('/',$file_name)[1],
+                'name'  => end($fllePath),
                 'url'   => \Storage::url($file_name)
             ];
         }
 
-        $activity_issue['file_path'] = '/storage/activity/';
+        $activity_issue['file_path'] = '/storage/activity/'.$id.'/';
 
         return $this->response(1, 'success', $activity_issue);
     }

@@ -179,6 +179,7 @@
             }
         },
         data(){
+            let id = this.$route.params && this.$route.params.id;
             return {
                 loading:false,
                 title:'',
@@ -190,18 +191,18 @@
                 tempRoute: {},
                 imagePostData:{
                     '_token': document.head.querySelector('meta[name="csrf-token"]').content,
-                    'path': 'activity',
+                    'path': 'activity/'+id,
                 },
                 imagePath:'',
                 fileList:[],
+                id:id,
             };
         },
         computed: {
         },
         created() {
             if (this.isEdit) {
-                const id = this.$route.params && this.$route.params.id
-                this.fetchData(id)
+                this.fetchData(this.id)
             }
 
             // Why need to make a copy of this.$route here?
@@ -365,17 +366,17 @@
             handleRemove(file, fileList) {
                 //console.log(file, fileList);
                 let _this = this;
-                deleteDeleteFile({path:'activity','filename':file.name}).then(response => {
+                deleteDeleteFile({path:this.imagePostData.path,'filename':file.name}).then(response => {
                     let type = 'error';
                     if( response.data.code == 1 ){
                         type = 'success';
-                    }
 
-                    // 删除fileList数据
-                    for(let i in _this.fileList ){
-                        if( _this.fileList[i].name == file.name ){
-                            _this.fileList.splice(i,1);
-                            break;
+                        // 删除fileList数据
+                        for(let i in _this.fileList ){
+                            if( _this.fileList[i].name == file.name ){
+                                _this.fileList.splice(i,1);
+                                break;
+                            }
                         }
                     }
 
