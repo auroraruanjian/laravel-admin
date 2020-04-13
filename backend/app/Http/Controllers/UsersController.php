@@ -87,10 +87,14 @@ class UsersController extends Controller
         if( !empty($where) ) $userslist = $userslist->where($where);
 
         $userslist = $userslist->groupBy('users.id')
-            ->orderBy('id', 'asc')
-            ->skip($start)
-            ->take($limit)
-            ->get();
+            ->orderBy('id', 'asc');
+
+        if( empty($username) ){
+            $userslist = $userslist->skip($start)
+                ->take($limit);
+        }
+
+        $userslist = $userslist->get();
 
         $data['total'] = Users::where($where)->count();
 
