@@ -225,11 +225,18 @@
                 console.log(res);
                 console.log(file);
                 console.log(fileList);
-                this.$notify({
-                    title: '成功',
-                    message: res.msg,
-                    type: 'success'
-                });
+                if( res.code == 1 ){
+                    this.$notify({
+                        title: '成功',
+                        message: res.msg,
+                        type: 'success'
+                    });
+                }else{
+                    this.$notify.error({
+                        title: '错误',
+                        message: res.msg,
+                    });
+                }
             },
             beforeImportUpload(file){
                 let fileExt = file.name.substring(file.name.lastIndexOf("."),file.name.length);

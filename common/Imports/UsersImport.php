@@ -17,8 +17,12 @@ class UsersImport implements ToCollection
         foreach($collection as $key => $item){
             if( empty($item) || empty($item[0])) continue;
 
-            $draw_time = (int)trim($item[1]);
+            $draw_time = intval(trim($item[1]));
             $username = trim($item[0]);
+
+            if( !preg_match('/^[a-zA-Z1-9_]{4,32}$/',$username) ){
+                throw new \Exception('对不起，第['.($key+1).']行【'.$username.'】用户名不合法！',-1);
+            }
 
             try{
                 $affect = DB::statement("

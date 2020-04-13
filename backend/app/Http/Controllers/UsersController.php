@@ -149,11 +149,16 @@ class UsersController extends Controller
         if( $fileExtension == 'txt' ){
             $password = bcrypt('123456');
             foreach(file($tmpFile) as $key => $item){
-                // TODO 验证用户名是否合法
-
-
                 $item = explode(',',$item);
-                $import_data[] = "('".$item[0]."','".$password."',".trim($item[1]).")";
+
+                // 验证用户名是否合法
+                $draw_time = intval(trim($item[1]));
+                $username = trim($item[0]);
+                if( !preg_match('/^[a-zA-Z1-9_]{4,32}$/',$username) ){
+                    return $this->response(0, '对不起，第['.($key+1).']行【'.$username.'】用户名不合法！');
+                }
+
+                $import_data[] = "('".$username."','".$password."',".$draw_time.")";
             }
 
             if( count($import_data) == 0 ){
@@ -181,8 +186,14 @@ class UsersController extends Controller
 
             // 需要移动到系统导入，导入完删除文件
             if (\Storage::disk('public')->put($fileName, file_get_contents($tmpFile)) ){
-                \Excel::import(new UsersImport(),''.config('filesystems.disks.public.root').'/'.$fileName);
-                \Storage::disk('public')->delete($fileName);
+                try{
+                    \Excel::import(new UsersImport(),''.config('filesystems.disks.public.root').'/'.$fileName);
+                }catch (\Exception $e){
+                    return $this->response(0, $e->getMessage());
+                }finally{
+                    \Storage::disk('public')->delete($fileName);
+                }
+
                 return $this->response(1, '导入成功！');
             }
         }
