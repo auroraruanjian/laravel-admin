@@ -70,11 +70,12 @@ class ActivityController extends Controller
         $diff_day = Carbon::parse($activity_issue->start_at)->diffInDays($now);
 
         $activity_issue->tickets_rule = json_decode($activity_issue->tickets_rule,true);
-        if( empty($activity_issue->tickets_rule[$diff_day-1]) || !is_array($activity_issue->tickets_rule[$diff_day-1]) ){
+
+        if( empty($activity_issue->tickets_rule[$diff_day]) || !is_array($activity_issue->tickets_rule[$diff_day]) ){
             return $this->response(0,'对不起，前缀规则配置错误！');
         }
 
-        $rules = $activity_issue->tickets_rule[$diff_day-1]['range'];
+        $rules = $activity_issue->tickets_rule[$diff_day]['range'];
 
         // 生成号码
         $code = str_pad(
@@ -97,7 +98,7 @@ class ActivityController extends Controller
         $activity_record->extra = json_encode(['code' => $code]);
 
         if( $activity_record->save() ){
-            return $this->response(1,'抽奖成功，号码为：'.$code);
+            return $this->response(1,'抽奖成功，号码为：'.$code,['code'=>$code]);
         }
 
         return $this->response(0,'抽奖失败！');

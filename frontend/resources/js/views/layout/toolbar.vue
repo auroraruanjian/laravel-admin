@@ -8,10 +8,16 @@
                 <span class="username"><em class="img-icon-user3"></em>你好，<b>{{ username }}</b></span>
                 <span ><em class="img-icon-yue">已用抽奖次数:</em><b>111</b></span>
                 <span ><em class="img-icon-yue">剩余抽奖次数:</em><b>111</b></span>
-                <span @click="logout" noborder><em class="img-icon-out">退出</em></span>
+
+                <span class="btns" noborder>
+                    <el-button class="fundsbtn cz" @click="$eventBus.$emit('showActivityRecord',true)">抽奖记录</el-button>
+                </span>
+                <span @click="logout" noborder>退出</span>
             </div>
         </div>
-        </div>
+
+        <ActivityRecord></ActivityRecord>
+    </div>
 </template>
 
 <script>
@@ -19,6 +25,11 @@
 
     export default {
         name: "toolbar",
+        data(){
+            return {
+                activity_record_visible:false,
+            };
+        },
         methods:{
             logout() {
                 this.$confirm('确认退出吗?', '提示', {
@@ -39,8 +50,10 @@
         },
         computed: {
             ...mapGetters(['id', 'nickname', 'username']),
-
         },
+        components:{
+            ActivityRecord:() => import('../activity/record.vue'),
+        }
     }
 </script>
 
@@ -81,6 +94,23 @@
                 }
                 b {
                     color: #f4586f;
+                }
+            }
+            .btns{
+                cursor: default;
+                button{
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #fff;
+                    border: none;
+                    font-size: 12px;
+                }
+                .fundsbtn{
+                    height: 23px;
+                    padding: 0px 11px;
+                    background-color: #ba0000;
                 }
             }
         }

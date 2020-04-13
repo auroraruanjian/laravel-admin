@@ -38,8 +38,9 @@
                 <van-col span="10">奖期：<em>{{item.activity_issue_id}}</em></van-col>
             </van-row>
             <van-row>
-                <van-col span="14">号码：<em>{{ item.code }}</em></van-col>
-                <van-col span="10">
+                <van-col span="8">号码：<em>{{ item.code }}</em></van-col>
+                <van-col span="8">开奖号码：<em v-if="item.open_code!=null">{{ item.open_code }}</em></van-col>
+                <van-col span="8">
                     状态：<van-tag v-if="item.open_code==null" type="warning">未开奖</van-tag>
                     <van-tag v-else-if="item.draw_level==0" type="success">一等奖</van-tag>
                     <van-tag v-else-if="item.draw_level==1" type="success">二等奖</van-tag>

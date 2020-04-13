@@ -11,6 +11,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 window.Vue = require('vue');
 
+Vue.prototype.$eventBus = new Vue();
+
 Vue.use(ElementUI);
 Vue.use(VueCookie);
 

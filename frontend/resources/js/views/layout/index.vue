@@ -45,4 +45,7 @@
         width: 1200px;
         margin: 0 auto;
     }
+    .app-main{
+        margin-top: 36px;
+    }
 </style>
