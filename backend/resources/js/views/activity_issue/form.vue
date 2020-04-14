@@ -63,6 +63,8 @@
                                                 :key="key"
                                                 :label="item.name"
                                                 :value="item.name">
+                                                <span style="float: left">{{ item.name }}</span>
+                                                <i class="el-icon-error" style="float: right; color: #aeaeae; font-size: 16px;margin-top: 10px;" @click.stop="handleRemove(item, fileList)"></i>
                                             </el-option>
                                         </el-select>
                                         <el-upload
@@ -367,7 +369,7 @@
                 }
             },
             handleRemove(file, fileList) {
-                //console.log(file, fileList);
+                // console.log(file, fileList);return;
                 let _this = this;
                 deleteDeleteFile({path:this.imagePostData.path,'filename':file.name}).then(response => {
                     let type = 'error';
@@ -379,6 +381,13 @@
                             if( _this.fileList[i].name == file.name ){
                                 _this.fileList.splice(i,1);
                                 break;
+                            }
+                        }
+
+                        // 删除表单中的值
+                        for(let x in _this.postForm.extra.prize_level){
+                            if( _this.postForm.extra.prize_level[x].prize_img == file.name ){
+                                _this.postForm.extra.prize_level[x].prize_img = '';
                             }
                         }
                     }
@@ -398,12 +407,11 @@
                 console.log(res);
                 console.log(file);
                 console.log(filelist);
-                /*
+
                 this.fileList.push({
                     name:file.name,
                     url:file.url
                 });
-                 */
                 this.postForm.extra.prize_level[this.last_upload_index].prize_img = file.name;
                 // = URL.createObjectURL(file.raw);
             },
