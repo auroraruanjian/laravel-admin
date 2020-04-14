@@ -73,6 +73,7 @@
                                             :on-success="handleUploadSuccess"
                                             :before-upload="beforeAvatarUpload"
                                             :data="imagePostData"
+                                            :headers="imagePostHeader"
                                             :show-file-list="false"
                                             :file-list="fileList"
                                             list-type="picture">
@@ -187,8 +188,11 @@
                 },
                 status:'draft',
                 tempRoute: {},
+                imagePostHeader:{
+                    'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                },
                 imagePostData:{
-                    '_token': document.head.querySelector('meta[name="csrf-token"]').content,
+                    //'_token': document.head.querySelector('meta[name="csrf-token"]').content,
                     'path': 'activity/'+id,
                 },
                 imagePath:'',

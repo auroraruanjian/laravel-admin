@@ -18,7 +18,7 @@ $factory->define(\Common\Models\Users::class, function (Faker $faker) {
     return [
         'username' => $faker->unique()->userName,
         'nickname' => $faker->name,
-        'password' => bcrypt('admin123'),
+        'password' => bcrypt(env('IMPORT_DEFAULT_PASSWORD')),
         'draw_time'=> mt_rand(1,5),
     ];
 });

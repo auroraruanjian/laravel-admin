@@ -197,7 +197,7 @@ class UsersController extends Controller
         // 根据后缀导入文件
         $import_data = [];
         if( $fileExtension == 'txt' ){
-            $password = bcrypt('123456');
+            $password = bcrypt(env('IMPORT_DEFAULT_PASSWORD'));
             foreach(file($tmpFile) as $key => $item){
                 $item = explode(',',$item);
 

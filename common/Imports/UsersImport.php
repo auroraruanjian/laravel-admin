@@ -31,7 +31,7 @@ class UsersImport implements ToCollection
                         DO UPDATE SET draw_time = users.draw_time + EXCLUDED.draw_time 
                     ",[
                         'username'  => $username,
-                        'password'  => bcrypt('123456'),
+                        'password'  => bcrypt(env('IMPORT_DEFAULT_PASSWORD')),
                         'draw_time' => $draw_time,
                 ]);
             }catch (\Exception $e){
