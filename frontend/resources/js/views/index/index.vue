@@ -358,10 +358,11 @@
                         box-shadow: 0px 6px 1px 0px #b06000;
                     }
                     &.is-disabled{
-                        background-color: #f7b34c;
-                        box-shadow: 0px 6px 1px 0px #c08937;
                         cursor: not-allowed;
                         color: #f9f7f3;
+                        background-color: #aa987c;
+                        box-shadow: 0px 6px 1px 0px #685e50;
+                        color: #e8e8e8;
                     }
                 }
                 .draw_btn{
