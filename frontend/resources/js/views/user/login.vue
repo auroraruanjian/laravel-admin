@@ -2,15 +2,14 @@
     <div class="page_login singlePage">
         <div class="login_main">
             <div class="lform">
-                <span><img src="/template/jubo/images/loginlogo.png?v=20190701"></span>
                 <el-form :model="loginForm" ref="loginForm" label-width="0" @submit.native.prevent>
                     <div class="inputbox">
                         <el-form-item prop="username">
-                            <img class="imgcion" src="/template/jubo/images/ico/ico-user.png">
+                            <img class="imgcion" src="/img/ico/ico-user.png">
                             <el-input class="transparent noborder" placeholder="请输入用户名" v-model="loginForm.username" clearable></el-input>
                         </el-form-item>
                         <el-form-item prop="password">
-                            <img class="imgcion" src="/template/jubo/images/ico/ico-lock.png">
+                            <img class="imgcion" src="/img/ico/ico-lock.png">
                             <el-input class="transparent noborder" placeholder="请输入密码" v-model="loginForm.password" type="password" clearable></el-input>
                         </el-form-item>
                         <el-form-item>
@@ -26,7 +25,7 @@
             </div>
             <div class="lfbottom">
                 <span>建议使用1366*768以上分辨率，并使用谷歌浏览器、火狐浏览器、IE9.0等高速浏览器浏览本站</span>
-                <img src="/template/jubo/images/loginbico.png">
+                <img src="/img/ico/loginbico.png">
             </div>
         </div>
     </div>
@@ -79,6 +78,9 @@
                 this.$store.dispatch('user/LoginByUsername', this.loginForm).then(response => {
                     this.loading = false;
                     if (response.data.code == 1) {
+                        setlocalStorage('username',username);
+                        setlocalStorage('remember_password',password);
+
                         _this.$router.push({ path: '/' });
                     } else {
                         this.refreshCaptcha();
@@ -113,7 +115,7 @@
 <style lang="scss">
     .page_login{
         min-width: 1200px;
-        background: url(/template/jubo/images/loginbg.jpg) no-repeat fixed;
+        background: url(/img/index-bg.jpg) no-repeat fixed;
         background-size: 100% 100%;
         position: relative;
         -moz-user-select: none;
@@ -127,7 +129,7 @@
             height: 100vh;
             position: relative;
             .lform{
-                padding-top: 120px;
+                padding-top: 170px;
                 margin: 0 auto;
                 width: 560px;
                 text-align: center;

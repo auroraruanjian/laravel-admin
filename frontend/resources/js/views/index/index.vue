@@ -278,7 +278,8 @@
     .page_index {
         height: 100%;
         min-height: 750px;
-        background: url(/img/activity_bg.jpg) no-repeat #350b04;
+        background: url(/img/activity_bg.jpg) no-repeat fixed #350b04;
+        background-size: 100% 100%;
         padding-top: 55px;
     }
     .draw_game{
