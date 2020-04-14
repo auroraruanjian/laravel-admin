@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Common\Models\Activity;
 use Common\Models\ActivityIssue;
 use Common\Models\ActivityRecord;
 use Illuminate\Http\Request;
@@ -20,9 +21,47 @@ class ActivityController extends Controller
         $this->middleware('auth');
     }
 
-    public function getIndex()
+    public function getIndex(Request $request)
     {
+        $activity_id = (int)$request->get('id',1);
 
+        $now = (string)Carbon::now();
+        // 检查活动状态以及活动是否存在
+        $activity_issue = ActivityIssue::select([
+            'activity_issue.id as issue_id',
+            'activity_issue.activity_id',
+            'activity_issue.start_at',
+            'activity_issue.end_at',
+            DB::raw("activity_issue.extra->>'tickets_total' as tickets_total"),
+            DB::raw("activity_issue.extra->'prize_level' as prize_level"),
+            'activity.ident',
+            'activity.title',
+            'activity.describe',
+            'activity.content',
+            'activity.status',
+        ])
+            ->leftJoin('activity','activity.id','activity_issue.activity_id')
+            ->where([
+                ['activity_issue.activity_id','=',$activity_id],
+                ['activity_issue.start_at','<=',$now],
+                ['activity_issue.end_at','>=',$now],
+            ])
+            ->first();
+
+        if( !empty($activity_issue) ){
+            $activity_issue = $activity_issue->toArray();
+            $activity_issue['prize_level'] = json_decode($activity_issue['prize_level'],true);
+            $activity_issue['code_len'] = strlen($activity_issue['tickets_total']*1000)-1;
+
+            unset($activity_issue['tickets_total']);
+        }else{
+            $activity_issue = [];
+        }
+
+        $activity_issue['file_path'] = '/storage/activity/'.$activity_issue['issue_id'].'/';
+        unset($activity_issue['tickets_total']);
+
+        return $this->response(1,'success',$activity_issue);
     }
 
     /**

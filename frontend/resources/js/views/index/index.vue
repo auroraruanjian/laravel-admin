@@ -1,5 +1,5 @@
 <template>
-    <div class="page_index bgn" :style="{minHeight:windowHeight+'px'}">
+    <div v-loading="page_loading" class="page_index bgn" :style="{minHeight:windowHeight+'px'}">
         <div class="container index-container">
             <div class="draw_game">
                 <div class="draw_top_area">
@@ -8,17 +8,23 @@
                             <em class="code" :class="item.code_class" :style="item.style" @webkitTransitionEnd.stop.prevent="endGame(key)"></em>
                         </span>
                     </div>
-                    <el-button class="hand_option" @click="draw(false)" :class="activity_draw.hand_option"></el-button>
+                    <el-button class="hand_option" v-if="keepDrawStatus" @click="stopKeepDraw" :class="activity_draw.hand_option"></el-button>
+                    <el-button class="hand_option" v-else @click="draw(false)" :class="activity_draw.hand_option"></el-button>
                 </div>
                 <div class="draw_content_area">
-                    <div class="content_title">这是活动标题</div>
-                    <div class="activity_content">这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容这是活动内容</div>
+                    <div class="content_title">{{activity.title}}</div>
+                    <div class="activity_content" v-html="activity.content"></div>
                 </div>
                 <div class="draw_footer_area">
-                    <el-row class="draw_user_list">
-                        <el-col :span="12"><p v-for="item in 20" :key="item">恭喜dddd中 一等奖 iphone</p></el-col>
-                        <el-col :span="12"><p v-for="item in 20" :key="item">恭喜dddd中 一等奖 iphone</p></el-col>
-                    </el-row>
+                    <div class="activity_prize_level">
+                        <el-carousel :interval="4000" type="card" height="142px">
+                            <el-carousel-item v-for="(item,key) in activity.prize_level" :key="key">
+                                <img style="width:100%;height:100%;" v-if='item.prize_img!=null' :src="activity.file_path + item.prize_img">
+                                <h3 >{{item.name}}</h3>
+                            </el-carousel-item>
+                        </el-carousel>
+                    </div>
+
                     <div class="draw_button">
                         <el-button class="draw_btn" type="primary" plain :disabled="disabled_status" @click="draw(false)">{{disabled_status?'抽奖中':'点击抽奖'}}</el-button>
                         <el-button class="keepdraw_btn" type="primary" plain :disabled="disabled_status" v-if="!keepDrawStatus" @click="keepDraw">连抽</el-button>
@@ -27,17 +33,38 @@
                 </div>
             </div>
         </div>
+
+        <div class="draw_user" v-if="draw_open_status">
+            <el-row class="draw_user_title">中奖榜单</el-row>
+            <el-row class="draw_user_list">
+                <vue-seamless-scroll :data="draw_user_list" :class-option="classOption" class="seamless-warp">
+                    <ul class="item">
+                        <li v-for="item in draw_user_list">
+                            {{item}}
+                        </li>
+                    </ul>
+                </vue-seamless-scroll>
+            </el-row>
+            <i class="el-icon-error" title="关闭" @click="draw_open_status=false"></i>
+        </div>
+        <div class="draw_open_btn" v-else @click="draw_open_status=true">排行榜</div>
     </div>
 </template>
 
 <script>
     import { mapGetters,mapState } from 'vuex';
-    import { getDraw } from '@/api/activity';
+    import { getDraw,getActivity,getRankList } from '@/api/activity';
+
+    const cubic = value => Math.pow(value, 3);
+    const easeInOutCubic = value => value < 0.5
+        ? cubic(value * 2) / 2
+        : 1 - cubic((1 - value) * 2) / 2;
 
     export default {
         name: "index",
         data(){
             return {
+                page_loading:false,
                 disabled_status:false,
                 keepDrawStatus:false, // 停止连抽
                 keepDrawTime:1,
@@ -45,16 +72,28 @@
                     hand_option:'hand_up',
                     draw_open_code_class:'draw_open_code5',
                     //open_code:[0,0,0,0,0],
-                    open_code_position:[
-                        {code:0,last_code:0,pos:0,style:{},code_class:''},
-                        {code:0,last_code:0,pos:0,style:{},code_class:''},
-                        {code:0,last_code:0,pos:0,style:{},code_class:''},
-                        {code:0,last_code:0,pos:0,style:{},code_class:''},
-                        {code:0,last_code:0,pos:0,style:{},code_class:''},
-                    ],
+                    open_code_position:[],
                     open_code:'',
                     animate_running:false,
                     animate_interval:300,
+                },
+                activity_id:1,
+                activity:{
+                    ident:'',
+                    title:'',
+                    describe:'',
+                    content:'',
+                    status:'',
+                    start_at:'',
+                    end_at:'',
+                    prize_level:[],
+                    file_path:'',
+                },
+                scrollTopInterval:'',
+                draw_open_status:true,
+                draw_user_list:[],
+                classOption:{
+                    autoPlay: false,
                 }
             };
         },
@@ -72,12 +111,31 @@
             },
             windowHeight(){
                 return window.innerHeight - 36;
-            }
+            },
         },
         created(){
-
+            this.init();
+            this.getRankList();
+        },
+        components:{
         },
         methods:{
+            init(){
+                this.page_loading = true;
+                getActivity( this.activity_id ).then( response => {
+                    this.page_loading = false;
+                    if( response.data.code == 1 ){
+                        this.activity = response.data.data;
+                        this.activity_draw.open_code_position = [];
+                        for( let i=0;i<response.data.data.code_len;i++ ){
+                            this.activity_draw.open_code_position.push({code:0,last_code:0,pos:0,style:{},code_class:''});
+                        }
+                        if( response.data.data.code_len >= 6 ) this.activity_draw.draw_open_code_class = 'draw_open_code6';
+                    }else{
+                        this.$message.error(response.data.error);
+                    }
+                });
+            },
             async draw( keep = false ){
                 // 动画没结束，不允许重复点击
                 if( this.activity_draw.animate_running ) return;
@@ -95,6 +153,9 @@
                         type: 'warning',
                         duration:1500,
                     });
+                }
+                if( !keep || this.keepDrawTime==1 ){
+                    this.backToTop();
                 }
 
                 this.activity_draw.hand_option = 'hand_down';
@@ -178,6 +239,35 @@
                 this.activity_draw.open_code_position[index].style = {
                     backgroundPosition:'0px -'+this.activity_draw.open_code_position[index].pos+'px'
                 }
+            },
+            backToTop(){
+                const el = document.documentElement;
+                const beginTime = Date.now();
+                const beginValue = el.scrollTop;
+                const rAF = window.requestAnimationFrame || (func => setTimeout(func, 16));
+                const frameFunc = () => {
+                    const progress = (Date.now() - beginTime) / 500;
+                    if (progress < 1) {
+                        el.scrollTop = beginValue * (1 - easeInOutCubic(progress));
+                        rAF(frameFunc);
+                    } else {
+                        el.scrollTop = 0;
+                    }
+                };
+                rAF(frameFunc);
+            },
+            getRankList(){
+                getRankList().then( response => {
+                    if( response.data.code == 1 ){
+                        for( let i in response.data.data ){
+                            let username = response.data.data[i].username;
+                            let prize_level_name = response.data.data[i].prize_level_name;
+
+                            this.draw_user_list.push('恭喜'+username+'获得'+prize_level_name);
+                        }
+                        this.classOption.autoPlay = true;
+                    }
+                });
             }
         }
     }
@@ -218,7 +308,6 @@
                     width: 511px;
                     left: 245px;
                 }
-
 
                 .code_bg{
                     width: 81px;
@@ -282,7 +371,7 @@
             color: #84121e;
             font-size: 18px;
             line-height: 35px;
-            padding-bottom: 40px;
+            padding-bottom: 45px;
 
             .content_title{
                 margin: 13px auto;
@@ -316,25 +405,6 @@
             text-align: left;
             color: #84121e;
             position: relative;
-
-            .draw_user_list{
-                height: 190px;
-                overflow: hidden;
-                background: #cebaa0;
-                border: 1px solid #6f1010;
-                border-radius: 8px;
-                width: 100%;
-                padding: 16px;
-                color: #84121e;
-                font-size: 16px;
-                text-align: left;
-
-                >.el-col{
-                    width: 50%;
-                    height: 156px;
-                    overflow: hidden;
-                }
-            }
 
             .draw_button{
                 position: absolute;
@@ -372,6 +442,112 @@
 
                 }
             }
+
+
+            .activity_prize_level{
+                background: #582e29;
+                border-radius: 8px;
+                padding: 17px 17px 0px;
+
+                .el-carousel__item {
+                    h3{
+                        font-size: 15px;
+                        margin: 0;
+                        position: absolute;
+                        color: #fff;
+                        background: #3d3d3d;
+                        padding: 5px 8px;
+                        opacity: 0.7;
+                        width: 100%;
+                        bottom: 0px;
+                        text-align: center;
+                        font-weight: bold;
+                        transition: opacity 0.3s;
+                    }
+                    &:hover h3{
+                        opacity: 0.98;
+                    }
+                }
+
+
+                .el-carousel__item:nth-child(2n) {
+                    background-color: #99a9bf;
+                }
+
+                .el-carousel__item:nth-child(2n+1) {
+                    background-color: #d3dce6;
+                }
+
+                .el-carousel__item--card.is-in-stage{
+                    border-radius: 5px;
+                }
+            }
         }
+    }
+
+    .draw_user{
+        height: 380px;
+        overflow: hidden;
+        background: #ffffff;
+        color: #282828;
+        font-size: 16px;
+        text-align: left;
+        position: fixed;
+        top: 50%;
+        margin-top: -250px;
+        left: 0px;
+        width: 227px;
+        box-shadow: 0px 0px 6px #fff;
+
+        .draw_user_title{
+            height: 30px;
+            width: 95%;
+            margin: 10px auto 15px;
+            background: #cebaa0;
+            line-height: 30px;
+            text-align: center;
+            color: #84121e;
+            font-weight: bold;
+        }
+
+        .draw_user_list{
+            /*width: 95%;*/
+            /*margin: 0 auto;*/
+            /*text-align: center;*/
+            /*height: 311px;*/
+            /*overflow: hidden;*/
+        }
+        .seamless-warp {
+            color: #2a2a2a;
+            height: 309px;
+            margin: 0px 8px;
+            background: #FEE7B1;
+            overflow: hidden;
+            border: 2px solid #C46302;
+            text-align: left;
+            padding: 0px 5px;
+        }
+
+        >i{
+            font-size: 22px;
+            position: absolute;
+            top: 14px;
+            right: 10px;
+            color: #d54141;
+            cursor: pointer;
+        }
+    }
+    .draw_open_btn{
+        position: fixed;
+        top: 50%;
+        margin-top: -100px;
+        background: #d18016;
+        color: #fff;
+        padding: 9px 5px;
+        width: 18px;
+        text-align: center;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        cursor: pointer;
     }
 </style>

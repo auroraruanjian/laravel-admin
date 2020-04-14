@@ -11,6 +11,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 window.Vue = require('vue');
 
+import scroll from 'vue-seamless-scroll'
+Vue.use(scroll)
+
 Vue.prototype.$eventBus = new Vue();
 
 Vue.use(ElementUI);
