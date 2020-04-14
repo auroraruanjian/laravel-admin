@@ -81,7 +81,11 @@ class CreateTableActivity extends Migration
             'ident'     => 'raffle_tickets',
             'title'     => '抽奖活动',
             'describe'  => '抽奖活动描述',
-            'content'   => '抽奖活动内容',
+            'content'   => '<p><strong><span style="color: #ff0000;">1.活动时间</span></strong></p>
+<p><span style="color: #000000;">2020年04月10日-2020年05月10日</span></p>
+<p><strong><span style="color: #ff0000;">2.活动内容</span></strong></p>
+<p><span style="color: #000000;">抽奖</span></p>
+<p><strong><span style="color: #ff0000;">3.活动须知</span></strong></p>',
             'status'    => 0,
         ]);
     }
