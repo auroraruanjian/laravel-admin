@@ -20,6 +20,11 @@ class ActivityController extends Controller
         $this->middleware('auth');
     }
 
+    public function getIndex()
+    {
+
+    }
+
     /**
      * 抽奖
      * @param Request $request
@@ -98,7 +103,7 @@ class ActivityController extends Controller
         $activity_record->extra = json_encode(['code' => $code]);
 
         if( $activity_record->save() ){
-            return $this->response(1,'抽奖成功，号码为：'.$code,['code'=>$code]);
+            return $this->response(1,'抽奖成功，号码为：'.$code,['code'=>str_split($code)]);
         }
 
         return $this->response(0,'抽奖失败！');

@@ -6,8 +6,8 @@
             </div>
             <div class="tbr">
                 <span class="username"><em class="img-icon-user3"></em>你好，<b>{{ username }}</b></span>
-                <span ><em class="img-icon-yue">已用抽奖次数:</em><b>111</b></span>
-                <span ><em class="img-icon-yue">剩余抽奖次数:</em><b>111</b></span>
+                <span ><em class="img-icon-yue">已用抽奖次数:</em><b>{{draw_time}}</b></span>
+                <span ><em class="img-icon-yue">剩余抽奖次数:</em><b>{{draw_count}}</b></span>
 
                 <span class="btns" noborder>
                     <el-button class="fundsbtn cz" @click="$eventBus.$emit('showActivityRecord',true)">抽奖记录</el-button>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import { mapGetters,mapState } from 'vuex';
 
     export default {
         name: "toolbar",
@@ -49,7 +49,12 @@
             },
         },
         computed: {
-            ...mapGetters(['id', 'nickname', 'username']),
+            ...mapGetters(['id', 'username']),
+            ...mapState({
+                nickname: state => state.user.nickname,
+                draw_time: state => state.user.draw_time,
+                draw_count: state => state.user.draw_count,
+            }),
         },
         components:{
             ActivityRecord:() => import('../activity/record.vue'),

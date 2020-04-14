@@ -20,7 +20,8 @@
 </script>
 
 <style lang="scss">
-    body{
+    body,html{
+        height: 100%;
         background: #f0f0f0;
     }
 </style>
