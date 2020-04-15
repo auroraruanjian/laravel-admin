@@ -232,20 +232,13 @@ class UsersController extends Controller
                 return $this->response(1, '导入成功！');
             }
         }elseif( $fileExtension == 'xls' || $fileExtension == 'xlsx' ){
-            $fileName = 'tmp/tmp.'. $fileExtension;
-
-            // 需要移动到系统导入，导入完删除文件
-            if (\Storage::disk('public')->put($fileName, file_get_contents($tmpFile)) ){
-                try{
-                    \Excel::import(new UsersImport(),''.config('filesystems.disks.public.root').'/'.$fileName);
-                }catch (\Exception $e){
-                    return $this->response(0, $e->getMessage());
-                }finally{
-                    \Storage::disk('public')->delete($fileName);
-                }
-
-                return $this->response(1, '导入成功！');
+            try{
+                \Excel::import(new UsersImport(),$file);
+            }catch (\Exception $e){
+                return $this->response(0, $e->getMessage());
             }
+
+            return $this->response(1, '导入成功！');
         }
 
         return $this->response(0, '导入失败！');

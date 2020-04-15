@@ -10,8 +10,8 @@ export function getActivityInit(){
 export function getActivityRecord( data ) {
     return fetch({
         url: 'activityRecord/index',
-        method: 'post',
-        data
+        method: 'get',
+        params:data
     });
 }
 

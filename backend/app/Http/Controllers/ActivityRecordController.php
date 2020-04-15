@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Common\Exports\ActivityRecordExport;
 use Common\Models\Activity;
 use Common\Models\ActivityIssue;
 use Common\Models\ActivityRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ActivityRecordController extends Controller
 {
@@ -50,7 +52,7 @@ class ActivityRecordController extends Controller
         return $this->response(1,'success',$data);
     }
 
-    public function postIndex(Request $request)
+    public function getIndex(Request $request)
     {
         $ident = $request->get('ident');
         $page  = (int)$request->get('page', 1);
@@ -105,7 +107,6 @@ class ActivityRecordController extends Controller
             }
         }
 
-
         $filed = [
             'activity_record.id',
             'activity.title',
@@ -131,7 +132,16 @@ class ActivityRecordController extends Controller
             ->leftJoin('activity','activity.id','activity_record.activity_id')
             ->leftJoin('activity_issue','activity_issue.id','activity_record.activity_issue_id')
             ->where($where)
-            ->orderBy('activity_record.id', 'desc')
+            ->orderBy('activity_record.id', 'desc');
+
+        // 如果是导出
+        $export = $request->get('export');
+        if( $export ){
+//            return Excel::download(new ActivityRecordExport($activity_record,$ident) ,'抽奖记录.xlsx');
+            return (new ActivityRecordExport($activity_record,$ident))->download('抽奖记录.xlsx');
+        }
+
+        $activity_record = $activity_record
             ->skip($start)
             ->take($limit)
             ->get();

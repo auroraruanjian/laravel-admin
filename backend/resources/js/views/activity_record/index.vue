@@ -57,9 +57,7 @@
 
                 <el-row justify="center" type="flex">
                     <el-button type="primary" icon="el-icon-search" @click="getActivityRecord" >搜索</el-button>
-                    <!--
-                    <el-button type="warning" icon="el-icon-circle-plus-outline" @click="handleExport" size="small">导出</el-button>
-                    -->
+                    <el-button type="warning" icon="el-icon-download" @click="handleExport" size="small">导出</el-button>
                 </el-row>
             </el-form>
         </div>
@@ -212,8 +210,15 @@
                 });
 
             },
-            handleExport(){
+            async handleExport(){
+                let data = Object.assign({},this.search);
+                data.export = 1;
 
+                let params = Object.keys(data).map(function (key) {
+                    return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
+                }).join("&");
+
+                window.location = '/activityRecord?'+params;
             }
         },
     }
