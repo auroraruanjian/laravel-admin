@@ -6,8 +6,8 @@
             </div>
             <div class="tbr">
                 <span class="username"><em class="img-icon-user3"></em>你好，<b>{{ username }}</b></span>
-                <span ><em class="img-icon-yue">已用抽奖次数:</em><b>{{draw_time}}</b></span>
-                <span ><em class="img-icon-yue">剩余抽奖次数:</em><b>{{draw_count}}</b></span>
+                <span ><em class="img-icon-yue">总抽奖次数:</em><b>{{draw_time}}</b></span>
+                <span ><em class="img-icon-yue">已抽奖次数:</em><b>{{draw_count}}</b></span>
 
                 <span class="btns" noborder>
                     <el-button class="fundsbtn cz" @click="$eventBus.$emit('showActivityRecord',true)">抽奖记录</el-button>
