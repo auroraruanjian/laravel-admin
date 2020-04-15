@@ -46,6 +46,7 @@ class ActivityController extends Controller
                 ['activity_issue.start_at','<=',$now],
                 ['activity_issue.end_at','>=',$now],
             ])
+            ->orderBy('activity_issue.id','desc')
             ->first();
 
         if( !empty($activity_issue) ){
