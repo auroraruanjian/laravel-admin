@@ -17,7 +17,8 @@ Route::get('/', function () {
     $os_name = $os->getIsmobile();
 
     if ($os_name) {
-        return view('index-m');
+        return '移动端开发中....';
+        //return view('index-m');
     }
     return view('index');
 });
