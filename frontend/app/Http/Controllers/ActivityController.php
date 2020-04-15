@@ -90,6 +90,7 @@ class ActivityController extends Controller
                 ['start_at','<=',$now],
                 ['end_at','>=',$now],
             ])
+            ->orderBy('activity_issue.id','desc')
             ->first();
 
         if( empty($activity_issue) ){
