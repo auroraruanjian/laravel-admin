@@ -20,10 +20,10 @@ if( mix.inProduction()){
 }
 
 mix.extract([
-    'tiny-cookie',
     'vue',
     'vuex',
     'vue-router',
+    // 'vue-cookie',
     'axios',
     'nprogress',
     'screenfull',

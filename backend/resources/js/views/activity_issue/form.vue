@@ -173,6 +173,8 @@
             let day = now.getDay();
             let one_day = 24*60*60*1000;
 
+            let xsrf_token = '';//this.$cookie.get('XSRF-TOKEN');
+
             return {
                 loading:false,
                 title:'',
@@ -191,7 +193,7 @@
                 status:'draft',
                 tempRoute: {},
                 imagePostHeader:{
-                    'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                    'X-CSRF-TOKEN': xsrf_token
                 },
                 imagePostData:{
                     //'_token': document.head.querySelector('meta[name="csrf-token"]').content,
