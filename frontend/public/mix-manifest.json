@@ -3,6 +3,7 @@
     "/js/app-m.js": "/js/app-m.js",
     "/js/manifest.js": "/js/manifest.js",
     "/js/vendor.js": "/js/vendor.js",
+    "/js/polyfill.min.js": "/js/polyfill.min.js",
     "/css/vendor.css": "/css/vendor.css",
     "/m/css/vendor.css": "/m/css/vendor.css"
 }

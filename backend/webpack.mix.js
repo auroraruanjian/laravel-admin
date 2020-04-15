@@ -100,5 +100,6 @@ Mix.listen('configReady', (webpackConfig) => {
 });
 
 mix.copy('resources/css/weui.css', 'public/css/weui.css');
+mix.copyDirectory('node_modules/babel-polyfill/dist/polyfill.min.js', 'public/js');
 
 mix.webpackConfig(webpack_config);

@@ -12,6 +12,7 @@
     "devDependencies": {
         "axios": "^0.19",
         "babel-plugin-import": "^1.13.0",
+        "babel-polyfill": "^6.26.0",
         "cross-env": "^5.1",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.13",

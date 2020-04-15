@@ -67,6 +67,8 @@ const webpack_config = {
 
 mix.webpackConfig(webpack_config);
 
+mix.copyDirectory('node_modules/babel-polyfill/dist/polyfill.min.js', 'public/js');
+
 /**
  * WEB配置
  */

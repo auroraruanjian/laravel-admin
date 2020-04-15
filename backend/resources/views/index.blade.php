@@ -7,6 +7,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
+    <script>
+        if(window.ActiveXObject || "ActiveXObject" in window){
+            var polyfill = document.createElement("script");
+            polyfill.src = 'js/polyfill.min.js';
+            window.document.head.appendChild(polyfill);
+        }
+    </script>
 </head>
 <body>
     <div id="app"></div>
