@@ -8,6 +8,13 @@ export function getActivityIssue( data ) {
     });
 }
 
+export function getCreate() {
+    return fetch({
+        url: 'activityIssue/create',
+        method: 'get',
+    });
+}
+
 export function postCreate( data ) {
     return fetch({
         url: 'activityIssue/create',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Common\Models\Activity;
 use Common\Models\ActivityIssue;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
@@ -69,6 +70,28 @@ class ActivityIssueController extends Controller
         return $this->response(1, 'Success!', $data);
     }
 
+    public function getCreate(Request $request)
+    {
+        $id = (int)$request->get('id',1);
+
+        $activity = Activity::select([
+            'title'
+        ])
+            ->where('id',$id)
+            ->first();
+
+        if( !empty($activity) ){
+            $activity = $activity->toArray();
+        }else{
+            $activity = [];
+        }
+
+        $activity['upload_file_path'] = 'activity/tmp/';
+        \Storage::disk('public')->deleteDirectory($activity['upload_file_path']);
+        $activity['image_path'] = '/storage/activity/tmp/';
+
+        return $this->response(1, 'success', $activity);
+    }
 
     public function postCreate(Request $request)
     {
@@ -88,6 +111,11 @@ class ActivityIssueController extends Controller
         }
 
         if ($activity_issue->save()) {
+
+            $upload_path = 'activity/tmp/';
+            \Storage::disk('public')->move($upload_path,'activity/'.$activity_issue->id);
+            \Storage::disk('public')->deleteDirectory($upload_path);
+
             return $this->response(1, '创建成功');
         } else {
             return $this->response(0, '创建失败');
@@ -199,10 +227,11 @@ class ActivityIssueController extends Controller
      */
     public function deleteDelete(Request $request)
     {
-        return $this->response(1, '系统不支持删除功能!');
+        //return $this->response(1, '系统不支持删除功能!');
 
         $id = $request->get('id');
         if( ActivityIssue::where('id','=',$id)->delete() ){
+            \Storage::disk('public')->deleteDirectory('activity/'.$id);
             return $this->response(1,'删除成功！');
         }else{
             return $this->response(0,'删除失败！');

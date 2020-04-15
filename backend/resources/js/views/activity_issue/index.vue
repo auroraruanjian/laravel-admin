@@ -26,20 +26,24 @@
                         {{ typeof scope.row.extra.code!='undefined'?scope.row.extra.code:'未开奖' }}
                     </template>
                 </el-table-column>
-                <el-table-column align="center" label="Operations">
+                <el-table-column align="center" label="Operations" width="150px">
                     <template slot-scope="scope">
-                        <el-button type="primary" size="small"
+                        <el-link   type="primary"
+                                   size="small"
+                                   icon="el-icon-edit"
                                    @click="$router.push({path:`/activityIssue/edit/${scope.row.id}`})"
                                    v-permission="'activityIssue/edit'">
                             编辑
-                        </el-button>
-                        <el-button type="warning" size="small"
+                        </el-link>
+                        <el-link type="warning"
+                                 size="small"
+                                 icon="el-icon-s-flag"
                                    @click="handleOpenCode(scope.row.id)"
                                    v-permission="'activityIssue/openCode'"
                                    v-if="typeof scope.row.extra.code=='undefined' || scope.row.extra.code == null">
                             开奖
-                        </el-button>
-<!--                        <el-button type="primary" size="small" @click="handleDelete(scope)" v-permission="'activityIssue/delete'">删除</el-button>-->
+                        </el-link>
+                        <el-link type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope)" v-permission="'activityIssue/delete'">删除</el-link>
                     </template>
                 </el-table-column>
             </el-table>

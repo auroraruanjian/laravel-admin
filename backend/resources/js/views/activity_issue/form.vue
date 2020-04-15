@@ -10,7 +10,7 @@
             <div class="container">
                 <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
                     <div class="createPost-main-container">
-                        <el-form-item label-width="120px" v-if="this.isEdit" label="活动标题:" class="postInfo-container-item" >
+                        <el-form-item label-width="120px" label="活动标题:" class="postInfo-container-item" >
                             <el-input
                                 placeholder="请输入标题"
                                 :disabled="true"
@@ -153,7 +153,7 @@
 <script>
     import Tinymce from '@/components/Tinymce'
     import Sticky from '@/components/Sticky' // 粘性header组件
-    import { postCreate, getEdit, putEdit } from '@/api/activity_issue'
+    import { postCreate, getEdit, putEdit, getCreate } from '@/api/activity_issue'
     import { deleteDeleteFile } from '@/api/upload'
 
     export default {
@@ -208,6 +208,8 @@
         created() {
             if (this.isEdit) {
                 this.fetchData(this.id)
+            }else{
+                this.getCreate();
             }
 
             // Why need to make a copy of this.$route here?
@@ -248,9 +250,20 @@
                     this.loading = false;
                 });
             },
+            getCreate(){
+                this.loading = true;
+                getCreate().then( response => {
+                    this.loading = false;
+
+                    this.title = response.data.data.title
+
+                    this.imagePostData.path = response.data.data.upload_file_path
+                    this.imagePath = response.data.data.image_path
+                })
+            },
             setTagsViewTitle() {
                 const title = '编辑活动奖期'
-                const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.title}` })
+                const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.id}` })
                 this.$store.dispatch('tagsView/updateVisitedView', route)
             },
             setPageTitle() {
