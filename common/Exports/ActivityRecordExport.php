@@ -39,8 +39,8 @@ class ActivityRecordExport implements FromQuery,WithHeadings,WithColumnFormattin
                 //'奖品名称',
                 '领奖状态',
                 'IP',
+                '抽奖时间',
                 '领奖时间',
-                '抽奖时间'
             ];
         }
         return $head;
