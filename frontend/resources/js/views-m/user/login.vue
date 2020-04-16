@@ -5,11 +5,11 @@
 <!--            <div class="logo"><img src="" /></div>-->
             <div class="loginMain">
                 <div class="form-input-item">
-                    <label><van-icon class-prefix="fe-icon" name="loginuser" /></label>
+                    <label><van-icon name="manager" /></label>
                     <input placeholder="请输入账号" type="text" v-model="loginForm.username" autocomplete="off"/>
                 </div>
                 <div class="form-input-item">
-                    <label><van-icon class-prefix="fe-icon" name="loginpassw" /></label>
+                    <label><van-icon name="lock" /></label>
                     <input placeholder="请输入密码" type="password" v-model="loginForm.password" autocomplete="new-password"/>
                 </div>
                 <div class="form-text-item">
@@ -79,6 +79,9 @@
                 this.$store.dispatch('user/LoginByUsername', this.loginForm).then(response => {
                     this.loading = false;
                     if (response.data.code == 1) {
+                        setlocalStorage('username',username);
+                        setlocalStorage('remember_password',password);
+
                         _this.$router.push({ path: '/' });
                     } else {
                         this.refreshCaptcha();
@@ -192,6 +195,7 @@
                     i {
                         color: #a0a0a0;
                         font-size: 18.75px;
+                        margin-top: 5px;
                     }
                 }
                 input {
