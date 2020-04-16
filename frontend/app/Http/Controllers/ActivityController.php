@@ -124,6 +124,7 @@ class ActivityController extends Controller
         $rules = $activity_issue->tickets_rule[$diff_day]['range'];
 
         // 生成号码
+        /*
         $code = str_pad(
                 mt_rand(
                     $rules[0],
@@ -133,7 +134,44 @@ class ActivityController extends Controller
                 '0',
                 STR_PAD_LEFT
             ).str_pad(mt_rand(0,999),3,'0',STR_PAD_LEFT);
+        */
 
+        // 获取当前期最后一个号码
+        $last_record = ActivityRecord::select([
+            DB::raw("extra->>'code' as code")
+        ])
+            ->where([
+            ['activity_id','=',$activity_id],
+            ['activity_issue_id','=',$activity_issue->id]
+        ])
+            ->orderBy('id','desc')
+            ->first();
+
+        $current_first_code = $rules[0];
+        if( empty($last_record) ){
+            $current_first_code = substr($last_record->code,0,strlen($last_record->code)-3);
+        }
+
+//        $row = DB::select("SELECT  FROM activity_record WHERE activity_issue_id=47 AND ::text",[
+//            'first_code'    => $current_first_code.'000',
+//            'last_code'     => $current_first_code.'999',
+//        ]);
+
+        $code_len = strlen($activity_issue->tickets_total*1000-1);
+
+        // 生成号码
+        $code = $this->_createCode($current_first_code,$activity_issue->id);
+        if( !$code ){
+            // 没有可分配号码，当前前缀+1重试
+            $current_first_code += 1;
+            if( $current_first_code > $rules[1]){
+                return $this->response(0,'对不起，当前期号码已用尽！');
+            }
+
+            $code = $this->_createCode($current_first_code,$activity_issue->id);
+        }
+
+        $code = str_pad($current_first_code,$code_len-3,'0',STR_PAD_LEFT).str_pad($code,3,'0',STR_PAD_LEFT);
 
         // 写入抽奖记录
         $activity_record = new ActivityRecord();
@@ -265,5 +303,30 @@ class ActivityController extends Controller
         }
 
         return $this->response(1,'success',$activity_record);
+    }
+
+    /**
+     * 生成号码
+     * @param $pos
+     *
+     * @return string
+     */
+    private function _createCode( $first_code , $issue_id )
+    {
+        $row = ActivityRecord::select([
+            DB::raw("right(extra->>'code',3) AS code")
+        ])
+            ->where([
+                ['activity_issue_id','=',$issue_id],
+            ])
+            ->whereRaw("extra->>'code' >= ?::text AND extra->>'code' <= ?::text",[$first_code.'000',$first_code.'999'])
+            ->get();
+
+        $code_list = collect(range(0,999))->diff($row->pluck('code'));
+        if( $code_list->count() == 0 ){
+            return false;
+        }
+
+        return $code_list->random();
     }
 }

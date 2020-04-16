@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Common\Models\Activity;
 use Common\Models\ActivityIssue;
+use Common\Models\ActivityRecord;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -264,14 +265,39 @@ class ActivityIssueController extends Controller
         $id = $request->get('id');
         $code = $request->get('code');
 
+        // 判断当前期是否开奖
+        $issue = ActivityIssue::select(['id',DB::raw("extra->>'code' as code")])->where('id',$id)->first();
+        if( !empty($issue->code) ){
+            return $this->response(0,'当前期已开奖，不可重新开奖！');
+        }
+
+        DB::beginTransaction();
+
+        // 判断三等奖
+        DB::update("UPDATE activity_record SET extra = jsonb_set(extra::jsonb,'{draw_level}',2::text::jsonb) where right(extra->>'code',1) ~ '^".substr($code,-1,1)."' and activity_issue_id=:issue_id",[
+            'issue_id'  => $id,
+        ]);
+
+        // 判断二等奖
+        DB::update("UPDATE activity_record SET extra = jsonb_set(extra::jsonb,'{draw_level}',1::text::jsonb) where right(extra->>'code',2) ~ '^".substr($code,-2,2)."' and activity_issue_id=:issue_id",[
+            'issue_id'  => $id,
+        ]);
+
+        // 判断一等奖
+        DB::update("UPDATE activity_record SET extra = jsonb_set(extra::jsonb,'{draw_level}',0::text::jsonb) where right(extra->>'code',3) ~ '^".substr($code,-3,3)."' and activity_issue_id=:issue_id",[
+            'issue_id'  => $id,
+        ]);
+
         $effect = DB::update("UPDATE activity_issue SET extra= jsonb_set(extra::jsonb,'{code}',:code::text::jsonb) where id=:id",[
             'code'  => str_pad($code,3,'0',STR_PAD_LEFT),
-            'id'    => $id
+            'id'    => $issue->id
         ]);
 
         if( $effect ){
+            DB::commit();
             return $this->response(1, '开奖成功');
         }
+        DB::rollBack();
 
         return $this->response(0, '开奖失败！');
     }

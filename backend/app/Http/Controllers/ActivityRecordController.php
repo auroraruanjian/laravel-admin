@@ -137,7 +137,6 @@ class ActivityRecordController extends Controller
         // 如果是导出
         $export = $request->get('export');
         if( $export ){
-//            return Excel::download(new ActivityRecordExport($activity_record,$ident) ,'抽奖记录.xlsx');
             return (new ActivityRecordExport($activity_record,$ident))->download('抽奖记录.xlsx');
         }
 

@@ -20,6 +20,9 @@ class CreateTableActivityIssue extends Migration
             $table->timestamp('end_at')->comment('活动结束时间');
             $table->jsonb('extra')->default('{}')->comment('扩展字段，存开奖号码等');
             $table->timestamps();
+
+            $table->index(DB::raw("((extra->>'code'))"));
+            $table->index(DB::raw("((extra->>'prize_level'))"));
         });
 
         $this->_permission();

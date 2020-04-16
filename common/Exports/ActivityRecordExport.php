@@ -72,7 +72,7 @@ class ActivityRecordExport implements FromQuery,WithHeadings,WithColumnFormattin
                 $row->activity_issue_id,
                 $row->code,
                 $row->open_code,
-                $row->draw_level,
+                !is_null($row->draw_level)?$row->draw_level+1:$row->draw_level,
                 $status,
                 $row->ip,
                 $row->created_at,

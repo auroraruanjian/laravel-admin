@@ -13,10 +13,10 @@
 
             <div class="account">{{ username }}</div>
             <div class="row">
-                <span >已用抽奖次数：<em>{{ draw_time }}</em></span>
+                <span >总抽奖次数：<em>{{ draw_time }}</em></span>
             </div>
             <div class="row">
-                <span >剩余抽奖次数：<em>{{ draw_count }}</em></span>
+                <span >已抽奖次数：<em>{{ draw_count }}</em></span>
             </div>
         </div>
 

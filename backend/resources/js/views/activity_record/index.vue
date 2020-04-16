@@ -70,7 +70,9 @@
                 <el-table-column align="header-center" label="活动奖期" prop="activity_issue_id"></el-table-column>
                 <el-table-column align="header-center" label="号码" prop="code" v-if="search.ident=='raffle_tickets'"></el-table-column>
                 <el-table-column align="header-center" label="开奖号码" prop="open_code" v-if="search.ident=='raffle_tickets'"></el-table-column>
-                <el-table-column align="header-center" label="奖级" prop="draw_level" v-if="search.ident=='raffle_tickets'"></el-table-column>
+                <el-table-column align="header-center" label="奖级" v-if="search.ident=='raffle_tickets'">
+                    <template slot-scope="scope">{{scope.row.draw_level!=null&&scope.row.draw_level>=0?(parseInt(scope.row.draw_level)+1):''}}</template>
+                </el-table-column>
                 <el-table-column align="header-center" label="领奖状态">
                     <template slot-scope="scope">
                         <el-tag v-if="scope.row.draw_level >=0 && scope.row.status==1" type="success">已领奖</el-tag>
