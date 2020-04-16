@@ -132,7 +132,7 @@
                         }
                         if( response.data.data.code_len >= 6 ) this.activity_draw.draw_open_code_class = 'draw_open_code6';
                     }else{
-                        this.$message.error(response.data.error);
+                        this.$message.error(response.data.msg);
                     }
                 });
             },

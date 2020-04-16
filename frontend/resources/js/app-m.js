@@ -9,7 +9,7 @@ window.Vue = require('vue');
 
 require('./bootstrap');
 
-import { NavBar,Button,Popup,Icon,Toast,Notify,Checkbox,List,Image,Row,Col,Dialog,Form,Field } from 'vant';
+import { NavBar,Button,Popup,Icon,Toast,Notify,Checkbox,List,Image,Row,Col,Dialog,Form,Field,Swipe,SwipeItem } from 'vant';
 Vue.use(NavBar);
 Vue.use(Button);
 Vue.use(Popup);
@@ -24,6 +24,11 @@ Vue.use(Col);
 Vue.use(Dialog);
 Vue.use(Form);
 Vue.use(Field);
+Vue.use(Swipe);
+Vue.use(SwipeItem);
+
+import scroll from 'vue-seamless-scroll'
+Vue.use(scroll)
 
 Vue.prototype.$eventBus = new Vue();
 

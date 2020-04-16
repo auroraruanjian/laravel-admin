@@ -30,6 +30,7 @@
         right: 0;
         bottom: 0;
         overflow: hidden;
+        overflow-y: scroll;
         -ms-overflow-style: none;
         -webkit-overflow-scrolling: touch;
         &::-webkit-scrollbar {
