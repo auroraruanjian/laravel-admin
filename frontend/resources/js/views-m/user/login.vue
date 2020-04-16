@@ -61,11 +61,11 @@
             },
             normalLogin() {
                 if (this.loginForm.username == '') {
-                    this.$root.alertMessage('请输入用户名！', '提示', 'warning');
+                    this.$notify({ type: 'warning', message: '请输入用户名！',duration:1000});
                     return false;
                 }
                 if (this.loginForm.password == '') {
-                    this.$root.alertMessage('请输入密码！', '提示', 'warning');
+                    this.$notify({ type: 'warning', message: '请输入密码！',duration:1000});
                     return false;
                 }
                 this.onSubmit();
@@ -102,7 +102,7 @@
                         console.log(err);
                         errMsg = err.response.data.msg;
                     }
-                    this.$root.alertMessage(errMsg,'提示',{type:'error'});
+                    this.$notify({ type: 'danger', message: errMsg });
                 });
             },
             validateInput (input) {
