@@ -29,6 +29,10 @@ mix.extract([
     'screenfull',
 ],'vendor');
 
+// mix.extract([
+//     'element-ui'
+// ],'element');
+
 mix.js('resources/js/app.js','');
 
 mix.styles([
@@ -45,6 +49,10 @@ mix.options({
 });
 
 const webpack_config = {
+    externals: {
+        vue: 'Vue',
+        element: 'ElementUI',
+    },
     resolve: {
         alias: {
             'res': path.resolve(__dirname, 'resources'),
@@ -73,11 +81,12 @@ const webpack_config = {
         }),
         new ChunkRenamePlugin({
             initialChunksWithEntry: true,
-            '/vendor': 'js/vendor.js'
+            '/vendor': 'js/vendor.js',
+            '/element': 'js/element.js'
         }),
-        //new BundleAnalyzerPlugin()
+        new BundleAnalyzerPlugin()
     ],
-    optimization:[],
+    optimization:{},
 };
 
 Mix.listen('configReady', (webpackConfig) => {
@@ -101,5 +110,6 @@ Mix.listen('configReady', (webpackConfig) => {
 
 mix.copy('resources/css/weui.css', 'public/css/weui.css');
 mix.copyDirectory('node_modules/babel-polyfill/dist/polyfill.min.js', 'public/js');
+mix.copyDirectory('node_modules/element-ui/lib/theme-chalk/fonts', 'public/css/fonts');
 
 mix.webpackConfig(webpack_config);

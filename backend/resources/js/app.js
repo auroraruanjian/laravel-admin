@@ -10,11 +10,13 @@ import Vue from 'vue'
 import App from '@/views/app.vue';
 import router from '@/router';
 import store from '@/store';
-import VueCookie from 'vue-cookie' ;
+// import VueCookie from 'vue-cookie' ;
+// Vue.use(VueCookie);
 
 // import 'normalize.css/normalize.css' // a modern alternative to CSS resets
-import ElementUI from 'element-ui';
+// import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
+// Vue.use(ElementUI);
 
 import vueParticleLine from 'vue-particle-line'
 // import 'vue-particle-line/dist/vue-particle-line.css'
@@ -27,9 +29,6 @@ import '../sass/index.scss' // global css
 import '@/icons' // icon
 
 window.Vue = require('vue');
-
-Vue.use(ElementUI);
-Vue.use(VueCookie);
 
 require('./bootstrap');
 /**

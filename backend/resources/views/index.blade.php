@@ -19,8 +19,10 @@
 <body>
     <div id="app"></div>
 
-
     <script src="{{ mix('/js/manifest.js' ) }}"></script>
+{{--    <script src="{{ mix('/js/element.js' ) }}"></script>--}}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10"></script>
+    <script src="//unpkg.com/element-ui@2.12.0/lib/index.js"></script>
     <script src="{{ mix('/js/vendor.js' ) }}"></script>
     <script src="{{ mix('/js/app.js' ) }}"></script>
 </body>
