@@ -3,11 +3,13 @@ import Vue from 'vue'
 import App from '@/views/app.vue';
 import router from '@/router';
 import store from '@/store';
-import VueCookie from 'vue-cookie' ;
+// import VueCookie from 'vue-cookie' ;
+// Vue.use(VueCookie);
 
 // import 'normalize.css/normalize.css' // a modern alternative to CSS resets
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
+// Vue.use(ElementUI);
 
 window.Vue = require('vue');
 
@@ -16,8 +18,6 @@ Vue.use(scroll)
 
 Vue.prototype.$eventBus = new Vue();
 
-Vue.use(ElementUI);
-Vue.use(VueCookie);
 
 require('./bootstrap');
 

@@ -1,9 +1,12 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/app-m.js": "/js/app-m.js",
-    "/js/manifest.js": "/js/manifest.js",
-    "/js/vendor.js": "/js/vendor.js",
-    "/js/polyfill.min.js": "/js/polyfill.min.js",
-    "/css/vendor.css": "/css/vendor.css",
-    "/m/css/vendor.css": "/m/css/vendor.css"
+    "/js/manifest.js": "/js/manifest.js?id=2e7de6d0885a99ca960c",
+    "/js/manifest.js.map": "/js/manifest.js.map?id=527032285de746a16f9f",
+    "/js/vendor.js": "/js/vendor.js?id=34cd5c10f9746e1febe7",
+    "/js/vendor.js.map": "/js/vendor.js.map?id=e1c51027dab4e5c0e224",
+    "/js/app.js": "/js/app.js?id=cb2517955f846b3c56ed",
+    "/js/app.js.map": "/js/app.js.map?id=5b09f61fd4e4e8bc4a50",
+    "/js/app-m.js": "/js/app-m.js?id=a7b84a19c2e0a43db10d",
+    "/js/app-m.js.map": "/js/app-m.js.map?id=d2efb40822dc584ada80",
+    "/js/polyfill.min.js": "/js/polyfill.min.js?id=45b9836beb16da615f0a",
+    "/css/vendor.css": "/css/vendor.css?id=345c983dd652f5d38a3e"
 }

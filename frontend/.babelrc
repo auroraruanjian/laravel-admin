@@ -1,9 +1,18 @@
 {
   "plugins": [
-      ["import", {
+      [
+          "import", {
           "libraryName": "vant",
           "libraryDirectory": "es",
-          "style": true
-      }]
+              "style": true
+          }
+      ],
+      [
+          "component",
+          {
+              "libraryName": "element-ui",
+              "styleLibraryName": "theme-chalk"
+          }
+      ]
   ]
 }

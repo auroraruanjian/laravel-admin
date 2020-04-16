@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer-sunburst').BundleAnalyzerPlugin;
 
 /*
  |--------------------------------------------------------------------------
@@ -23,14 +24,19 @@ if( mix.inProduction()){
 }
 
 mix.extract([
-    'vue',
+    //'vue',
     'vuex',
     'vue-router',
-    'element-ui',
+    // 'element-ui',
     'axios'
 ],'vendor');
 
 const webpack_config = {
+    externals: {
+        vue: 'Vue',
+        element: 'ElementUI',
+        vant: 'Vant',
+    },
     resolve: {
         alias: {
             'res': path.resolve(__dirname, 'resources'),
@@ -59,8 +65,10 @@ const webpack_config = {
         }),
         new ChunkRenamePlugin({
             initialChunksWithEntry: true,
-            '/vendor': 'js/vendor.js'
+            '/vendor': 'js/vendor.js',
+            '/vendor-m': 'js/vendor-m.js'
         }),
+        //new BundleAnalyzerPlugin()
     ],
     optimization:[],
 };
@@ -68,6 +76,7 @@ const webpack_config = {
 mix.webpackConfig(webpack_config);
 
 mix.copyDirectory('node_modules/babel-polyfill/dist/polyfill.min.js', 'public/js');
+mix.copyDirectory('node_modules/element-ui/lib/theme-chalk/fonts', 'public/css/fonts');
 
 /**
  * WEB配置
@@ -79,17 +88,13 @@ mix.styles([
     // 'node_modules/element-ui/lib/theme-chalk/index.css',
     'node_modules/nprogress/nprogress.css',
     'node_modules/font-awesome/css/font-awesome.css',
+    'node_modules/element-ui/lib/theme-chalk/index.css',
+    'node_modules/element-ui/packages/theme-chalk/src/index',
 ], 'public/css/vendor.css');
 
 /**
  * 手机端配置
  */
-mix.styles([
-    // // onsenui自带的无字体核心css文件（没有捆绑字体）
-    // 'node_modules/onsenui/css/onsenui-core.css',
-    //
-    // // 手动增加字体包
-    // 'node_modules/onsenui/css/ionicons/css/ionicons.css',
-    'vant/lib/index.css'
-
-], 'public/m/css/vendor.css');
+// mix.styles([
+//     'node_modules/vant/lib/index.css'
+// ], 'public/m/css/vendor.css');

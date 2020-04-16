@@ -18,11 +18,12 @@
     <!-- <meta name="msapplication-TileImage" content="/images/icons/msapplication-icon-144x144.png"> -->
     <meta name="msapplication-TileColor" content="#000000">
 
-    <link href="{{ mix( '/m/css/vendor.css' ) }}" type="text/css" rel="stylesheet" />
+{{--    <link href="{{ mix( 'm/css/vendor.css' ) }}" type="text/css" rel="stylesheet" />--}}
 </head>
 <body>
     <div id="app"></div>
     <script src="{{ mix( '/js/manifest.js' ) }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
     <script src="{{ mix( '/js/vendor.js' ) }}"></script>
     <script src="{{ mix( '/js/app-m.js' ) }}"></script>
 </body>

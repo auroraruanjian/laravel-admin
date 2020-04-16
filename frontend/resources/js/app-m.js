@@ -41,49 +41,6 @@ new Vue({
 
     },
     methods:{
-        /*
-        //参数：消息，待选列表，当前已选项(高亮)，回调函数，是否可以按遮罩层关闭，是否加宽，增设class样式名
-        alertSelect(msg,list = ['开启', '关闭'],curindex = 1,callback = val => {},cancelable = false,wplus = false,spclass = ''){
-            this.$ons.notification
-                .alert({
-                    modifier: wplus ? 'select wplus' : 'select',
-                    title: '',
-                    class: spclass,
-                    message: msg,
-                    buttonLabels: list,
-                    primaryButtonIndex: curindex,
-                    cancelable: cancelable
-                })
-                .then(val => {
-                    callback(val);
-                });
-        },
-        //type 可选 success error warning
-        //参数：消息，标题，类型，是否html，回调函数，按钮(多个按钮用数组,回调里的val对应按下按钮的索引)
-        alertMessage(msg, tit = '', type = '', isHtml = false, callback = val => {},buttonLabels = '确定') {
-            this.$ons.notification
-                .alert({
-                    cancelable: type ? false : true,
-                    modifier: type,
-                    message: isHtml ? '' : msg,
-                    messageHTML: isHtml ? msg : '',
-                    title: tit,
-                    buttonLabels: buttonLabels
-                })
-                .then(val => {
-                    callback(val);
-                });
-        },
-        //type 可选 success error warning , 可叠加 (空格)small 用来一行显示更多的字
-        alertToast(msg, type = '',force = false) {
-            this.$ons.notification.toast({
-                modifier: '',
-                message: msg,
-                animation: 'fall',
-                timeout: 2000,
-                force: force
-            });
-        },
-        */
+
     }
 });
