@@ -84,7 +84,7 @@ const webpack_config = {
             '/vendor': 'js/vendor.js',
             '/element': 'js/element.js'
         }),
-        new BundleAnalyzerPlugin()
+        //new BundleAnalyzerPlugin()
     ],
     optimization:{},
 };
