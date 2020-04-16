@@ -21,9 +21,11 @@ class CreateTableActivityIssue extends Migration
             $table->jsonb('extra')->default('{}')->comment('扩展字段，存开奖号码等');
             $table->timestamps();
 
-            $table->index(DB::raw("((extra->>'code'))"));
-            $table->index(DB::raw("((extra->>'prize_level'))"));
+
         });
+
+        DB::statement("CREATE INDEX ON activity_issue ((extra->>'code'))");
+        DB::statement("CREATE INDEX ON activity_issue ((extra->>'prize_level'))");
 
         $this->_permission();
         //$this->_data();

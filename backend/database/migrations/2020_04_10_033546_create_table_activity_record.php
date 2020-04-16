@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use DB;
 
 class CreateTableActivityRecord extends Migration
 {
@@ -25,18 +24,13 @@ class CreateTableActivityRecord extends Migration
             $table->timestamp('draw_at')->nullable()->comment('领奖时间');
 
             $table->timestamps();
-
-            //CREATE INDEX ON activity_record (right(extra->>'code',1));
-            //CREATE INDEX ON activity_record (right(extra->>'code',2));
-            //CREATE INDEX ON activity_record (right(extra->>'code',3));
-            //CREATE INDEX ON activity_record (right(extra->>'code',3));
-            //CREATE INDEX ON activity_record ((extra ->> 'code'));
-            $table->index(DB::raw("((extra->>'code'))"));
-            $table->index(DB::raw("((extra->>'draw_level'))"));
-            $table->index(DB::raw("(right(extra->>'code',1))"));
-            $table->index(DB::raw("(right(extra->>'code',2))"));
-            $table->index(DB::raw("(right(extra->>'code',3))"));
         });
+
+        DB::statement("CREATE INDEX ON activity_record ((extra->>'code'))");
+        DB::statement("CREATE INDEX ON activity_record ((extra->>'draw_level'))");
+        DB::statement("CREATE INDEX ON activity_record (right(extra->>'code',1))");
+        DB::statement("CREATE INDEX ON activity_record (right(extra->>'code',2))");
+        DB::statement("CREATE INDEX ON activity_record (right(extra->>'code',3))");
 
         $this->_permission();
     }
