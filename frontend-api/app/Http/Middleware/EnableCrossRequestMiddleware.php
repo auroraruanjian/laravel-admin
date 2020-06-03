@@ -25,7 +25,7 @@ class EnableCrossRequestMiddleware
         $origin = $request->server('HTTP_ORIGIN') ? $request->server('HTTP_ORIGIN') : '';
         $allow_origin = [
             'http://localhost:8080',
-            'http://www.laravel-admin.me',
+            'http://frontend_web.laravel_admin.me',
         ];
         if (in_array($origin, $allow_origin)) {
             $response->headers->add([

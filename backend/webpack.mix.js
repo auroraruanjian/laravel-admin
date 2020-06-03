@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer-sunburst').BundleAnalyzerPlugin;
 
 /*
  |--------------------------------------------------------------------------
@@ -13,21 +14,30 @@ const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
  |
  */
 
-mix.js('resources/js/app.js','')
-    .sass('resources/sass/app.scss', 'public/css', { implemention: require('node-sass') });
-
-mix.sourceMaps();
-
 if( mix.inProduction()){
     mix.version([]);
+    mix.sourceMaps();
 }
 
 mix.extract([
     'vue',
     'vuex',
     'vue-router',
-    'axios'
+    'axios',
+    'nprogress',
+    'screenfull',
 ],'vendor');
+
+mix.js('resources/js/app.js','');
+
+mix.styles([
+    'node_modules/nprogress/nprogress.css',
+    'node_modules/element-ui/lib/theme-chalk/index.css',
+    'node_modules/element-ui/packages/theme-chalk/src/index',
+    'node_modules/font-awesome/css/font-awesome.css',
+    'node_modules/vue-particle-line/dist/vue-particle-line.css',
+    // '../sass/index.scss',
+], 'public/css/app.css');
 
 const webpack_config = {
     resolve: {
@@ -58,11 +68,20 @@ const webpack_config = {
         }),
         new ChunkRenamePlugin({
             initialChunksWithEntry: true,
-            '/vendor': 'js/vendor.js'
+            '/vendor': 'js/vendor.js',
+            '/element': 'js/element.js'
         }),
+        //new BundleAnalyzerPlugin()
     ],
-    optimization:[],
+    optimization:{},
 };
+
+if(mix.inProduction()){
+    webpack_config.externals ={
+        vue: 'Vue',
+        element: 'ElementUI',
+    };
+}
 
 Mix.listen('configReady', (webpackConfig) => {
     // Create SVG sprites
@@ -84,5 +103,7 @@ Mix.listen('configReady', (webpackConfig) => {
 });
 
 mix.copy('resources/css/weui.css', 'public/css/weui.css');
+mix.copyDirectory('node_modules/babel-polyfill/dist/polyfill.min.js', 'public/js');
+mix.copyDirectory('node_modules/element-ui/lib/theme-chalk/fonts', 'public/css/fonts');
 
 mix.webpackConfig(webpack_config);

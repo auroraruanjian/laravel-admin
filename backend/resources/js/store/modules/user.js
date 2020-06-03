@@ -24,6 +24,7 @@ const user = {
             }
         },
         SET_USERINFO : ( state , data ) => {
+            state.id        = data.id;
             state.username  = data.username;
             state.nickname  = data.nickname;
             state.role_name = data.role_name;

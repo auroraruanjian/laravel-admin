@@ -164,6 +164,7 @@ class AdminController extends Controller
         return [
             'code'      => 1,
             'data'      => [
+                'id'        => $user->id,
                 'username'  => $user->username,
                 'nickname'  => $user->nickname,
                 'last_time' => $user->last_time,
@@ -173,5 +174,28 @@ class AdminController extends Controller
                 'wechat_status' => !empty($user->unionid)?true:false,
             ]
         ];
+    }
+
+    /**
+     * 修改密码
+     */
+    public function putChangepassword(Request $request)
+    {
+        $user = AdminUser::find(Auth()->id());
+
+        if ($user) {
+            $old_password = $request->get('old_password');
+
+            if (!Hash::check($old_password, $user->password)) {
+                return $this->response(0,'原密码输入不正确！');
+            }
+
+            $user->password = bcrypt($request->get('new_password'));
+
+            $user->save();
+
+            return $this->response(1,'密码修改成功！');
+        }
+        return $this->response(0,'密码修改失败！');
     }
 }

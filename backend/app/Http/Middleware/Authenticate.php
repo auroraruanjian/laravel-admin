@@ -52,7 +52,7 @@ class Authenticate extends Middleware
             $rule .= '/index';
         }
 
-        if( in_array($rule,['admin/info'],true) || Gate::check($rule) ){
+        if( in_array($rule,['admin/info','admin/changePassword'],true) || Gate::check($rule) ){
             return $next($request);
         }
 

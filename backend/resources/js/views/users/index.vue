@@ -1,6 +1,47 @@
 <template>
     <div class="app-container" v-loading="loading">
         <div class="container">
+            <el-form ref="form" :model="search" label-width="80px" ><!--size="small"-->
+                <el-row :gutter="80" >
+                    <el-col :span="8">
+                        <el-form-item label="用户名">
+                            <el-input v-model="search.username"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="注册时间">
+                            <el-date-picker
+                                v-model="search.time"
+                                type="datetimerange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期">
+                            </el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                    </el-col>
+                </el-row>
+
+                <el-row justify="center" type="flex">
+                    <el-button type="primary" icon="el-icon-search" @click="getAllUsers" size="small">搜索</el-button>
+
+                    <el-upload
+                        style="margin-left: 10px;"
+                        class="import_file"
+                        action="/users/import"
+                        :show-file-list="false"
+                        :on-success="handleImportSuccess"
+                        :data="imagePostData"
+                        :file-list="fileList"
+                        :before-upload="beforeImportUpload">
+                        <el-button type="warning" icon="el-icon-circle-plus-outline" size="small">导入</el-button>
+                    </el-upload>
+                </el-row>
+            </el-form>
+        </div>
+
+        <div class="container"  style="margin-top:20px;">
             <div class="handle-box">
                 <el-button type="primary" @click="handleAddUsers" v-permission="'users/create'" size="small">创建用户</el-button>
             </div>
@@ -82,6 +123,10 @@
                     page: 1,
                     limit: 20
                 },
+                search:{
+                    username:'',
+                    time:[],
+                },
                 dialogVisible: false,
                 dialogType: 'new',
                 loading:false,
@@ -101,8 +146,8 @@
             async getAllUsers(){
                 this.loading =  true;
 
-                let data = this.listQuery;
-                data.parent_id = this.parent_id;
+                let data = Object.assign(this.search,this.listQuery);
+
                 let result = await getAllUsers(data);
 
                 if( result.data.code == 1 ){
@@ -127,7 +172,7 @@
                 this.loading =  false;
             },
             handleDelete( scope ){
-                this.$confirm('此操作将永久删除该配置, 是否继续?', '提示', {
+                this.$confirm('此操作将永久删除该会员, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'

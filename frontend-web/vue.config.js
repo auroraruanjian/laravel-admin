@@ -5,7 +5,7 @@ module.exports = {
     devServer:{
         proxy: {
             '/api': {
-                target: 'http://api.laravel_admin.me',
+                target: 'http://frontend-api.laravel_admin.me',
                 ws: true,
                 changeOrigin: true,
                 pathRewrite: {'^/api' : ''}
