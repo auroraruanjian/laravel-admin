@@ -21,6 +21,7 @@ class CreateTableUserGroup extends Migration
         });
 
         $this->_permission();
+        $this->_data();
     }
 
     private function _permission()
@@ -62,6 +63,20 @@ class CreateTableUserGroup extends Migration
                 'rule'        => 'user_group/delete',
                 'name'        => '删除用户组',
                 'extra'       => json_encode(['hidden' => true]),
+            ],
+        ]);
+    }
+
+    private function _data()
+    {
+        DB::table('user_group')->insert([
+            [
+                'name'        => '正式组',
+                'status'      => 1
+            ],
+            [
+                'name'        => '测试组',
+                'status'      => 1
             ],
         ]);
     }

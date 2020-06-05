@@ -1,7 +1,9 @@
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer-sunburst').BundleAnalyzerPlugin;
 
 module.exports = {
     productionSourceMap:false,
+
     devServer:{
         proxy: {
             '/api': {
@@ -12,19 +14,19 @@ module.exports = {
             },
         }
     },
-    /*
-    outputDir:'public',
-    pages:{
-        index:{
 
-        }
+    css:{
     },
-    */
+
     chainWebpack: config => {
 
     },
+
     configureWebpack: {
         plugins: [
+            // new BundleAnalyzerPlugin({analyzerPort: 8889,})
         ]
-    }
+    },
+
+    lintOnSave: false
 };

@@ -2,9 +2,11 @@
 
 namespace Common\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Users extends Model
+class Users extends Authenticatable
 {
     //
     protected $table='users';
