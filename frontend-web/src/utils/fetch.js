@@ -1,7 +1,6 @@
 import { Message } from 'element-ui'
 import axios from 'axios'
 import store from '@/store'
-import router from '@/router'
 
 // create an axios instance
 const fetch = axios.create({
@@ -29,7 +28,7 @@ fetch.interceptors.response.use(
                     if(error.response.status == 419){
                         location.reload()
                     }else{
-                        router.push({path:'login'});
+                        window.router.push({path:'login'});
                     }
                 })
             }else if( error.response.status == 422 ){

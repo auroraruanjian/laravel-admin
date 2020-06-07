@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Index from '../views/Index.vue'
-import Login from '../views/user/index.vue'
 import NProgress from 'nprogress' // progress bar
 import store from '@/store';
 
@@ -10,6 +8,8 @@ Vue.use(VueRouter)
 NProgress.inc(0.2)
 NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false })
 
+import Index from '../views-web/index/Index.vue'
+
 const routes = [
     {
         path: '/',
@@ -17,17 +17,9 @@ const routes = [
         component: Index
     },
     {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-    },
-    {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: () => import('../views-web/user/login.vue')
     },
 ]
 

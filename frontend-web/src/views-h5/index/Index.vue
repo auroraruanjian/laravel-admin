@@ -1,8 +1,8 @@
 <template>
-    <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png">
-        <el-link type="primary" v-if="typeof username=='undefined' || username==null || username.length==0" tag="li" @click="$router.push({path:'\login'})">登录</el-link>
-        <el-link type="primary" v-else @click="logout">退出</el-link>
+    <div>
+        <img alt="Vue logo" src="../../assets/logo.png">
+        <van-button v-if="typeof username=='undefined' || username==null || username.length==0" type="primary" @click="$router.push({path:'\login'})">登录</van-button>
+        <van-button v-else @click="logout">退出</van-button>
     </div>
 </template>
 
@@ -10,7 +10,7 @@
     import { mapGetters,mapState } from 'vuex';
 
     export default {
-        name: "Index",
+        name: "index",
         computed: {
             ...mapGetters(['username']),
         },
@@ -19,20 +19,22 @@
         },
         methods:{
             logout(){
-                this.$confirm('确认退出吗?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
+                this.$dialog.confirm({
+                    title: '提示',
+                    message: '确认退出登录么？',
                     type: 'warning'
                 }).then(() => {
                     this.$store.dispatch('user/logout').then((response) => {
                         if (response.data.code == 1) {
-                            this.$message(response.data.msg);
+                            this.$toast.success(response.data.msg);
                         }
-                        //this.$router.push({path:'/'});
+                        //this.$router.push({path:'/main'});
                     }).catch((e) => {
                         console.log(e);
                     });
-                }).catch(() => {});
+                }).catch(() => {
+                    // on cancel
+                });
             },
         }
     }
