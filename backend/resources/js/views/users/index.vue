@@ -2,14 +2,14 @@
     <div class="app-container" v-loading="loading">
         <div class="container">
             <div class="handle-box">
-                <el-button type="primary" @click="handleAddUsers" v-permission="'users/create'" size="small">创建用户</el-button>
+                <el-button type="primary" @click="handleAddUsers" v-permission="'users/create'" size="small">创建散户</el-button>
             </div>
 
             <el-table :data="users_list" style="width: 100%;margin-top:30px;" border >
                 <el-table-column align="center" label="ID" prop="id"></el-table-column>
                 <el-table-column align="header-center" label="商户名称" prop="account"></el-table-column>
-                <el-table-column align="header-center" label="用户名" prop="username"></el-table-column>
-                <el-table-column align="header-center" label="用户组" prop="user_group_name"></el-table-column>
+                <el-table-column align="header-center" label="散户名" prop="username"></el-table-column>
+<!--                <el-table-column align="header-center" label="散户组" prop="user_group_name"></el-table-column>-->
                 <el-table-column align="header-center" label="昵称" prop="nickname"></el-table-column>
                 <el-table-column align="header-center" label="上次登录IP" prop="last_ip"></el-table-column>
                 <el-table-column align="header-center" label="上次登录时间" prop="last_time"></el-table-column>
@@ -29,8 +29,8 @@
                 <el-form-item label="商户">
                     <el-input v-model="users.client_id" placeholder="商户" />
                 </el-form-item>
-                <el-form-item label="用户名">
-                    <el-input v-model="users.username" placeholder="用户名" />
+                <el-form-item label="散户名">
+                    <el-input v-model="users.username" placeholder="散户名" />
                 </el-form-item>
                 <el-form-item label="昵称">
                     <el-input v-model="users.nickname" placeholder="昵称" />
@@ -65,7 +65,7 @@
         id:'',
         client_id:'1',
         username: '',
-        user_group_id: '1',
+        //user_group_id: '1',
         nickname: '',
         password:'',
         status:true,

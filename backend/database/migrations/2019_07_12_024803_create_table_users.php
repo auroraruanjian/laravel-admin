@@ -21,8 +21,8 @@ class CreateTableUsers extends Migration
             $table->integer('top_id')->default(0)->comment('总代用户 ID，总代为 0');
             $table->integer('parent_id')->default(0)->comment('父级用户 ID，总代为 0');
             $table->jsonb('parent_tree')->default('[]')->comment('父级树');
-            $table->smallInteger('user_group_id')->comment('用户组 ID');
-            $table->integer('merchant_id')->nullable()->comment('商户号ID');
+            //$table->smallInteger('user_group_id')->comment('用户组 ID');
+            //$table->integer('merchant_id')->nullable()->comment('商户号ID');
             $table->string('username',32)->comment('用户名');
             $table->string('nickname',20)->unique()->comment('昵称');
             $table->string('password')->comment('密码');
@@ -35,7 +35,7 @@ class CreateTableUsers extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->unique(['merchant_id','username']);
+            //$table->unique(['merchant_id','username']);
             $table->index('username');
         });
 
@@ -53,7 +53,7 @@ class CreateTableUsers extends Migration
         $users_id = DB::table('admin_role_permissions')->insertGetId([
             'parent_id'   => $row->id,
             'rule'        => 'users/',
-            'name'        => '用户管理',
+            'name'        => '散户管理',
             'extra'       => json_encode(['icon' => 'users','component'=>'SubPage','redirect'=>'/users/index']),
         ]);
 
@@ -61,19 +61,19 @@ class CreateTableUsers extends Migration
             [
                 'parent_id'   => $users_id,
                 'rule'        => 'users/index',
-                'name'        => '用户列表',
+                'name'        => '散户列表',
                 'extra'       => json_encode(['hidden' => true,'component'=>'users/index']),
             ],
             [
                 'parent_id'   => $users_id,
                 'rule'        => 'users/create',
-                'name'        => '增加用户',
+                'name'        => '增加散户',
                 'extra'       => json_encode(['hidden' => true]),
             ],
             [
                 'parent_id'   => $users_id,
                 'rule'        => 'users/delete',
-                'name'        => '删除用户',
+                'name'        => '删除散户',
                 'extra'       => json_encode(['hidden' => true]),
             ],
         ]);

@@ -17,6 +17,8 @@ class MerchantsSeeder extends Seeder
         DB::table('merchants')->insert([
             [
                 'account'               => 'zf10000000001',
+                'nickname'              => '测试',
+                'password'              => bcrypt('123456'),
                 'system_public_key'     => $system['public'],
                 'system_private_key'    => $system['private'],
                 'merchant_public_key'   => $merchant['public'],

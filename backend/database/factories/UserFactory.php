@@ -25,3 +25,11 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+$factory->define(\Common\Models\AgentUsers::class, function (Faker $faker) {
+    return [
+        'username' => $faker->name,
+        'nickname' => $faker->name,
+        'password' => bcrypt('123456'),
+    ];
+});

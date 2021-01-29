@@ -1,6 +1,7 @@
 <template>
     <div class="dashboard-container">
         <el-row :gutter="20">
+            <!--
             <el-col :span="8">
                 <el-card shadow="hover" class="mgb20" style="height:252px;">
                     <div class="user-info">
@@ -27,9 +28,10 @@
                     <el-progress :percentage="0.9" color="#f56c6c"></el-progress>
                 </el-card>
             </el-col>
-            <el-col :span="16">
+            -->
+            <el-col :span="24">
                 <el-row :gutter="20" class="mgb20">
-                    <el-col :span="8">
+                    <el-col :span="6">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-1">
                                 <i class="grid-con-icon">
@@ -38,12 +40,12 @@
 
                                 <div class="grid-cont-right">
                                     <div class="grid-num">1234</div>
-                                    <div>用户访问量</div>
+                                    <div>当日散户收款总额</div>
                                 </div>
                             </div>
                         </el-card>
                     </el-col>
-                    <el-col :span="8">
+                    <el-col :span="6">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-2">
                                 <i class="grid-con-icon">
@@ -51,12 +53,12 @@
                                 </i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">321</div>
-                                    <div>系统消息</div>
+                                    <div>当日订单总量</div>
                                 </div>
                             </div>
                         </el-card>
                     </el-col>
-                    <el-col :span="8">
+                    <el-col :span="6">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-3">
                                 <i class="grid-con-icon">
@@ -64,12 +66,81 @@
                                 </i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">5000</div>
-                                    <div>数量</div>
+                                    <div>当日成功订单数</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-3">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="chart" class-name="card-panel-icon" />
+                                </i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">5000</div>
+                                    <div>当日订单成功率</div>
                                 </div>
                             </div>
                         </el-card>
                     </el-col>
                 </el-row>
+                <el-row :gutter="20" class="mgb20">
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-1">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+                                </i>
+
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">1234</div>
+                                    <div>当日充值保证金总额</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-2">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="message" class-name="card-panel-icon" />
+                                </i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">321</div>
+                                    <div>当日散户提现总额</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-3">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="chart" class-name="card-panel-icon" />
+                                </i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">5000</div>
+                                    <div>当日商户提现总额</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-3">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="chart" class-name="card-panel-icon" />
+                                </i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">5000</div>
+                                    <div>平均每单金额</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+                <!--
                 <el-card shadow="hover" style="height:403px;">
                     <div slot="header" class="clearfix">
                         <span>待办事项</span>
@@ -94,6 +165,7 @@
                         </el-table-column>
                     </el-table>
                 </el-card>
+                -->
             </el-col>
         </el-row>
     </div>

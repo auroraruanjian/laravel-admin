@@ -13,5 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(PaymentChannelSeeder::class);
         $this->call(MerchantsSeeder::class);
+        $this->call(AgentUsersSeeder::class);
     }
 }

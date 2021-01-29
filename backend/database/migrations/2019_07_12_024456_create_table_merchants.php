@@ -19,6 +19,8 @@ class CreateTableMerchants extends Migration
         Schema::create('merchants', function (Blueprint $table) {
             $table->increments('id');
             $table->string('account',60)->comment('商户号');
+            $table->string('nickname',20)->unique()->comment('昵称');
+            $table->string('password')->comment('密码');
             $table->text('system_public_key','')->comment('系统公钥');
             $table->text('system_private_key','')->comment('系统私钥');
             $table->text('merchant_public_key','')->comment('商户公钥');
@@ -47,7 +49,7 @@ class CreateTableMerchants extends Migration
         $merchant_id = DB::table('admin_role_permissions')->insertGetId([
             'parent_id'   => $id,
             'rule'        => 'merchant/index',
-            'name'        => '商户列表',
+            'name'        => '商户管理',
             'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
         ]);
 

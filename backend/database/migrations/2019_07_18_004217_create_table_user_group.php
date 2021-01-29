@@ -20,7 +20,7 @@ class CreateTableUserGroup extends Migration
             $table->timestamps();
         });
 
-        $this->_permission();
+        //$this->_permission();
     }
 
     private function _permission()
