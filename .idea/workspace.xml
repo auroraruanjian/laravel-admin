@@ -2,19 +2,533 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671224a9-92fb-49c6-aaaa-b3090c3b09d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/ChildAgentController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/api/child_agent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/Models/MerchantUsers.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/.babelrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/.env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/.styleci.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Console/Commands/Test.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Console/Kernel.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Events/NotifyEvent.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Exceptions/Handler.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Helpers/function.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/AdminController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/Auth/VerificationController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/Controller.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/ConfigController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/DepositsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/HomeController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/LogController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/MerchantController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/NoticesController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/OrdersController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/PaymentCategoryController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/PaymentChannelController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/PaymentMethodController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/PermissionController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/RoleController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/UserGroupController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/UsersController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Kernel.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Middleware/Authenticate.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Middleware/CheckForMaintenanceMode.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Middleware/EncryptCookies.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Middleware/RequestLog.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Middleware/SQLInjectionDetectionLog.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Middleware/TrimStrings.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Middleware/TrustProxies.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Jobs/RefreshConfig.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Listeners/LogSuccessfulLogin.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Providers/AuthServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Providers/BroadcastServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Providers/EventServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Providers/RouteServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/artisan" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/bootstrap/app.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/bootstrap/cache/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/composer.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/composer.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/app.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/auth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/broadcasting.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/cache.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/database.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/filesystems.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/hashing.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/logging.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/mail.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/queue.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/services.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/session.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/config/view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/database/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/database/factories/UserFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/laravel-echo-server.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/phpunit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/public/.htaccess" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/public/img/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/public/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/css/weui.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/admin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/deposits.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/log.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/merchant.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/notice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/orders.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/payment_category.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/payment_channel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/payment_method.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/permission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/role.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/usergroup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/bak/users.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/child_agent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/merchant.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/report.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Breadcrumb/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Hamburger/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/MDinput/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Pagination/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/RightPanel/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Screenfull/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Sticky/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/SvgIcon/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/ThemePicker/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Tinymce/components/EditorImage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Tinymce/dynamicLoadScript.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Tinymce/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Tinymce/plugins.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/components/Tinymce/toolbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/directive/permission/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/directive/permission/permission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/404.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/admin_role.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/bug.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/chart.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/client.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/clipboard.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/component.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/config.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/dashboard.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/deposit.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/documentation.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/drag.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/edit.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/education.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/email.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/example.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/excel.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/exit-fullscreen.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/eye-open.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/eye.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/form.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/fullscreen.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/guide.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/international.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/language.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/link.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/list.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/lock.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/message.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/money.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/nested.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/notice.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/orders_record.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/password.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/payment.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/pdf.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/people.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/peoples.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/permission.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/qq.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/search.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/setting.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/shopping.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/size.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/skill.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/star.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/tab.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/table.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/theme.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/tree-table.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/tree.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/user.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/user_account.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/user_group.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/users.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/wechat.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/wechat_login.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/withdrawal.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svg/zip.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/icons/svgo.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/AppMain.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/Navbar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/Settings/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/Sidebar/FixiOSBug.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/Sidebar/Item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/Sidebar/Link.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/Sidebar/Logo.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/Sidebar/SidebarItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/Sidebar/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/TagsView/ScrollPane.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/TagsView/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/components/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/layout/mixin/ResizeHandler.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/router/_import_development.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/router/_import_production.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/router/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/store/getters.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/store/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/store/modules/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/store/modules/permission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/store/modules/settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/store/modules/tagsView.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/store/modules/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/utils/fetch.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/utils/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/utils/scroll-to.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/utils/validate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/app.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/child_agent/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/common/SubPage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/dashboard/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/merchant/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/report/merchantRecord.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/report/profit.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/users/login.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/withdrawal/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/withdrawal/record.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/lang/en/auth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/lang/en/pagination.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/lang/en/passwords.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/lang/en/validation.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/lang/zh_cn/auth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/sass/app.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/sass/btn.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/sass/element-ui.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/sass/element-variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/sass/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/sass/mixin.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/sass/sidebar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/sass/transition.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/sass/variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/views/auth/login.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/views/auth/passwords/email.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/views/auth/passwords/reset.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/views/auth/register.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/views/auth/verify.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/views/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/views/wechat.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/routes/api.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/routes/channels.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/routes/console.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/routes/dynamic.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/routes/web.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/server.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/app/public/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/debugbar/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/framework/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/framework/cache/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/framework/cache/data/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/framework/sessions/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/framework/testing/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/framework/views/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/storage/logs/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/tests/CreatesApplication.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/tests/Feature/ExampleTest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/tests/TestCase.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/tests/Unit/ExampleTest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/webpack.mix.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/yarn.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.babelrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/.styleci.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Console/Commands/Test.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Console/Kernel.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Events/NotifyEvent.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Exceptions/Handler.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Helpers/function.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/AdminController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/Auth/VerificationController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/ChildAgentController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/Controller.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/MerchantController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/ConfigController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/DepositsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/HomeController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/LogController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/MerchantController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/NoticesController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/OrdersController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/PaymentCategoryController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/PaymentChannelController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/PaymentMethodController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/PermissionController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/RoleController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/UserGroupController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/UsersController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Kernel.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Middleware/Authenticate.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Middleware/CheckForMaintenanceMode.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Middleware/EncryptCookies.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Middleware/RequestLog.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Middleware/SQLInjectionDetectionLog.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Middleware/TrimStrings.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Middleware/TrustProxies.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Requests/AdminCreateRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Requests/AgentCreateRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Requests/CommonIndexRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Http/Requests/ConfigCreateRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Jobs/RefreshConfig.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Listeners/LogSuccessfulLogin.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Providers/AuthServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Providers/BroadcastServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Providers/EventServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/app/Providers/RouteServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/artisan" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/bootstrap/app.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/bootstrap/cache/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/composer.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/composer.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/app.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/auth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/broadcasting.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/cache.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/database.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/filesystems.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/hashing.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/logging.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/mail.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/queue.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/services.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/session.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/config/view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/database/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/database/factories/UserFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/laravel-echo-server.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/phpunit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/public/.htaccess" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/public/img/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/public/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/css/weui.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/admin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/deposits.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/log.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/merchant.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/notice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/orders.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/payment_category.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/payment_channel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/payment_method.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/permission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/role.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/usergroup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/bak/users.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/child_agent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/merchant.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/api/report.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Breadcrumb/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Hamburger/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/MDinput/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Pagination/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/RightPanel/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Screenfull/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Sticky/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/SvgIcon/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/ThemePicker/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Tinymce/components/EditorImage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Tinymce/dynamicLoadScript.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Tinymce/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Tinymce/plugins.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/components/Tinymce/toolbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/directive/permission/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/directive/permission/permission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/404.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/admin_role.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/bug.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/chart.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/client.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/clipboard.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/component.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/config.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/dashboard.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/deposit.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/documentation.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/drag.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/edit.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/education.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/email.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/example.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/excel.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/exit-fullscreen.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/eye-open.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/eye.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/form.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/fullscreen.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/guide.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/international.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/language.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/link.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/list.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/lock.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/message.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/money.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/nested.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/notice.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/orders_record.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/password.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/payment.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/pdf.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/people.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/peoples.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/permission.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/qq.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/search.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/setting.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/shopping.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/size.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/skill.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/star.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/tab.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/table.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/theme.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/tree-table.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/tree.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/user.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/user_account.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/user_group.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/users.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/wechat.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/wechat_login.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/withdrawal.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svg/zip.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/icons/svgo.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/AppMain.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Navbar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Settings/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Sidebar/FixiOSBug.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Sidebar/Item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Sidebar/Link.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Sidebar/Logo.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Sidebar/SidebarItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Sidebar/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/TagsView/ScrollPane.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/TagsView/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/components/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/layout/mixin/ResizeHandler.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/router/_import_development.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/router/_import_production.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/router/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/store/getters.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/store/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/store/modules/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/store/modules/permission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/store/modules/settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/store/modules/tagsView.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/store/modules/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/utils/fetch.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/utils/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/utils/scroll-to.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/utils/validate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/app.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/child_agent/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/common/SubPage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/dashboard/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/merchant/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/report/merchantRecord.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/report/profit.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/users/login.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/withdrawal/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/js/views/withdrawal/record.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/lang/en/auth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/lang/en/pagination.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/lang/en/passwords.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/lang/en/validation.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/lang/zh_cn/auth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/sass/app.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/sass/btn.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/sass/element-ui.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/sass/element-variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/sass/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/sass/mixin.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/sass/sidebar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/sass/transition.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/sass/variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/views/auth/login.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/views/auth/passwords/email.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/views/auth/passwords/reset.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/views/auth/register.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/views/auth/verify.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/views/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/resources/views/wechat.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/routes/api.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/routes/channels.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/routes/console.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/routes/dynamic.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/routes/web.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/server.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/app/public/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/debugbar/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/framework/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/framework/cache/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/framework/cache/data/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/framework/sessions/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/framework/testing/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/framework/views/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/storage/logs/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/tests/CreatesApplication.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/tests/Feature/ExampleTest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/tests/TestCase.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/tests/Unit/ExampleTest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/webpack.mix.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/app/Http/Controllers/MerchantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/MerchantController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/app/Http/Requests/ClientCreateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Requests/AgentCreateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/resources/js/views/child_agent/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/agent/resources/js/views/child_agent/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/resources/js/views/merchant/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/agent/resources/js/views/merchant/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024456_create_table_merchants.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024456_create_table_merchants.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024803_create_table_agent_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024803_create_table_agent_users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/seeds/MerchantsSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeds/MerchantsSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200225_create_table_merchant_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200225_create_table_merchant_users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/Models/MerchantUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/Models/MerchantUsers.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +652,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/common/Models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../code" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -148,11 +662,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/common/Models" />
       <recent name="$PROJECT_DIR$/agent/app/Http/Controllers" />
       <recent name="$PROJECT_DIR$/agent/resources/js/views/child_agent" />
       <recent name="$PROJECT_DIR$/agent/resources/js/views/withdrawal" />
-      <recent name="$PROJECT_DIR$/agent/resources/js/views/report" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/agent/resources/js/views/child_agent" />
@@ -174,12 +688,24 @@
       <workItem from="1611733742606" duration="670000" />
       <workItem from="1611783521861" duration="15066000" />
       <workItem from="1611853967996" duration="8844000" />
-      <workItem from="1611946530009" duration="15153000" />
+      <workItem from="1611946530009" duration="24552000" />
     </task>
+    <task id="LOCAL-00001" summary="代理后台">
+      <created>1612015158568</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1612015158568</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="代理后台" />
+    <option name="LAST_COMMIT_MESSAGE" value="代理后台" />
   </component>
   <component name="WindowStateProjectService">
     <state x="444" y="27" width="810" height="881" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1611952432543">
@@ -190,10 +716,15 @@
       <screen x="67" y="27" width="1584" height="886" />
     </state>
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1584.886@67.27.1584.886" timestamp="1611856336075" />
-    <state x="681" y="262" width="380" height="402" key="FileChooserDialogImpl" timestamp="1611839811999">
-      <screen x="67" y="27" width="1605" height="874" />
+    <state x="402" y="27" width="1008" height="881" key="CommitChangelistDialog2" timestamp="1612015158387">
+      <screen x="67" y="27" width="1688" height="881" />
+    </state>
+    <state x="402" y="27" width="1008" height="881" key="CommitChangelistDialog2/67.27.1688.881@67.27.1688.881" timestamp="1612015158387" />
+    <state x="713" y="264" width="424" height="484" key="FileChooserDialogImpl" timestamp="1612030125334">
+      <screen x="67" y="27" width="1688" height="881" />
     </state>
     <state x="681" y="262" width="380" height="402" key="FileChooserDialogImpl/67.27.1605.874@67.27.1605.874" timestamp="1611839811999" />
+    <state x="713" y="264" width="424" height="484" key="FileChooserDialogImpl/67.27.1688.881@67.27.1688.881" timestamp="1612030125334" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1611577675775" />
     <state x="655" y="387" width="398" height="159" key="NewPhpFileDialog" timestamp="1611952294366">
       <screen x="67" y="27" width="1584" height="881" />
@@ -205,10 +736,15 @@
     <state x="595" y="27" width="638" height="886" key="find.popup/67.27.1584.886@67.27.1584.886" timestamp="1611942128131" />
     <state x="602" y="158" width="624" height="624" key="find.popup/67.27.1605.874@67.27.1605.874" timestamp="1611849106866" />
     <state x="683" y="161" width="717" height="624" key="find.popup/67.27.1847.895@67.27.1847.895" timestamp="1611784272175" />
-    <state x="630" y="373" width="490" height="181" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1611847833213">
-      <screen x="67" y="27" width="1605" height="874" />
+    <state x="574" y="214" width="672" height="678" key="search.everywhere.popup" timestamp="1612030080131">
+      <screen x="67" y="27" width="1688" height="881" />
+    </state>
+    <state x="574" y="214" width="672" height="678" key="search.everywhere.popup/67.27.1688.881@67.27.1688.881" timestamp="1612030080131" />
+    <state x="659" y="376" width="490" height="181" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1612022265063">
+      <screen x="67" y="27" width="1688" height="881" />
     </state>
     <state x="630" y="373" width="490" height="181" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/67.27.1605.874@67.27.1605.874" timestamp="1611847833213" />
+    <state x="659" y="376" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/67.27.1688.881@67.27.1688.881" timestamp="1612022265063" />
     <state x="715" y="381" width="540" height="185" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/67.27.1847.895@67.27.1847.895" timestamp="1611783880802" />
   </component>
 </project>
