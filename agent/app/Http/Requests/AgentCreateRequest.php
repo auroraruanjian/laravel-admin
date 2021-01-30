@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientCreateRequest extends FormRequest
+class AgentCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,9 @@ class ClientCreateRequest extends FormRequest
     {
         return [
             //
-            'account'=> 'required|alpha_num',
-            'status' => 'required|boolean',
+            'username'  => 'required|alpha_num',
+            'nickname'  => 'required|alpha_num',
+            'password'  => 'required|alpha_num',
         ];
     }
 
@@ -37,10 +38,12 @@ class ClientCreateRequest extends FormRequest
     public function messages()
     {
         return [
-            'account.required'  => '商户名称不能为空！',
-            'account.integer'   => '商户名称必须为数字！',
-            'status.required'   => '状态不能为空！',
-            'status.boolean'    => '状态不正确！',
+            'account.required'      => '商户名称不能为空！',
+            'account.alpha_num'     => '商户名称必须为数字！',
+            'nickname.required'     => '状态不能为空！',
+            'nickname.alpha_num'    => '状态不正确！',
+            'password.required'     => '状态不能为空！',
+            'password.alpha_num'    => '状态不正确！',
         ];
     }
 }

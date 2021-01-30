@@ -6,8 +6,10 @@ use App\Http\Requests\ClientCreateRequest;
 use App\Http\Requests\CommonIndexRequest;
 use Common\Models\MerchantFund;
 use Common\Models\Merchants;
+use Common\Models\MerchantUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Psy\Util\Str;
 
 class MerchantController extends Controller
 {
@@ -30,48 +32,70 @@ class MerchantController extends Controller
 
         $data = [
             'total'       => 0,
-            'client_list' => [],
+            'merchant_list' => [],
         ];
 
-        $clientlist = Merchants::select([
-            'merchants.id',
-            'merchants.account',
-            'merchants.status',
-            'merchant_fund.balance',
-            'merchant_fund.hold_balance',
+        $merchant = Merchants::select([
+            'id',
+            'agent_id',
+            'account',
+            'nickname',
+            'status'
         ])
-            ->leftJoin('merchant_fund','merchant_fund.merchant_id','merchants.id')
+            ->where('agent_id','=',auth()->id())
             ->orderBy('merchants.id', 'asc')
             ->skip($start)
             ->take($limit)
             ->get();
 
-        $data['total'] = Merchants::count();
+        $data['total'] = Merchants::where('agent_id','=',auth()->id())->count();
 
-        if (!$clientlist->isEmpty()) {
-            $data['client_list'] = $clientlist->toArray();
+        if (!$merchant->isEmpty()) {
+            $data['merchant_list'] = $merchant->toArray();
         }
 
         return $this->response(1, 'Success!', $data);
     }
 
-    public function postCreate(ClientCreateRequest $request)
+    public function postCreate(Request $request)
     {
+        $system_key = \Common\Helpers\RSA::new();
+        $merchant_key = \Common\Helpers\RSA::new();
+
         DB::beginTransaction();
         $merchant             = new Merchants();
+        $merchant->agent_id   =  auth()->id();
         $merchant->account    = $request->get('account')??0;
+        $merchant->nickname   = $request->get('nickname');
+
+        $merchant->system_public_key    = $system_key['public'];
+        $merchant->system_private_key   = $system_key['private'];
+        $merchant->merchant_public_key  = $merchant_key['public'];
+        $merchant->merchant_private_key = $merchant_key['private'];
+        $merchant->md5_key              = \Illuminate\Support\Str::random(32);
+
         $merchant->status     = (int)$request->get('status',0)?true:false;
 
         if( $merchant->save() ){
             // 新增商户资金记录
-            $merchant_fund = new MerchantFund();
-            $merchant_fund->merchant_id = $merchant->id;
+            $merchant_fund = DB::table('merchant_fund')->insert(['merchant_id' => $merchant->id]);
+            if( $merchant_fund ) {
+                // TODO:新增商户系统超级管理员
+                $merchant_user = new MerchantUsers();
+                $merchant_user->merchant_id = $merchant->id;
+                $merchant_user->username    = 'admin';
+                $merchant_user->nickname    = '管理员';
+                $merchant_user->phone       = $request->get('phone');
+                $merchant_user->password    = $request->get('password');
+                $merchant_user->pay_password= $request->get('pay_password');
 
-            // TODO:新增商户系统超级管理员
-
-            if($merchant_fund->save()){
-                DB::commit();
-                return $this->response(1, '添加成功');
+                if($merchant_user->save()){
+                    DB::commit();
+                    return $this->response(1, '添加成功');
+                }
+            }else{
+                DB::rollBack();
+                return $this->response(0, '金额添加失败！');
             }
         }
 

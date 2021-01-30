@@ -2,34 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671224a9-92fb-49c6-aaaa-b3090c3b09d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/MerchantController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/api/merchant.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/api/report.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/app.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/child_agent/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/common/SubPage.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/dashboard/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/merchant/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/report/merchantRecord.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/report/profit.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/users/login.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/withdrawal/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agent/resources/js/views/withdrawal/record.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AgentUsersController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024803_create_table_agent_users.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/resources/js/api/agent_users.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/resources/js/views/agent/users.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/Models/AgentUsers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/LogController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/LogController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/ChildAgentController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/agent/resources/js/api/child_agent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/Models/MerchantUsers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/app/Http/Controllers/MerchantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/MerchantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/app/Http/Requests/ClientCreateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Requests/AgentCreateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/resources/js/views/child_agent/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/agent/resources/js/views/child_agent/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/resources/js/views/merchant/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/agent/resources/js/views/merchant/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/resources/views/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024456_create_table_merchants.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024456_create_table_merchants.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024803_create_table_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024803_create_table_users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2019_07_18_004217_create_table_user_group.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2019_07_18_004217_create_table_user_group.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024803_create_table_agent_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2019_07_12_024803_create_table_agent_users.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/database/seeds/MerchantsSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeds/MerchantsSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/resources/js/views/dashboard/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/resources/js/views/dashboard/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/resources/js/views/users/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/resources/js/views/users/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +24,13 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/api/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -146,7 +138,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/agent/resources/js/views/withdrawal" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/common/Models" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -155,19 +147,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/common/Models" />
+      <recent name="$PROJECT_DIR$/agent/app/Http/Controllers" />
+      <recent name="$PROJECT_DIR$/agent/resources/js/views/child_agent" />
+      <recent name="$PROJECT_DIR$/agent/resources/js/views/withdrawal" />
+      <recent name="$PROJECT_DIR$/agent/resources/js/views/report" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/agent/resources/js/views/child_agent" />
       <recent name="$PROJECT_DIR$/agent/app/Http/Controllers/bak" />
       <recent name="$PROJECT_DIR$/agent/resources/js/api" />
       <recent name="$PROJECT_DIR$/agent/resources/js/api/bak" />
       <recent name="$PROJECT_DIR$/agent/resources/js/views/bak/user" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/agent/resources/js/views/withdrawal" />
-      <recent name="$PROJECT_DIR$/agent/resources/js/views/report" />
-      <recent name="$PROJECT_DIR$/agent/resources/js/api" />
-      <recent name="$PROJECT_DIR$/agent/resources/js/views/child_agent" />
-      <recent name="$PROJECT_DIR$/agent/app/Http/Controllers" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -181,7 +173,8 @@
       <workItem from="1611522760588" duration="2008000" />
       <workItem from="1611733742606" duration="670000" />
       <workItem from="1611783521861" duration="15066000" />
-      <workItem from="1611853967996" duration="7181000" />
+      <workItem from="1611853967996" duration="8844000" />
+      <workItem from="1611946530009" duration="15153000" />
     </task>
     <servers />
   </component>
@@ -189,6 +182,10 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="444" y="27" width="810" height="881" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1611952432543">
+      <screen x="67" y="27" width="1584" height="881" />
+    </state>
+    <state x="444" y="27" width="810" height="881" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1584.881@67.27.1584.881" timestamp="1611952432543" />
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1611856336075">
       <screen x="67" y="27" width="1584" height="886" />
     </state>
@@ -198,6 +195,10 @@
     </state>
     <state x="681" y="262" width="380" height="402" key="FileChooserDialogImpl/67.27.1605.874@67.27.1605.874" timestamp="1611839811999" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1611577675775" />
+    <state x="655" y="387" width="398" height="159" key="NewPhpFileDialog" timestamp="1611952294366">
+      <screen x="67" y="27" width="1584" height="881" />
+    </state>
+    <state x="655" y="387" width="398" height="159" key="NewPhpFileDialog/67.27.1584.881@67.27.1584.881" timestamp="1611952294366" />
     <state x="595" y="27" width="638" height="886" key="find.popup" timestamp="1611942128131">
       <screen x="67" y="27" width="1584" height="886" />
     </state>

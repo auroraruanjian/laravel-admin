@@ -18,16 +18,15 @@ class CreateTableMerchants extends Migration
          */
         Schema::create('merchants', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('agent_id')->default(0)->comment('代理的ID');
             $table->string('account',60)->comment('商户号');
-            $table->string('nickname',20)->unique()->comment('昵称');
-            $table->string('password')->comment('密码');
+            $table->string('nickname',20)->comment('昵称');
             $table->text('system_public_key','')->comment('系统公钥');
             $table->text('system_private_key','')->comment('系统私钥');
             $table->text('merchant_public_key','')->comment('商户公钥');
             $table->text('merchant_private_key','')->comment('商户私钥');
             $table->string('md5_key','')->comment('MD5签名校验秘钥');
             $table->jsonb('payment_channel')->default(json_encode([]))->comment('分配的支付通道以及费率');
-
             $table->tinyInteger('status')->default(0)->comment('状态:0 正常，1 冻结');
 
             $table->rememberToken();

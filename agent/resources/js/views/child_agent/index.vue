@@ -2,51 +2,85 @@
     <div class="app-container" v-loading="loading">
         <div class="container">
             <div class="handle-box">
-                <el-button type="primary" @click="handleAddMerchant" v-permission="'merchant/create'" size="small">创建商户</el-button>
+                <el-form :inline="true" :model="form" class="demo-form-inline" size="small" style="display: inline;">
+                    <el-form-item label="用户名查询">
+                        <el-input v-model="form.user" placeholder="请输入用户名"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="warning" @click="search">查询</el-button>
+                    </el-form-item>
+                </el-form>
+                <el-form :inline="true" :model="form" class="demo-form-inline" size="small" style="display: inline;margin-left:200px;">
+                    <el-form-item label="是否可用" size="small">
+                        <el-select v-model="choose_area" placeholder="请选择活动区域">
+                            <el-option label="全部" value="0"></el-option>
+                            <el-option label="可用" value="1"></el-option>
+                            <el-option label="不可用" value="2"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <el-button style="float: right;" type="primary" @click="handleAddAgent" v-permission="'merchant/create'" size="small">新增下级</el-button>
             </div>
 
-            <el-table :data="merchant_list" style="width: 100%;margin-top:30px;" border >
+            <el-table :data="agent_list" style="width: 100%;margin-top:30px;" border fixed>
                 <el-table-column align="center" label="ID" prop="id"></el-table-column>
-                <el-table-column align="header-center" label="商户名称" prop="account"></el-table-column>
-                <el-table-column align="header-center" label="昵称" prop="nickname"></el-table-column>
-                <el-table-column align="header-center" label="上次登录IP" prop="last_ip"></el-table-column>
-                <el-table-column align="header-center" label="上次登录时间" prop="last_time"></el-table-column>
-                <el-table-column align="center" label="Operations">
+                <el-table-column align="header-center" label="用户名" prop="username"></el-table-column>
+                <el-table-column align="header-center" label="用户账号" prop="nickname"></el-table-column>
+                <el-table-column align="header-center" label="转卡费率(商家)" prop="balance"></el-table-column>
+                <el-table-column align="header-center" label="微信费率(商家)" prop="balance"></el-table-column>
+                <el-table-column align="header-center" label="支付宝转卡费率(商家)" prop="balance"></el-table-column>
+                <el-table-column align="header-center" label="支付宝扫码费率(商家)" prop="balance"  width="220"></el-table-column>
+                <el-table-column align="header-center" label="今日 卡转卡/宝转卡" prop="balance" width="150"></el-table-column>
+                <el-table-column align="header-center" label="是否可用" prop="status" width="150">
                     <template slot-scope="scope" >
-                        <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
-                        <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>
+                        <el-tag type="success" v-if="scope.row.status==1">可用</el-tag>
+                        <el-tag type="danger" v-else>不可用</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column align="header-center" label="可用余额" prop="balance"></el-table-column>
+                <el-table-column align="header-center" label="谷歌秘钥" prop="google_key"></el-table-column>
+                <el-table-column align="header-center" label="上级代理账号" prop="parent_username"></el-table-column>
+                <el-table-column align="center" label="操作">
+                    <template slot-scope="scope" >
+                        <el-button type="warning" size="small" @click="handleEdit(scope)">修改</el-button>
+                        <el-button type="primary" size="small" @click="handleEdit(scope)">修改费率</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
-            <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getAllMerchant" />
+            <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getAllAgent" />
         </div>
 
-        <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Merchant':'New Merchant'">
-            <el-form :model="Merchant" label-width="15%" label-position="right">
-                <el-form-item label="商户">
-                    <el-input v-model="Merchant.client_id" placeholder="商户" />
+        <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑商户':'新增商户'">
+            <el-form :model="Agent" label-width="22%" label-position="right">
+                <el-form-item label="姓名" class="is-required">
+                    <el-input v-model="Agent.nickname" placeholder="请输入4~10位字符，以字母开头" />
                 </el-form-item>
-                <el-form-item label="散户名">
-                    <el-input v-model="Merchant.username" placeholder="散户名" />
+                <el-form-item label="账号" class="is-required">
+                    <el-input v-model="Agent.username" placeholder="请输入4~10位字符，以字母开头" />
                 </el-form-item>
-                <el-form-item label="昵称">
-                    <el-input v-model="Merchant.nickname" placeholder="昵称" />
+                <el-form-item label="登录密码" class="is-required">
+                    <el-input v-model="Agent.password" placeholder="请输入6~11位英文或数字且符合0~9或a~z字符" type="password" />
                 </el-form-item>
-                <el-form-item label="密码">
-                    <el-input v-model="Merchant.password" placeholder="密码" type="password" />
+                <el-form-item label="确认密码" class="is-required">
+                    <el-input v-model="Agent.repassword" placeholder="请再次输入登录密码" type="password" />
                 </el-form-item>
-                <el-form-item label="是否启用">
-                    <el-switch
-                        v-model="Merchant.status"
-                        active-color="#13ce66"
-                        inactive-color="#ddd">
-                    </el-switch>
+                <el-form-item label="转卡费率">
+                    <el-input v-model="Agent.balance" placeholder="请输入支付宝扫码费率 %" />
+                </el-form-item>
+                <el-form-item label="微信费率">
+                    <el-input v-model="Agent.balance" placeholder="请输入支付宝扫码费率 %" />
+                </el-form-item>
+                <el-form-item label="支付宝转卡费率">
+                    <el-input v-model="Agent.balance" placeholder="请输入支付宝扫码费率 %" />
+                </el-form-item>
+                <el-form-item label="支付宝扫码费率">
+                    <el-input v-model="Agent.balance" placeholder="请输入支付宝转卡费率 %" />
                 </el-form-item>
             </el-form>
             <div style="text-align:right;">
-                <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-                <el-button type="primary" @click="confirm">Confirm</el-button>
+                <el-button type="danger" @click="dialogVisible=false">取消</el-button>
+                <el-button type="primary" @click="confirm">新增</el-button>
             </div>
         </el-dialog>
     </div>
@@ -55,26 +89,25 @@
 <script>
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { getAllMerchant,editMerchant,addMerchant,getMerchant,deleteMerchant } from '@/api/merchant'
+import { getAllAgent,editAgent,addAgent,getAgent,deleteAgent } from '@/api/child_agent'
 import { mapGetters } from 'vuex'
 
 
-const defaultMerchant = {
+const defaultAgent = {
     id:'',
-    client_id:'1',
     username: '',
-    //user_group_id: '1',
     nickname: '',
     password:'',
+    repassword:'',
     status:true,
 };
 
 export default {
-    name: "ChildAgentIndex",
+    name: "AgentIndex",
     data(){
         return {
-            Merchant: Object.assign({}, defaultMerchant),
-            merchant_list: [],
+            Agent: Object.assign({}, defaultAgent),
+            agent_list: [],
             total: 0,
             listQuery: {
                 page: 1,
@@ -83,6 +116,10 @@ export default {
             dialogVisible: false,
             dialogType: 'new',
             loading:false,
+            form:{
+
+            },
+            choose_area:"0",
         };
     },
     computed: {
@@ -93,56 +130,39 @@ export default {
     components: { Pagination },
     directives: { permission },
     created() {
-        this.getAllMerchant();
+        this.getAllAgent();
     },
     methods:{
-        async getAllMerchant(){
+        async getAllAgent(){
             this.loading =  true;
 
             let data = this.listQuery;
             data.parent_id = this.parent_id;
-            let result = await getAllMerchant(data);
+            let result = await getAllAgent(data);
 
             if( result.data.code == 1 ){
                 this.total = result.data.data.total;
-                this.merchant_list = result.data.data.merchant_list;
+                this.agent_list = result.data.data.agent_list;
             }else{
                 this.$message.error(result.data.message);
             }
             this.loading =  false;
         },
-        handleAddMerchant(){
-            this.Merchant = Object.assign({}, defaultMerchant)
+        search(){
+
+        },
+        handleAddAgent(){
+            this.Agent = Object.assign({}, defaultAgent)
             this.dialogType = 'new'
             this.dialogVisible = true
         },
         async handleEdit( scope ){
             this.loading =  true;
-            let current_Merchant = await getMerchant(scope.row.id);
-            this.Merchant = current_Merchant.data.data;
+            let current_Agent = await getAgent(scope.row.id);
+            this.Agent = current_Agent.data.data;
             this.dialogType = 'edit'
             this.dialogVisible = true
             this.loading =  false;
-        },
-        handleDelete( scope ){
-            this.$confirm('此操作将永久删除该配置, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then( async() => {
-                let result = await deleteMerchant( scope.row.id )
-                if( result.data.code == 1 ){
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
-                    this.getAllMerchant();
-                }else{
-                    this.$message.error(result.data.message);
-                }
-            }).catch((e) => {
-                console.log(e);
-            });
         },
         async confirm(){
             const isEdit = this.dialogType === 'edit'
@@ -153,23 +173,23 @@ export default {
             let response;
 
             if (isEdit) {
-                response = await editMerchant(this.Merchant)
+                response = await editAgent(this.Agent)
             }else{
-                response = await addMerchant(this.Merchant)
+                response = await addAgent(this.Agent)
             }
 
             if( response.data.code == 1 ){
                 type = 'success';
                 message = `
-                            <div>Merchant name: ${this.Merchant.title}</div>
-                          `;
+                    <div>Agent name: ${this.Agent.title}</div>
+                  `;
             }else{
                 message = response.data.msg;
             }
 
             this.dialogVisible = false
 
-            this.getAllMerchant();
+            this.getAllAgent();
 
             this.$notify({
                 title: response.data.msg,
@@ -181,12 +201,19 @@ export default {
     },
     watch: {
         parent_id(){
-            this.getAllMerchant();
+            this.getAllAgent();
         }
     }
 }
 </script>
 
 <style scoped>
-
+/deep/.el-table th > .cell{
+    text-align: center;
+}
+/deep/.el-form-item.is-required .el-form-item__label:before{
+    content: "*";
+    color: #f56c6c;
+    margin-right: 4px;
+}
 </style>

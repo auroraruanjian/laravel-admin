@@ -32,6 +32,7 @@ class CreateTableAgentUsers extends Migration
             $table->string('unionid')->nullable()->comment('微信登陆唯一ID');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
 
             //$table->unique(['merchant_id','username']);
             $table->index('username');

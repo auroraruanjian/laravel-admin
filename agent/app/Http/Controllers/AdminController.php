@@ -145,6 +145,7 @@ class AdminController extends Controller
         $user = auth()->user();
 
         $permission = [
+            /*
             [
                 "rule"          => "permission",
                 "name"          => "后台权限管理",
@@ -154,6 +155,7 @@ class AdminController extends Controller
                 ],
                 "description"   => "",
             ],
+            */
             [
                 "rule"          => "merchant",
                 "name"          => "代收商户管理",
