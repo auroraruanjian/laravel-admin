@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AgentCreateRequest;
 use App\Http\Requests\CommonIndexRequest;
 use Common\Models\AgentUsers;
-use Common\Models\MerchantFund;
+use Common\Models\Funds;
 use Common\Models\Merchants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -78,6 +78,11 @@ class ChildAgentController extends Controller
 
         if( $agent->save() ){
             // TODO：新增代理资金记录
+            $merchant_fund = DB::table('merchant_fund')->insert(['type'=>'3','third_id' => $agent->id]);
+            if( !$merchant_fund ) {
+                DB::rollBack();
+                return $this->response(0, '资金添加失败');
+            }
 
             // TODO：新增支付费率
 

@@ -54,7 +54,7 @@ class MerchantFund
         DB::beginTransaction();
 
         try {
-            $merchant_fund = \Common\Models\MerchantFund::where('merchant_id', $order->from_merchant_id)
+            $merchant_fund = \Common\Models\Funds::where('merchant_id', $order->from_merchant_id)
                 ->lockForUpdate()
                 ->first(['balance', 'hold_balance']);
         } catch (\Exception $e) {

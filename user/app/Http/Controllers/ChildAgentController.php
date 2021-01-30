@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AgentCreateRequest;
 use App\Http\Requests\CommonIndexRequest;
 use Common\Models\AgentUsers;
-use Common\Models\MerchantFund;
+use Common\Models\Funds;
 use Common\Models\Merchants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

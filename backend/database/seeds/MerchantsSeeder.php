@@ -37,9 +37,10 @@ class MerchantsSeeder extends Seeder
             'status'        => 1,
         ]);
 
-        DB::table('merchant_fund')->insert([
+        DB::table('funds')->insert([
             [
-                'merchant_id'           => 1,
+                'type'          => 1,
+                'third_id'      => 1,
             ],
         ]);
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientCreateRequest;
 use App\Http\Requests\CommonIndexRequest;
-use Common\Models\MerchantFund;
+use Common\Models\Funds;
 use Common\Models\Merchants;
 use Common\Models\MerchantUsers;
 use Illuminate\Http\Request;
@@ -78,7 +78,7 @@ class MerchantController extends Controller
 
         if( $merchant->save() ){
             // 新增商户资金记录
-            $merchant_fund = DB::table('merchant_fund')->insert(['merchant_id' => $merchant->id]);
+            $merchant_fund = DB::table('merchant_fund')->insert(['type'=>'1','third_id' => $merchant->id]);
             if( $merchant_fund ) {
                 // TODO:新增商户系统超级管理员
                 $merchant_user = new MerchantUsers();

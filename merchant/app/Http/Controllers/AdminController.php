@@ -50,72 +50,59 @@ class AdminController extends Controller
             ],
             */
             [
-                "rule"          => "merchant",
-                "name"          => "代收商户管理",
+                "rule"          => "orders",
+                "name"          => "订单管理",
                 "extra"         => [
                     "icon"      => "users",
-                    "redirect"  => "/merchant/index",
+                    "redirect"  => "/orders/index",
                     "component" => "Layout",
                 ],
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "merchant/index",
-                        "name"=> "代收商户列表",
+                        "rule"=> "orders/index",
+                        "name"=> "订单",
                         "extra"=> [
                             "icon"      => "list",
-                            "component" => "merchant/index",
-                            'hidden'    => true,
+                            "component" => "orders/index",
+                        ],
+                    ],
+                    [
+                        "rule"=> "orders/index",
+                        "name"=> "账变",
+                        "extra"=> [
+                            "icon"      => "list",
+                            "component" => "orders/index",
                         ],
                     ],
                 ]
             ],
             [
-                "rule"          => "child_agent",
-                "name"          => "子代理管理",
+                "rule"          => "deposit",
+                "name"          => "充值管理",
                 "extra"         => [
                     "icon"      => "users",
-                    "redirect"  => "/child_agent/index",
+                    "redirect"  => "/deposit/index",
                     "component" => "Layout"
                 ],
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "child_agent/index",
-                        "name"=> "子代理列表",
+                        "rule"=> "deposit/index",
+                        "name"=> "充值",
                         "extra"=> [
                             "icon"      => "list",
-                            "component" => "child_agent/index",
-                            'hidden'    => true,
-                        ],
-                    ],
-                ]
-            ],
-            [
-                "rule"          => "report",
-                "name"          => "统计管理",
-                "extra"         => [
-                    "icon"      => "users",
-                    "component" => "Layout"
-                ],
-                "description"   => "",
-                "child"         => [
-                    [
-                        "rule"=> "report/profit",
-                        "name"=> "收益统计",
-                        "extra"=> [
-                            "icon"=> "permission",
-                            "component"=> "report/profit"
+                            "component" => "deposit/index",
                         ],
                     ],
                     [
-                        "rule"=> "report/merchantRecord",
-                        "name"=> "商户流水统计",
+                        "rule"=> "deposit/record",
+                        "name"=> "充值记录",
                         "extra"=> [
-                            "icon"=> "permission",
-                            "component"=> "report/merchantRecord"
+                            "icon"      => "list",
+                            "component" => "deposit/record",
                         ],
-                    ]
+                    ],
                 ]
             ],
             [
@@ -136,7 +123,7 @@ class AdminController extends Controller
                         ],
                     ],
                     [
-                        "rule"=> "withdrawal/record",
+                        "rule"=> "withdrawal/merchantRecord",
                         "name"=> "提现记录",
                         "extra"=> [
                             "icon"=> "permission",
@@ -146,8 +133,44 @@ class AdminController extends Controller
                 ]
             ],
             [
-                "rule"          => "funds",
-                "name"          => "账变记录",
+                "rule"          => "agency",
+                "name"          => "代收管理",
+                "extra"         => [
+                    "icon"      => "users",
+                    "component" => "Layout"
+                ],
+                "description"   => "",
+                "child"         => [
+                    [
+                        "rule"=> "agency/index",
+                        "name"=> "代收记录",
+                        "extra"=> [
+                            "icon"=> "permission",
+                            "component"=> "agency/index"
+                        ],
+                    ],
+                    [
+                        "rule"=> "agency/detail",
+                        "name"=> "代收明细",
+                        "extra"=> [
+                            "icon"=> "permission",
+                            "component"=> "agency/detail"
+                        ],
+                    ]
+                ]
+            ],
+            [
+                "rule"          => "notices",
+                "name"          => "公告列表",
+                "extra"         => [
+                    "icon"      => "users",
+                    "component" => "Layout"
+                ],
+                "description"   => "",
+            ],
+            [
+                "rule"          => "profit",
+                "name"          => "收益统计",
                 "extra"         => [
                     "icon"      => "users",
                     "component" => "Layout"

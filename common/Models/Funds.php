@@ -4,10 +4,10 @@ namespace Common\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MerchantFund extends Model
+class Funds extends Model
 {
     //
-    protected $table='merchant_fund';
+    protected $table='funds';
 
     public $timestamps = false;
 }

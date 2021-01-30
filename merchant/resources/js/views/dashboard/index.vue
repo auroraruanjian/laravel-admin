@@ -31,7 +31,7 @@
             -->
             <el-col :span="24">
                 <el-row :gutter="20" class="mgb20">
-                    <el-col :span="8">
+                    <el-col :span="6">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-1">
                                 <i class="grid-con-icon">
@@ -40,12 +40,12 @@
 
                                 <div class="grid-cont-right">
                                     <div class="grid-num">1234</div>
-                                    <div>可提现余额</div>
+                                    <div>今日代付总额</div>
                                 </div>
                             </div>
                         </el-card>
                     </el-col>
-                    <el-col :span="8">
+                    <el-col :span="6">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-2">
                                 <i class="grid-con-icon">
@@ -53,12 +53,12 @@
                                 </i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">321</div>
-                                    <div>今日商户收款总额</div>
+                                    <div>当前可用余额</div>
                                 </div>
                             </div>
                         </el-card>
                     </el-col>
-                    <el-col :span="8">
+                    <el-col :span="6">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-3">
                                 <i class="grid-con-icon">
@@ -66,7 +66,75 @@
                                 </i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">5000</div>
-                                    <div>昨日返点金额</div>
+                                    <div>每单佣金</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-3">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="chart" class-name="card-panel-icon" />
+                                </i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">5000</div>
+                                    <div>当前费率</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20" class="mgb20">
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-1">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+                                </i>
+
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">1234</div>
+                                    <div>今日卡转卡/今日宝转卡</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-2">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="message" class-name="card-panel-icon" />
+                                </i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">321</div>
+                                    <div>昨日卡转卡/昨日宝转卡</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-3">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="chart" class-name="card-panel-icon" />
+                                </i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">5000</div>
+                                    <div>今日手续费/昨日手续费</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-3">
+                                <i class="grid-con-icon">
+                                    <svg-icon icon-class="chart" class-name="card-panel-icon" />
+                                </i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">5000</div>
+                                    <div>卡转卡费率/宝转卡费率</div>
                                 </div>
                             </div>
                         </el-card>

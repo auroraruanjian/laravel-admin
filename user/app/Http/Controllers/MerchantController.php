@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientCreateRequest;
 use App\Http\Requests\CommonIndexRequest;
-use Common\Models\MerchantFund;
+use Common\Models\Funds;
 use Common\Models\Merchants;
 use Common\Models\MerchantUsers;
 use Illuminate\Http\Request;

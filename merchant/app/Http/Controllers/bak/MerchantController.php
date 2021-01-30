@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientCreateRequest;
 use App\Http\Requests\CommonIndexRequest;
-use Common\Models\MerchantFund;
+use Common\Models\Funds;
 use Common\Models\Merchants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -64,7 +64,7 @@ class MerchantController extends Controller
 
         if( $merchant->save() ){
             // 新增商户资金记录
-            $merchant_fund = new MerchantFund();
+            $merchant_fund = new Funds();
             $merchant_fund->merchant_id = $merchant->id;
 
             // TODO:新增商户系统超级管理员
