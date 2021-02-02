@@ -37,10 +37,13 @@ class MerchantController extends Controller
             'merchants.id',
             'merchants.account',
             'merchants.status',
-            'merchant_fund.balance',
-            'merchant_fund.hold_balance',
+            'funds.balance',
+            'funds.hold_balance',
         ])
-            ->leftJoin('merchant_fund','merchant_fund.merchant_id','merchants.id')
+            ->leftJoin('funds',function( $join ){
+                $join->on('funds.third_id','=','merchants.id')
+                    ->where('funds.type','=','1');
+            })
             ->orderBy('merchants.id', 'asc')
             ->skip($start)
             ->take($limit)

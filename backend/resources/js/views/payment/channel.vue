@@ -62,12 +62,14 @@
                         <el-table-column type="expand">
                             <template slot-scope="scope">
                                 <el-form label-position="right" label-width="100px"  class="demo-table-expand">
+                                    <!--
                                     <el-form-item label="启用的总代" >
-                                        <el-checkbox-group v-model="scope.row.top_merchant_ids"><!--v-model=""-->
+                                        <el-checkbox-group v-model="scope.row.top_merchant_ids"><
                                             <el-checkbox v-for="top_user in top_users" :label="top_user.id" :key="top_user.id" >{{top_user.username}}</el-checkbox>
                                         </el-checkbox-group>
                                     </el-form-item>
-                                    <el-form-item label="银行" ><!--v-if="scope.row.ident=='bank'"-->
+                                    -->
+                                    <el-form-item label="银行" v-if="scope.row.ident=='netbank'">
                                         <el-checkbox-group v-model="scope.row.extra.banks"><!--v-model=""-->
                                             <el-checkbox v-for="(bank,key) in bank_list" :label="bank.ident" :key="key" >{{bank.name}}</el-checkbox>
                                         </el-checkbox-group>
@@ -223,7 +225,6 @@
 
                     new_methods.push( this.make_detail_data(false,old_method!=null?{...old_method,...method}:method) );
                 }
-                console.log(new_methods);
                 this.payment_channel.detail = new_methods;
                 //console.log(this.payment_channel.detail,this.current_payment_categroy.methods);
             },

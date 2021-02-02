@@ -43,14 +43,16 @@ class CreateTableAgentUsers extends Migration
 
     private function _permission()
     {
-        $row = DB::table('admin_role_permissions')->where('name', '会员管理')->where('parent_id', 0)->first();
 
-        if (empty($row)) {
-            return;
-        }
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => 0,
+            'rule'        => 'member',
+            'name'        => '会员管理',
+            'extra'       => json_encode(['icon' => 'list','component'=>'Layout']),
+        ]);
 
         $users_id = DB::table('admin_role_permissions')->insertGetId([
-            'parent_id'   => $row->id,
+            'parent_id'   => $id,
             'rule'        => 'agent_users/',
             'name'        => '代理管理',
             'extra'       => json_encode(['icon' => 'users','component'=>'SubPage','redirect'=>'/agent_users/index']),

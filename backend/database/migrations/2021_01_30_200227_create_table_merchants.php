@@ -28,6 +28,7 @@ class CreateTableMerchants extends Migration
             $table->string('md5_key','')->comment('MD5签名校验秘钥');
             $table->jsonb('payment_channel')->default(json_encode([]))->comment('分配的支付通道以及费率');
             $table->tinyInteger('status')->default(0)->comment('状态:0 正常，1 冻结');
+            $table->jsonb('extra')->default(json_encode([]))->comment('扩展数据，保存费率');
 
             $table->rememberToken();
             $table->timestamps();
@@ -38,15 +39,14 @@ class CreateTableMerchants extends Migration
 
     private function _permission()
     {
-        $id = DB::table('admin_role_permissions')->insertGetId([
-            'parent_id'   => 0,
-            'rule'        => 'member',
-            'name'        => '会员管理',
-            'extra'       => json_encode(['icon' => 'list','component'=>'Layout']),
-        ]);
+        $row = DB::table('admin_role_permissions')->where('name', '会员管理')->where('parent_id', 0)->first();
+
+        if (empty($row)) {
+            return;
+        }
 
         $merchant_id = DB::table('admin_role_permissions')->insertGetId([
-            'parent_id'   => $id,
+            'parent_id'   => $row->id,
             'rule'        => 'merchant/index',
             'name'        => '商户管理',
             'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),

@@ -7,7 +7,7 @@
                         <el-input v-model="form.user" placeholder="请输入用户名"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="warning" @click="onSubmit">查询</el-button>
+                        <el-button type="warning" @click="search">查询</el-button>
                     </el-form-item>
                 </el-form>
                 <el-form :inline="true" :model="form" class="demo-form-inline" size="small" style="display: inline;margin-left:200px;">
@@ -67,20 +67,14 @@
                     <el-input v-model="Merchant.repay_password" placeholder="请再次输入资金密码" type="password" />
                 </el-form-item>
                 <el-form-item label="开通渠道">
-                    <el-select v-model="Merchant.payment_channel" placeholder="请选择活动区域">
-                        <el-option label="支付宝扫码" value="alipay"></el-option>
-                        <el-option label="网银" value="beijing"></el-option>
-                        <el-option label="支付宝转卡" value="shanghai"></el-option>
-                    </el-select>
+                    <el-checkbox-group  v-model="Merchant.payment_method" >
+                        <el-checkbox v-for="(item,key) in payment_method" :key="key" :label="item.id" @change="checkPaymentMethod(item)">{{ item.name }}</el-checkbox>
+                    </el-checkbox-group>
                 </el-form-item>
-                <el-form-item label="支付宝扫码费率">
-                    <el-input v-model="Merchant.balance" placeholder="请输入支付宝扫码费率 %" />
-                </el-form-item>
-                <el-form-item label="网银费率">
-                    <el-input v-model="Merchant.balance" placeholder="请输入网银费率 %" />
-                </el-form-item>
-                <el-form-item label="支付宝转卡费率">
-                    <el-input v-model="Merchant.balance" placeholder="请输入支付宝转卡费率 %" />
+                <el-form-item v-for="(item,key) in payment_method" :label="item.name+'费率'" :key="key">
+                    <el-input v-model="Merchant.payment_method_fee[item.id]" :placeholder="'请输入'+item.name+'费率'" :disabled="!Merchant.payment_method.includes(item.id)">
+                        <template slot="append"> %</template>
+                    </el-input>
                 </el-form-item>
             </el-form>
             <div style="text-align:right;">
@@ -107,6 +101,8 @@ const defaultMerchant = {
     password:'',
     pay_password: '',
     status:true,
+    payment_method:[],
+    payment_method_fee:{},
 };
 
 export default {
@@ -115,6 +111,7 @@ export default {
         return {
             Merchant: Object.assign({}, defaultMerchant),
             merchant_list: [],
+            payment_method:[],
             total: 0,
             listQuery: {
                 page: 1,
@@ -150,13 +147,18 @@ export default {
             if( result.data.code == 1 ){
                 this.total = result.data.data.total;
                 this.merchant_list = result.data.data.merchant_list;
+                this.payment_method = result.data.data.payment_method;
             }else{
                 this.$message.error(result.data.message);
             }
             this.loading =  false;
         },
+        search(){
+
+        },
         handleAddMerchant(){
             this.Merchant = Object.assign({}, defaultMerchant)
+
             this.dialogType = 'new'
             this.dialogVisible = true
         },
@@ -164,6 +166,7 @@ export default {
             this.loading =  true;
             let current_Merchant = await getMerchant(scope.row.id);
             this.Merchant = current_Merchant.data.data;
+
             this.dialogType = 'edit'
             this.dialogVisible = true
             this.loading =  false;
@@ -202,6 +205,11 @@ export default {
                 type: type
             })
         },
+        checkPaymentMethod( item )
+        {
+            console.log(item);
+            return false;
+        }
     },
     watch: {
         parent_id(){

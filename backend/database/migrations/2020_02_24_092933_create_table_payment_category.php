@@ -23,7 +23,8 @@ class CreateTablePaymentCategory extends Migration
         });
 
         $this->_permission();
-        $this->_data();
+        //$this->_data();
+        $this->_data2();
     }
 
     private function _permission()
@@ -124,6 +125,18 @@ class CreateTablePaymentCategory extends Migration
                 ]),
                 'status'        => true,
             ],
+        ]);
+    }
+
+    private function _data2()
+    {
+        DB::table('payment_category')->insert([
+            [
+                'ident' => 'person',
+                'name' => '个人',
+                'method_idents' => json_encode(['alipay_person_scan', 'transfer','alipay_card']),
+                'param' => json_encode([])
+            ]
         ]);
     }
 

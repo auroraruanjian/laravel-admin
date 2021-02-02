@@ -7,6 +7,7 @@ use App\Http\Requests\CommonIndexRequest;
 use Common\Models\Funds;
 use Common\Models\Merchants;
 use Common\Models\MerchantUsers;
+use Common\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Psy\Util\Str;
@@ -54,6 +55,8 @@ class MerchantController extends Controller
             $data['merchant_list'] = $merchant->toArray();
         }
 
+        $data['payment_method'] = PaymentMethod::select(['id','ident','name'])->where('status','=','1')->get();
+
         return $this->response(1, 'Success!', $data);
     }
 
@@ -76,10 +79,27 @@ class MerchantController extends Controller
 
         $merchant->status     = (int)$request->get('status',0)?true:false;
 
+        $payment_method     = $request->get('payment_method');
+        $payment_method_fee = $request->get('payment_method_fee');
+
+        $extra = [
+            'fee' => [],
+        ];
+        if( !empty($payment_method) && !empty($payment_method_fee) ){
+            foreach( $payment_method_fee as $key => $fee ){
+                if( in_array($key,$payment_method) ){
+                    $extra['fee'][$key] = $fee;
+
+                    // TODO:手续费检查，是否低于代理自生
+                }
+            }
+        }
+        $merchant->extra = json_encode($extra);
+
         if( $merchant->save() ){
             // 新增商户资金记录
-            $merchant_fund = DB::table('merchant_fund')->insert(['type'=>'1','third_id' => $merchant->id]);
-            if( $merchant_fund ) {
+            $fund = DB::table('funds')->insert(['type'=>'1','third_id' => $merchant->id]);
+            if( $fund ) {
                 // TODO:新增商户系统超级管理员
                 $merchant_user = new MerchantUsers();
                 $merchant_user->merchant_id = $merchant->id;

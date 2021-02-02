@@ -114,7 +114,7 @@
                 this.loading =  false;
             },
             handleAddAgentUser(){
-                this.agent_users = Object.assign({}, defaultUsers)
+                this.agent_users = Object.assign({}, defaultAgentUsers)
                 this.dialogType = 'new'
                 this.dialogVisible = true
             },
