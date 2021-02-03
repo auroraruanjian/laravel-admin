@@ -57,10 +57,9 @@ class UsersController extends Controller
     public function postCreate(Request $request)
     {
         $users                  = new Users();
-        $users->client_id       = $request->get('client_id');
         $users->username        = $request->get('username','');
         $users->nickname        = $request->get('nickname','');
-        $users->password        = $request->get('password','');
+        $users->password        = bcrypt($request->get('password',''));
         //$users->user_group_id   = $request->get('user_group_id');
         $users->status          = (int)$request->get('status',0)?true:false;
 
@@ -96,10 +95,9 @@ class UsersController extends Controller
             return $this->response(0, '配置不存在失败');
         }
 
-        $users->client_id       = $request->get('client_id');
         $users->username        = $request->get('username','');
         $users->nickname        = $request->get('nickname','');
-        $users->password        = $request->get('password','');
+        $users->password        = bcrypt($request->get('password',''));
         //$users->user_group_id   = $request->get('user_group_id');
         $users->status          = (int)$request->get('status',0)?true:false;
 

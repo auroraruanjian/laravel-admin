@@ -15,13 +15,14 @@ class CreateTablePaymentMethod extends Migration
     {
         Schema::create('payment_method', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('ident', 16)->unique()->comment('英文标识');
+            $table->string('ident', 30)->unique()->comment('英文标识');
             $table->string('name', 32)->comment('中文名称');
             $table->boolean('status')->default(0)->comment('是否启用');
         });
 
         $this->_permission();
-        $this->_data();
+        //$this->_data();
+        $this->_data2();
     }
 
     private function _permission()
@@ -150,6 +151,27 @@ class CreateTablePaymentMethod extends Migration
                 'name'       => '数字货币',
                 'status'     => true,
             ]
+        ]);
+    }
+
+    private function _data2()
+    {
+        DB::table('payment_method')->insert([
+            [
+                'ident'     => 'transfer',
+                'name'      => '网银',
+                'status'    => true,
+            ],
+            [
+                'ident'     => 'alipay_person_scan',
+                'name'      => '支付宝扫码',
+                'status'    => true,
+            ],
+            [
+                'ident'     => 'alipay_card',
+                'name'      => '支付宝转卡',
+                'status'    => true,
+            ],
         ]);
     }
 

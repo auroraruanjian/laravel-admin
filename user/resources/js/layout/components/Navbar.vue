@@ -12,6 +12,9 @@
                     卡转卡费率: <span class="value_text">0</span> % &nbsp;&nbsp;&nbsp;
                     宝转卡费率: <span class="value_text">1.3</span> % &nbsp;&nbsp;
                 </span>
+                <el-button type="success" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;" @click="deposit.dialogVisible=true">充值</el-button>
+                <el-button type="danger" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">提现</el-button>
+
                 <el-button type="primary" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">刷新</el-button>
                 <el-button type="warning" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">我的密钥</el-button>
 
@@ -80,6 +83,18 @@
                 <el-button type="danger" @click="wechat.wechat_visible=false">Cancel</el-button>
             </div>
         </el-dialog>
+
+        <el-dialog :visible.sync="deposit.dialogVisible" title="充值申请" width="500px" >
+            <el-form :model="deposit.form" label-width="15%" label-position="right">
+                <el-form-item label="金额" class="is-required">
+                    <el-input v-model="deposit.form.amount" placeholder="请输入4~10位字符，以字母开头" />
+                </el-form-item>
+            </el-form>
+            <div style="text-align:right;">
+                <el-button type="danger" @click="deposit.dialogVisible=false">取消</el-button>
+                <el-button type="primary" @click="depostConfirm">新增</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -117,6 +132,12 @@
                     mode:'web',
                     qrcode_loading:'',
                 },
+                deposit:{
+                    dialogVisible:false,
+                    form:{
+                        amount:0,
+                    }
+                }
             };
         },
         methods: {
@@ -217,6 +238,9 @@
                     });
             },
             bindGoogle(){},
+            depostConfirm(){
+
+            },
         },
         beforeDestroy() {
             this.wechat_close();
