@@ -18,27 +18,6 @@ class AdminController extends Controller
 
         $permission = [
             [
-                "rule"          => "dashboard",
-                "name"          => "个人首页",
-                "extra"         => [
-                    "icon"      => "users",
-                    "redirect"  => "/dashboard/index",
-                    "component" => "Layout",
-                ],
-                "description"   => "",
-                "child"         => [
-                    [
-                        "rule"=> "dashboard/index",
-                        "name"=> "个人首页",
-                        "extra"=> [
-                            "icon"      => "list",
-                            "component" => "dashboard/index",
-                            'hidden'    => true,
-                        ],
-                    ],
-                ]
-            ],
-            [
                 "rule"          => "payment_method",
                 "name"          => "收款方式",
                 "extra"         => [
@@ -53,12 +32,22 @@ class AdminController extends Controller
                         "name"=> "收款方式",
                         "extra"=> [
                             "icon"      => "list",
-                            "component" => "withdrawal_method/index",
+                            "component" => "payment_method/index",
+                            'hidden'    => true,
+                        ],
+                    ],
+                    [
+                        "rule"=> "deposit/index",
+                        "name"=> "充值申请",
+                        "extra"=> [
+                            "icon"      => "list",
+                            "component" => "deposit/index",
                             'hidden'    => true,
                         ],
                     ],
                 ]
             ],
+            /*
             [
                 "rule"          => "payment_method",
                 "name"          => "Q币购入",
@@ -74,7 +63,7 @@ class AdminController extends Controller
                         "name"=> "Q币购入",
                         "extra"=> [
                             "icon"      => "list",
-                            "component" => "withdrawal_method/index",
+                            "component" => "payment_method/index",
                             'hidden'    => true,
                         ],
                     ],
@@ -95,14 +84,14 @@ class AdminController extends Controller
                         "name"=> "Q币售出",
                         "extra"=> [
                             "icon"      => "list",
-                            "component" => "withdrawal_method/index",
+                            "component" => "payment_method/index",
                             'hidden'    => true,
                         ],
                     ],
                 ]
             ],
             [
-                "rule"          => "withdrawal",
+                "rule"          => "report",
                 "name"          => "记录中心",
                 "extra"         => [
                     "icon"      => "users",
@@ -137,7 +126,7 @@ class AdminController extends Controller
                 ]
             ],
             [
-                "rule"          => "withdrawal",
+                "rule"          => "agent",
                 "name"          => "代理中心",
                 "extra"         => [
                     "icon"      => "users",
@@ -146,7 +135,7 @@ class AdminController extends Controller
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "report/deposit",
+                        "rule"=> "agent/deposit",
                         "name"=> "团队成员管理",
                         "extra"=> [
                             "icon"=> "permission",
@@ -163,6 +152,7 @@ class AdminController extends Controller
                     ],
                 ]
             ],
+            */
         ];
         return [
             'code'      => 1,

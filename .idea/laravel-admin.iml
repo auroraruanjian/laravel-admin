@@ -51,6 +51,7 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/php-timer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/php-token-stream" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/predis/predis" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/log" />

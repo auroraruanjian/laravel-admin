@@ -8,6 +8,7 @@ use Common\Models\Merchants;
 use Common\Models\Orders;
 use Common\Models\PaymentChannelDetail;
 use Common\Models\PaymentMethod;
+use Common\Models\UserPaymentMethods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -60,13 +61,46 @@ class Payment
             return [-9,$this->error_message , []];
         }
 
-        $account_number = $channel_detail['channel_param']['merchant_id']??$channel_detail['channel_param']['appid'];
+        // 检测支付类型为个人，则采用[抢单\自动匹配]模式
+        $account_number = '';
+        $payee_user_id  = 0;    // 接收人ID 0：系统
+
+        if( $channel_detail['category_ident'] == 'person' ){
+            // 获取匹配模式
+            $person_order_model = getSysConfig('person_order_model');
+            // 如果自动匹配模式
+            if( $person_order_model == 1 ){
+                // 如果是银行转账,则获取 散户银行卡
+                if( $channel_detail['payment_method_ident'] == 'transfer' ){
+                    $user_payment_method = UserPaymentMethods::select(['id','user_id','extra','limit_amount'])->where([
+                        ['type','=','1'],
+                        ['status','=','1'],
+                        ['is_delete','=','1'],
+                        ['is_open','=','1'],
+                    ])
+                        ->get()
+                        ->toArray();
+
+                    if( empty($user_payment_method) ){
+                        return [-13,'无可用支付通道！' , []];
+                    }
+
+                    // TODO: 检测限额
+
+                    $account_number = $user_payment_method[0]['id'];
+                    $payee_user_id  = $user_payment_method[0]['user_id'];
+                }
+            }
+        }else{
+            $account_number = $channel_detail['channel_param']['merchant_id']??$channel_detail['channel_param']['appid'];
+        }
 
         // 添加支付订单记录
         $deposits_model = new Deposits();
         $deposits_model->merchant_id = $this->merchant['id'];                                       // 商户ID
         $deposits_model->payment_channel_detail_id = $channel_detail['channel_detail_id'];          // 支付通道ID
         $deposits_model->account_number = $account_number;                                          // 支付商户号
+        $deposits_model->payee_user_id = $payee_user_id;                                            // 接收人ID 0：系统
         //merchant_fee  从商户号分配费率计算
         $deposits_model->third_fee = $this->decrypt_data['amount'] * $channel_detail['rate'];       // 第三方手续费
         $deposits_model->amount = $this->decrypt_data['amount'];                                    // 金额
@@ -417,16 +451,18 @@ class Payment
             'payment_channel_detail.extra',
             'payment_channel_detail.id as channel_detail_id',
             'payment_channel_detail.payment_method_id',
+            'payment_method.ident as payment_method_ident',
             'payment_category.ident as category_ident',
         ])
             ->leftJoin('payment_channel','payment_channel.id','payment_channel_detail.payment_channel_id')
             ->leftJoin('payment_category','payment_category.id','payment_channel.payment_category_id')
+            ->leftJoin('payment_method','payment_method.id','payment_channel_detail.payment_method_id')
             ->where([
                 ['payment_channel_detail.min_amount','<=',$this->decrypt_data['amount']],
                 ['payment_channel_detail.max_amount','>=',$this->decrypt_data['amount']],
                 ['payment_channel_detail.payment_method_id','=',$payment_method->id],
                 ['payment_channel_detail.status','=',true],
-                ['payment_channel_detail.top_merchant_ids','@>',$this->merchant['id']],
+                //['payment_channel_detail.top_merchant_ids','@>',$this->merchant['id']],
                 ['payment_channel.status','=',0],
             ])
 //            ->where( function($query)use($now_time){

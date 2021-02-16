@@ -38,6 +38,7 @@ class CreateTableDeposits extends Migration
             $table->decimal('merchant_fee', 15, 4)->default(0)->comment('用户的手续费，负数扣除，整数返还');
             $table->decimal('third_fee', 15, 4)->default(0)->comment('平台手续费');
             $table->string('account_number', 50)->default('')->comment('商户号或银行卡号');
+            $table->integer('payee_user_id')->default(0)->comment('收款人ID，0为系统，散户');
             $table->string('error_type', 64)->default('')->comment('违规类型');
 
             $table->tinyInteger('callback_status')->default(0)->comment('第三方回调状态，大于 0 为成功');

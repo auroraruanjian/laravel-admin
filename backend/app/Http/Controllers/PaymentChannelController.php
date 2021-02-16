@@ -19,7 +19,7 @@ class PaymentChannelController extends Controller
     ];
 
     private $detail_filed = [
-        'top_merchant_ids'  => [],
+        //'top_merchant_ids'  => [],
         'start_time'        => '00:00:00',
         'end_time'          => '00:00:00',
         'rate'              => 0,
@@ -166,7 +166,7 @@ class PaymentChannelController extends Controller
 
         // 加载商户接口详情数据
         foreach($payment_channel->detail as &$dateil){
-            $dateil->top_merchant_ids = json_decode($dateil->top_merchant_ids,true);
+            //$dateil->top_merchant_ids = json_decode($dateil->top_merchant_ids,true);
             $dateil->extra = json_decode($dateil->extra,true);
         };
 

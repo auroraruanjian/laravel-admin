@@ -97,6 +97,27 @@ class CreateTableConfig extends Migration
             ]
         ]);
 
+        $person_id = DB::table('config')->insertGetId([
+            'parent_id'     => 0,
+            'title'         => '散户支付配置',
+            'key'           => 'person',
+            'value'         => '',
+            'is_disabled'   => 1,
+            'description'   => '',
+        ]);
+        DB::table('config')->insert([
+            [
+                'parent_id'     => $person_id,
+                'title'         => '订单模式',
+                'key'           => 'person_order_model',
+                'value'         => '1',
+                'type'          => '3',
+                'extra'         => json_encode(['data'=>[['key'=>'抢单','value'=>'0'],['key'=>'自动分配','value'=>'1']]]),
+                'is_disabled'   => 1,
+                'description'   => '0:抢单 1:自动分配',
+            ],
+        ]);
+        /*
         $wechat_id = DB::table('config')->insertGetId([
             'parent_id'     => 0,
             'title'         => '微信配置',
@@ -148,6 +169,7 @@ class CreateTableConfig extends Migration
             ],
             //
         ]);
+        */
     }
 
     /**

@@ -55,7 +55,7 @@
 <script>
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { getAllMerchant,editMerchant,addMerchant,getMerchant,deleteMerchant } from '@/api/merchant'
+import { getAllMerchant,editMerchant,addMerchant,getMerchant,deleteMerchant } from '@/api/payment_method'
 import { mapGetters } from 'vuex'
 
 
@@ -96,88 +96,7 @@ export default {
         this.getAllMerchant();
     },
     methods:{
-        async getAllMerchant(){
-            this.loading =  true;
 
-            let data = this.listQuery;
-            data.parent_id = this.parent_id;
-            let result = await getAllMerchant(data);
-
-            if( result.data.code == 1 ){
-                this.total = result.data.data.total;
-                this.merchant_list = result.data.data.merchant_list;
-            }else{
-                this.$message.error(result.data.message);
-            }
-            this.loading =  false;
-        },
-        handleAddMerchant(){
-            this.Merchant = Object.assign({}, defaultMerchant)
-            this.dialogType = 'new'
-            this.dialogVisible = true
-        },
-        async handleEdit( scope ){
-            this.loading =  true;
-            let current_Merchant = await getMerchant(scope.row.id);
-            this.Merchant = current_Merchant.data.data;
-            this.dialogType = 'edit'
-            this.dialogVisible = true
-            this.loading =  false;
-        },
-        handleDelete( scope ){
-            this.$confirm('此操作将永久删除该配置, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then( async() => {
-                let result = await deleteMerchant( scope.row.id )
-                if( result.data.code == 1 ){
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
-                    this.getAllMerchant();
-                }else{
-                    this.$message.error(result.data.message);
-                }
-            }).catch((e) => {
-                console.log(e);
-            });
-        },
-        async confirm(){
-            const isEdit = this.dialogType === 'edit'
-
-            let type = 'error';
-            let message = '';
-
-            let response;
-
-            if (isEdit) {
-                response = await editMerchant(this.Merchant)
-            }else{
-                response = await addMerchant(this.Merchant)
-            }
-
-            if( response.data.code == 1 ){
-                type = 'success';
-                message = `
-                            <div>Merchant name: ${this.Merchant.title}</div>
-                          `;
-            }else{
-                message = response.data.msg;
-            }
-
-            this.dialogVisible = false
-
-            this.getAllMerchant();
-
-            this.$notify({
-                title: response.data.msg,
-                dangerouslyUseHTMLString: true,
-                message: message,
-                type: type
-            })
-        },
     },
     watch: {
         parent_id(){

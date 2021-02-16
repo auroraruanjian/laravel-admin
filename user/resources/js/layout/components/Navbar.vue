@@ -7,10 +7,20 @@
         <div class="right-menu">
             <template v-if="device!=='mobile'">
                 <span style="height: 100%;line-height: 50px;vertical-align: text-bottom;color: #303133;font-size: 14px;">
-                    欢迎您: <span class="value_text">Epay999</span> &nbsp;&nbsp;&nbsp;
+                    <el-link type="text" @click.native="$router.push({path:'/deposit/index'});">未处理订单: 0</el-link>    &nbsp;&nbsp;&nbsp;
+                    <el-switch
+                        v-model="order_status"
+                        active-text="停单"
+                        inactive-text="接单">
+                    </el-switch> &nbsp;&nbsp;&nbsp;
+                    <el-switch
+                        v-model="deposit_status"
+                        active-text="手动到帐"
+                        inactive-text="自动到帐">
+                    </el-switch> &nbsp;&nbsp;&nbsp;
+                    欢迎您: <span class="value_text">亿贝</span> &nbsp;&nbsp;&nbsp;
                     余额: <span class="value_text">0</span> 元 &nbsp;&nbsp;&nbsp;
-                    卡转卡费率: <span class="value_text">0</span> % &nbsp;&nbsp;&nbsp;
-                    宝转卡费率: <span class="value_text">1.3</span> % &nbsp;&nbsp;
+                    冻结余额: <span class="value_text">0</span> % &nbsp;&nbsp;&nbsp;
                 </span>
                 <el-button type="success" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;" @click="deposit.dialogVisible=true">充值</el-button>
                 <el-button type="danger" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">提现</el-button>
@@ -137,7 +147,10 @@
                     form:{
                         amount:0,
                     }
-                }
+                },
+                // 接单状态
+                order_status:false,
+                deposit_status:false,
             };
         },
         methods: {

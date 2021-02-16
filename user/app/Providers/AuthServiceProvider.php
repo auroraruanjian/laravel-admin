@@ -25,22 +25,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        Gate::before(function ($user, $ability){
-
-            if ($user->id == 1 ) {
-                return true;
-            }
-
-            $permission = AdminRolePermissions::where('rule', '=', $ability)->first();
-
-            if ($permission && !Gate::has($ability)) {
-                // 对访问权限定义 Gate
-                Gate::define($ability, function ($user) use ($permission) {
-                    return $user->hasPermission($permission);
-                });
-            }
-        });
-
         $this->registerPolicies();
 
         //

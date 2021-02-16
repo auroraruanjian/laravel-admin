@@ -50,6 +50,10 @@ export default {
                 {
                     'ident':'alipay_scan',
                     'name':'支付宝扫码',
+                },
+                {
+                    'ident':'transfer',
+                    'name':'网银',
                 }
             ],
             pay_info:{

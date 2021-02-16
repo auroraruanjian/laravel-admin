@@ -10,7 +10,6 @@ define('PAY_VIEW_TYPE_URL',3);
 // 支付页类型二维码
 define('PAY_VIEW_TYPE_QRCODE',4);
 
-
 /**
  * 获取系统配置，从redis获取缓存2秒
  * @param        $key
@@ -23,7 +22,7 @@ function getSysConfig($key,$default='')
         'redis:'.$key,
         2,
         function() use ($key,$default){
-            return Redis::hget('sys_config',$key);
+            return Illuminate\Support\Facades\Redis::hget('sys_config',$key);
         }
     );
 
