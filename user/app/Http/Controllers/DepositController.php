@@ -76,11 +76,11 @@ class DepositController extends Controller
 
 
             DB::commit();
-            $this->response(1,'状态修改成功！');
+            return $this->response(1,'状态修改成功！');
         }
 
         DB::rollBack();
-        $this->response(0,'状态修改失败！');
+        return $this->response(0,'状态修改失败！');
 
     }
 }

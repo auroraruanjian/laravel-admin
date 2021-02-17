@@ -47,6 +47,27 @@ class AdminController extends Controller
                     ],
                 ]
             ],
+            [
+                "rule"          => "withdrawal",
+                "name"          => "收益提取",
+                "extra"         => [
+                    "icon"      => "users",
+                    "component" => "Layout",
+                    "redirect"  => "/withdrawal/index",
+                ],
+                "description"   => "",
+                "child"         => [
+                    [
+                        "rule"=> "withdrawal/index",
+                        "name"=> "收益提取",
+                        "extra"=> [
+                            "icon"=> "permission",
+                            "component"=> "withdrawal/index",
+                            'hidden'    => true,
+                        ],
+                    ],
+                ]
+            ]
             /*
             [
                 "rule"          => "payment_method",
