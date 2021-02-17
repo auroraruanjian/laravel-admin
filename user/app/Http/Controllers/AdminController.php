@@ -61,6 +61,27 @@ class AdminController extends Controller
                 ]
             ],
             [
+                "rule"          => "orders",
+                "name"          => "Q币买卖",
+                "extra"         => [
+                    "icon"      => "users",
+                    "redirect"  => "/orders/index",
+                    "component" => "Layout"
+                ],
+                "description"   => "",
+                "child"         => [
+                    [
+                        "rule"=> "orders/index",
+                        "name"=> "Q币售出",
+                        "extra"=> [
+                            "icon"      => "list",
+                            "component" => "orders/index",
+                            'hidden'    => true,
+                        ],
+                    ],
+                ]
+            ],
+            [
                 "rule"          => "user_deposit",
                 "name"          => "Q币买入",
                 "extra"         => [
