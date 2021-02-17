@@ -7,7 +7,7 @@
         <div class="right-menu">
             <template v-if="device!=='mobile'">
                 <span style="height: 100%;line-height: 50px;vertical-align: text-bottom;color: #303133;font-size: 14px;">
-                    <el-link type="text" @click.native="$router.push({path:'/deposit/index'});">未处理订单: 0</el-link>    &nbsp;&nbsp;&nbsp;
+                    <el-link type="text" @click.native="$router.push({path:'/user_deposit/index'});"><i class="el-icon-view el-icon--right"></i> 未处理订单: 0</el-link>    &nbsp;&nbsp;&nbsp;
                     <el-switch
                         v-model="order_status"
                         active-text="停单"
@@ -22,7 +22,7 @@
                     余额: <span class="value_text">0</span> 元 &nbsp;&nbsp;&nbsp;
                     冻结余额: <span class="value_text">0</span> % &nbsp;&nbsp;&nbsp;
                 </span>
-                <el-button type="success" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;" @click="deposit.dialogVisible=true">充值</el-button>
+                <el-button type="success" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;" @click="user_deposit.dialogVisible=true">充值</el-button>
                 <el-button type="danger" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">提现</el-button>
 
                 <el-button type="primary" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">刷新</el-button>
@@ -94,15 +94,15 @@
             </div>
         </el-dialog>
 
-        <el-dialog :visible.sync="deposit.dialogVisible" title="充值申请" width="500px" >
-            <el-form :model="deposit.form" label-width="15%" label-position="right">
+        <el-dialog :visible.sync="user_deposit.dialogVisible" title="充值申请" width="500px" >
+            <el-form :model="user_deposit.form" label-width="15%" label-position="right">
                 <el-form-item label="金额" class="is-required">
-                    <el-input v-model="deposit.form.amount" placeholder="请输入4~10位字符，以字母开头" />
+                    <el-input v-model="user_deposit.form.amount" placeholder="请输入4~10位字符，以字母开头" />
                 </el-form-item>
             </el-form>
             <div style="text-align:right;">
-                <el-button type="danger" @click="deposit.dialogVisible=false">取消</el-button>
-                <el-button type="primary" @click="depostConfirm">新增</el-button>
+                <el-button type="danger" @click="user_deposit.dialogVisible=false">取消</el-button>
+                <el-button type="primary" @click="userDepostConfirm">新增</el-button>
             </div>
         </el-dialog>
     </div>
@@ -115,6 +115,7 @@
     import Screenfull from '@/components/Screenfull'
     import QRCode  from 'qrcode'
     import { wechat_login,unbind_wechat } from '@/api/auth'
+    import { applyDeposit } from '@/api/user_deposits'
 
     export default {
         components: {
@@ -142,7 +143,7 @@
                     mode:'web',
                     qrcode_loading:'',
                 },
-                deposit:{
+                user_deposit:{
                     dialogVisible:false,
                     form:{
                         amount:0,
@@ -169,7 +170,9 @@
                     console.log(e);
                 });
             },
-            changePasswd(){},
+            changePasswd(){
+
+            },
             async wechatState(){
                 let _this = this;
 
@@ -250,9 +253,21 @@
                         console.log(e);
                     });
             },
-            bindGoogle(){},
-            depostConfirm(){
+            bindGoogle(){
 
+            },
+            async userDepostConfirm(){
+                let result = await applyDeposit(this.user_deposit.form);
+                let type = 'danger';
+                if(  result.data.code == 1 ){
+                    type = 'success';
+                }
+                this.$message({
+                    type: type,
+                    message: result.data.msg
+                });
+
+                this.user_deposit.dialogVisible = false;
             },
         },
         beforeDestroy() {

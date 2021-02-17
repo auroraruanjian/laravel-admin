@@ -36,12 +36,46 @@ class AdminController extends Controller
                             'hidden'    => true,
                         ],
                     ],
+                ]
+            ],
+
+            [
+                "rule"          => "deposit",
+                "name"          => "Q币售出",
+                "extra"         => [
+                    "icon"      => "users",
+                    "redirect"  => "/deposit/index",
+                    "component" => "Layout"
+                ],
+                "description"   => "",
+                "child"         => [
                     [
                         "rule"=> "deposit/index",
-                        "name"=> "充值申请",
+                        "name"=> "Q币售出",
                         "extra"=> [
                             "icon"      => "list",
                             "component" => "deposit/index",
+                            'hidden'    => true,
+                        ],
+                    ],
+                ]
+            ],
+            [
+                "rule"          => "user_deposit",
+                "name"          => "Q币买入",
+                "extra"         => [
+                    "icon"      => "users",
+                    "redirect"  => "/user_deposit/index",
+                    "component" => "Layout"
+                ],
+                "description"   => "",
+                "child"         => [
+                    [
+                        "rule"=> "user_deposit/index",
+                        "name"=> "Q币买入",
+                        "extra"=> [
+                            "icon"      => "list",
+                            "component" => "user_deposit/index",
                             'hidden'    => true,
                         ],
                     ],
@@ -69,48 +103,6 @@ class AdminController extends Controller
                 ]
             ]
             /*
-            [
-                "rule"          => "payment_method",
-                "name"          => "Q币购入",
-                "extra"         => [
-                    "icon"      => "users",
-                    "redirect"  => "/payment_method/index",
-                    "component" => "Layout"
-                ],
-                "description"   => "",
-                "child"         => [
-                    [
-                        "rule"=> "payment_method/index",
-                        "name"=> "Q币购入",
-                        "extra"=> [
-                            "icon"      => "list",
-                            "component" => "payment_method/index",
-                            'hidden'    => true,
-                        ],
-                    ],
-                ]
-            ],
-            [
-                "rule"          => "payment_method",
-                "name"          => "Q币售出",
-                "extra"         => [
-                    "icon"      => "users",
-                    "redirect"  => "/payment_method/index",
-                    "component" => "Layout"
-                ],
-                "description"   => "",
-                "child"         => [
-                    [
-                        "rule"=> "payment_method/index",
-                        "name"=> "Q币售出",
-                        "extra"=> [
-                            "icon"      => "list",
-                            "component" => "payment_method/index",
-                            'hidden'    => true,
-                        ],
-                    ],
-                ]
-            ],
             [
                 "rule"          => "report",
                 "name"          => "记录中心",

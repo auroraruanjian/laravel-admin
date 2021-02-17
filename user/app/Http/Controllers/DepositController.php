@@ -22,7 +22,7 @@ class DepositController extends Controller
     public function getIndex(Request $request)
     {
         // TODO:获取 银行卡记录等
-        $deposit = Deposits::select([
+        $model = Deposits::select([
             'id',
             'amount',
             'status',
@@ -31,11 +31,13 @@ class DepositController extends Controller
         ])
             ->where([
                 ['payee_user_id','=',auth()->id()],
-            ])
-            ->get();
+            ]);
+        $deposit = $model->get();
+        $total = $model->count();
 
         return $this->response(1,'success',[
-            'deposits'  => $deposit
+            'deposits'  => $deposit,
+            'total'     => $total,
         ]);
     }
 
