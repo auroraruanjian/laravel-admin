@@ -50,45 +50,37 @@ class AdminController extends Controller
             ],
             */
             [
-                "rule"          => "orders",
+                "rule"          => "orders1",
                 "name"          => "订单管理",
                 "extra"         => [
                     "icon"      => "users",
-                    "redirect"  => "/orders/index",
+                    "redirect"  => "/orders/index1",
                     "component" => "Layout",
                 ],
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "orders/index",
+                        "rule"=> "orders/index1",
                         "name"=> "订单",
                         "extra"=> [
                             "icon"      => "list",
-                            "component" => "orders/index",
-                        ],
-                    ],
-                    [
-                        "rule"=> "orders/index",
-                        "name"=> "账变",
-                        "extra"=> [
-                            "icon"      => "list",
-                            "component" => "orders/index",
+                            "component" => "deposit/index",
                         ],
                     ],
                 ]
             ],
             [
-                "rule"          => "deposit",
+                "rule"          => "merchant_deposit",
                 "name"          => "充值管理",
                 "extra"         => [
                     "icon"      => "users",
-                    "redirect"  => "/deposit/index",
+                    "redirect"  => "/merchant_deposit/index",
                     "component" => "Layout"
                 ],
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "deposit/index",
+                        "rule"=> "merchant_deposit/index",
                         "name"=> "充值",
                         "extra"=> [
                             "icon"      => "list",
@@ -96,11 +88,11 @@ class AdminController extends Controller
                         ],
                     ],
                     [
-                        "rule"=> "deposit/record",
+                        "rule"=> "merchant_deposit/record",
                         "name"=> "充值记录",
                         "extra"=> [
                             "icon"      => "list",
-                            "component" => "deposit/record",
+                            "component" => "deposit/index",
                         ],
                     ],
                 ]
@@ -119,7 +111,7 @@ class AdminController extends Controller
                         "name"=> "提现",
                         "extra"=> [
                             "icon"=> "permission",
-                            "component"=> "withdrawal/index"
+                            "component"=> "deposit/index"
                         ],
                     ],
                     [
@@ -127,13 +119,13 @@ class AdminController extends Controller
                         "name"=> "提现记录",
                         "extra"=> [
                             "icon"=> "permission",
-                            "component"=> "withdrawal/record"
+                            "component"=> "deposit/index"
                         ],
                     ]
                 ]
             ],
             [
-                "rule"          => "agency",
+                "rule"          => "deposit",
                 "name"          => "代收管理",
                 "extra"         => [
                     "icon"      => "users",
@@ -142,21 +134,33 @@ class AdminController extends Controller
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "agency/index",
+                        "rule"=> "deposit/index",
                         "name"=> "代收记录",
                         "extra"=> [
                             "icon"=> "permission",
-                            "component"=> "agency/index"
+                            "component"=> "deposit/index"
                         ],
                     ],
+                ]
+            ],
+            [
+                "rule"=> "orders",
+                "name"=> "账变",
+                "extra"=> [
+                    "icon"      => "list",
+                    "component" => "Layout",
+                    "redirect"  => "/orders/index",
+                ],
+                "child"         => [
                     [
-                        "rule"=> "agency/detail",
-                        "name"=> "代收明细",
+                        "rule"=> "orders/index",
+                        "name"=> "代收记录",
                         "extra"=> [
                             "icon"=> "permission",
-                            "component"=> "agency/detail"
+                            "component"=> "orders/index",
+                            "hidden"=> true
                         ],
-                    ]
+                    ],
                 ]
             ],
             [

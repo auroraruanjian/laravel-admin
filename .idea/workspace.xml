@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671224a9-92fb-49c6-aaaa-b3090c3b09d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/user/app/Http/Controllers/OrdersController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/resources/js/api/orders.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/resources/js/views/orders/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/OrdersController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/deposits.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/api/orders.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/deposit/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merchant/resources/js/views/orders/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2019_09_13_143440_create_table_orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2019_09_13_143440_create_table_orders.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/user/app/Http/Controllers/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant/app/Http/Controllers/DepositController.php" beforeDir="false" afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/DepositController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +134,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/user/resources/js/api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/merchant/app/Http/Controllers" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -141,19 +143,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/user/resources/js/api" />
-      <recent name="$PROJECT_DIR$/user/resources/js/views/orders" />
-      <recent name="$PROJECT_DIR$/user/app/Http/Controllers" />
-      <recent name="$PROJECT_DIR$/common/Models" />
-      <recent name="$PROJECT_DIR$/user/resources/js/views" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/user/app/Http/Controllers/bak" />
       <recent name="$PROJECT_DIR$/user/resources/js/views/bak" />
       <recent name="$PROJECT_DIR$/user/resources/js/api/bak" />
       <recent name="$PROJECT_DIR$/agent/resources/js/views/child_agent" />
       <recent name="$PROJECT_DIR$/agent/app/Http/Controllers/bak" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/merchant/app/Http/Controllers" />
+      <recent name="$PROJECT_DIR$/merchant/resources/js/api" />
+      <recent name="$PROJECT_DIR$/merchant/resources/js/views" />
+      <recent name="$PROJECT_DIR$/merchant/resources/js/views/deposit" />
+      <recent name="$PROJECT_DIR$/user/resources/js/api" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -175,7 +177,8 @@
       <workItem from="1612993179412" duration="2453000" />
       <workItem from="1613470082977" duration="22586000" />
       <workItem from="1613507593054" duration="3955000" />
-      <workItem from="1613574983938" duration="11717000" />
+      <workItem from="1613574983938" duration="17868000" />
+      <workItem from="1613663274793" duration="3652000" />
     </task>
     <task id="LOCAL-00001" summary="代理后台">
       <created>1612015158568</created>
@@ -233,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613583333451</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="散户帐变">
+      <created>1613588837611</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1613588837611</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,7 +257,8 @@
     <MESSAGE value="基本流程" />
     <MESSAGE value="收益提取" />
     <MESSAGE value="散户充值" />
-    <option name="LAST_COMMIT_MESSAGE" value="散户充值" />
+    <MESSAGE value="散户帐变" />
+    <option name="LAST_COMMIT_MESSAGE" value="散户帐变" />
   </component>
   <component name="WindowStateProjectService">
     <state x="469" y="27" width="810" height="881" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1612034266406">
@@ -255,30 +266,35 @@
     </state>
     <state x="444" y="27" width="810" height="881" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1584.881@67.27.1584.881" timestamp="1611952432543" />
     <state x="469" y="27" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1688.881@67.27.1688.881" timestamp="1612034266406" />
+    <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1613590813923">
+      <screen x="67" y="27" width="1851" height="899" />
+    </state>
+    <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1851.899@67.27.1851.899" timestamp="1613590813923" />
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1611856336075">
       <screen x="67" y="27" width="1584" height="886" />
     </state>
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1584.886@67.27.1584.886" timestamp="1611856336075" />
-    <state x="435" y="27" width="920" height="899" key="CommitChangelistDialog2" timestamp="1613583333166">
+    <state x="435" y="27" width="920" height="899" key="CommitChangelistDialog2" timestamp="1613588837526">
       <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="402" y="27" width="1008" height="881" key="CommitChangelistDialog2/67.27.1688.881@67.27.1688.881" timestamp="1612042062654" />
     <state x="403" y="27" key="CommitChangelistDialog2/67.27.1691.878@67.27.1691.878" timestamp="1612286982679" />
     <state x="434" y="27" width="1101" height="895" key="CommitChangelistDialog2/67.27.1847.895@67.27.1847.895" timestamp="1612372827991" />
-    <state x="435" y="27" width="920" height="899" key="CommitChangelistDialog2/67.27.1851.899@67.27.1851.899" timestamp="1613583333166" />
+    <state x="435" y="27" width="920" height="899" key="CommitChangelistDialog2/67.27.1851.899@67.27.1851.899" timestamp="1613588837526" />
     <state x="241" y="101" width="1350" height="734" key="DiffContextDialog" timestamp="1613583289972">
       <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="226" y="100" width="1350" height="734" key="DiffContextDialog/67.27.1688.881@67.27.1688.881" timestamp="1612042061700" />
     <state x="241" y="101" key="DiffContextDialog/67.27.1847.895@67.27.1847.895" timestamp="1612372820787" />
     <state x="241" y="101" key="DiffContextDialog/67.27.1851.899@67.27.1851.899" timestamp="1613583289972" />
-    <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl" timestamp="1612900181200">
-      <screen x="67" y="27" width="1847" height="895" />
+    <state x="776" y="268" width="424" height="484" key="FileChooserDialogImpl" timestamp="1613657551628">
+      <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="614" y="265" width="380" height="487" key="FileChooserDialogImpl/67.27.1429.886@67.27.1429.886" timestamp="1612104405094" />
     <state x="681" y="262" width="380" height="402" key="FileChooserDialogImpl/67.27.1605.874@67.27.1605.874" timestamp="1611839811999" />
     <state x="713" y="264" width="424" height="484" key="FileChooserDialogImpl/67.27.1688.881@67.27.1688.881" timestamp="1612030125334" />
     <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl/67.27.1847.895@67.27.1847.895" timestamp="1612900181200" />
+    <state x="776" y="268" key="FileChooserDialogImpl/67.27.1851.899@67.27.1851.899" timestamp="1613657551628" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1611577675775" />
     <state x="753" y="393" width="398" height="159" key="NewPhpFileDialog" timestamp="1612807685997">
       <screen x="67" y="27" width="1847" height="895" />
