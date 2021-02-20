@@ -38,17 +38,6 @@ class AdminController extends Controller
         $user = auth()->user();
 
         $permission = [
-            /*
-            [
-                "rule"          => "permission",
-                "name"          => "后台权限管理",
-                "extra"         => [
-                    "icon"      => "lock",
-                    "component" => "Layout"
-                ],
-                "description"   => "",
-            ],
-            */
             [
                 "rule"          => "orders1",
                 "name"          => "订单管理",
@@ -60,11 +49,27 @@ class AdminController extends Controller
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "orders/index1",
-                        "name"=> "订单",
+                        "rule"=> "deposit/index",
+                        "name"=> "代收记录",
+                        "extra"=> [
+                            "icon"      => "permission",
+                            "component" => "deposit/index"
+                        ],
+                    ],
+                    [
+                        "rule"=> "withdrawal/index",
+                        "name"=> "代付记录",
                         "extra"=> [
                             "icon"      => "list",
-                            "component" => "deposit/index",
+                            "component" => "withdrawal/index",
+                        ],
+                    ],
+                    [
+                        "rule"=> "orders/index",
+                        "name"=> "账变记录",
+                        "extra"=> [
+                            "icon"=> "permission",
+                            "component"=> "orders/index",
                         ],
                     ],
                 ]
@@ -98,7 +103,7 @@ class AdminController extends Controller
                 ]
             ],
             [
-                "rule"          => "withdrawal",
+                "rule"          => "merchant_withdrawal",
                 "name"          => "提现管理",
                 "extra"         => [
                     "icon"      => "users",
@@ -107,7 +112,7 @@ class AdminController extends Controller
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "withdrawal/index",
+                        "rule"=> "merchant_withdrawal/index",
                         "name"=> "提现",
                         "extra"=> [
                             "icon"=> "permission",
@@ -115,7 +120,7 @@ class AdminController extends Controller
                         ],
                     ],
                     [
-                        "rule"=> "withdrawal/merchantRecord",
+                        "rule"=> "merchant_withdrawal/merchantRecord",
                         "name"=> "提现记录",
                         "extra"=> [
                             "icon"=> "permission",
@@ -125,56 +130,17 @@ class AdminController extends Controller
                 ]
             ],
             [
-                "rule"          => "deposit",
-                "name"          => "代收管理",
+                "rule"          => "profit",
+                "name"          => "收益统计",
                 "extra"         => [
                     "icon"      => "users",
                     "component" => "Layout"
                 ],
                 "description"   => "",
-                "child"         => [
-                    [
-                        "rule"=> "deposit/index",
-                        "name"=> "代收记录",
-                        "extra"=> [
-                            "icon"=> "permission",
-                            "component"=> "deposit/index"
-                        ],
-                    ],
-                ]
-            ],
-            [
-                "rule"=> "orders",
-                "name"=> "账变",
-                "extra"=> [
-                    "icon"      => "list",
-                    "component" => "Layout",
-                    "redirect"  => "/orders/index",
-                ],
-                "child"         => [
-                    [
-                        "rule"=> "orders/index",
-                        "name"=> "代收记录",
-                        "extra"=> [
-                            "icon"=> "permission",
-                            "component"=> "orders/index",
-                            "hidden"=> true
-                        ],
-                    ],
-                ]
             ],
             [
                 "rule"          => "notices",
                 "name"          => "公告列表",
-                "extra"         => [
-                    "icon"      => "users",
-                    "component" => "Layout"
-                ],
-                "description"   => "",
-            ],
-            [
-                "rule"          => "profit",
-                "name"          => "收益统计",
                 "extra"         => [
                     "icon"      => "users",
                     "component" => "Layout"

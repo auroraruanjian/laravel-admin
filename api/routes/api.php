@@ -30,6 +30,15 @@ Route::prefix('payment')->group(function () {
     // 查询订单状态
     Route::post('query', 'PaymentController@query');
 
-    // 查询订单状态
+    // 测试状态
     Route::get('test', 'PaymentController@test');
+});
+
+
+Route::prefix('withdrawal')->group(function () {
+    // 支付
+    Route::get('apply', 'WithdrawalController@apply');
+
+    // 查询订单状态
+    Route::post('query', 'WithdrawalController@query');
 });

@@ -168,14 +168,14 @@ class Payment
     {
         $return_data = [
             'code'      => '',
-            'message'   => '',
+            'msg'       => '',
             'data'      => '',
         ];
 
         list($init_code,$init_message) = $this->_init( 'query' , $request );
         if( $init_code != 1 ){
             $return_data['code'] = $init_code;
-            $return_data['message'] = $init_message;
+            $return_data['msg'] = $init_message;
             return $return_data;
         }
 
@@ -195,7 +195,7 @@ class Payment
 
         if( empty($deposit_record) ){
             $return_data['code'] = -8;
-            $return_data['message'] = '订单号不存在';
+            $return_data['msg'] = '订单号不存在';
             return $return_data;
         }
 
@@ -208,7 +208,7 @@ class Payment
 
         // 返回加密签名后的数据
         $return_data['code'] = 0;
-        $return_data['message'] = 'success';
+        $return_data['msg'] = 'success';
         $return_data['data'] = $this->_encrypt($deposit_record);
         return $return_data;
     }
