@@ -7,7 +7,7 @@ use Common\Models\UserWithdrawals;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class WithdrawalController extends Controller
+class UserWithdrawalController extends Controller
 {
     //
     /**
@@ -37,15 +37,15 @@ class WithdrawalController extends Controller
                 ['user_id','=',auth()->id()],
             ]);
 
-        $withdrawals = $withdrawal_model->get()->toArray();
+        $user_withdrawals = $withdrawal_model->get()->toArray();
         $count = $withdrawal_model->count();
 
-        foreach( $withdrawals as &$withdrawal){
-            $withdrawal['extra'] = json_decode($withdrawal['extra'],true);
+        foreach( $user_withdrawals as &$withdrawal){
+            $user_withdrawals['extra'] = json_decode($withdrawal['extra'],true);
         }
 
         return $this->response(1,'success',[
-            'withdrawals'   => $withdrawals,
+            'user_withdrawals'   => $user_withdrawals,
             'total'         => $count
         ]);
     }

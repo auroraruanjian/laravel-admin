@@ -36,7 +36,7 @@
                 </el-row>
             </div>
 
-            <el-table :data="withdrawals" style="width: 100%;margin-top:30px;" border >
+            <el-table :data="user_withdrawals" style="width: 100%;margin-top:30px;" border >
                 <el-table-column align="center" label="订单编号" prop="id"></el-table-column>
                 <el-table-column align="header-center" label="提现金额" prop="amount"></el-table-column>
                 <el-table-column align="header-center" label="手续费" prop="fee"></el-table-column>
@@ -117,7 +117,7 @@ export default {
     data(){
         return {
             withdrawal: Object.assign({}, defaultWithdrawal),
-            withdrawals: [],
+            user_withdrawals: [],
             banks:[],
             total: 0,
             listQuery: {
@@ -151,7 +151,7 @@ export default {
 
             if( result.data.code == 1 ){
                 this.total = result.data.data.total;
-                this.withdrawals = result.data.data.withdrawals;
+                this.user_withdrawals = result.data.data.user_withdrawals;
             }else{
                 this.$message.error(result.data.msg);
             }

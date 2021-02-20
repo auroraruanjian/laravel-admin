@@ -2,7 +2,7 @@ import fetch from '@/utils/fetch'
 
 export function getAllRecord( data ) {
     return fetch({
-        url: 'withdrawal',
+        url: 'user_withdrawal',
         method: 'get',
         params:data
     });
@@ -10,7 +10,7 @@ export function getAllRecord( data ) {
 
 export function applyWithdrawal( data ) {
     return fetch({
-        url: 'withdrawal/apply',
+        url: 'user_withdrawal/apply',
         method: 'post',
         data
     });

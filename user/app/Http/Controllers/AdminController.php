@@ -103,21 +103,21 @@ class AdminController extends Controller
                 ]
             ],
             [
-                "rule"          => "withdrawal",
+                "rule"          => "user_withdrawal",
                 "name"          => "收益提取",
                 "extra"         => [
                     "icon"      => "users",
                     "component" => "Layout",
-                    "redirect"  => "/withdrawal/index",
+                    "redirect"  => "/user_withdrawal/index",
                 ],
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "withdrawal/index",
+                        "rule"=> "user_withdrawal/index",
                         "name"=> "收益提取",
                         "extra"=> [
                             "icon"=> "permission",
-                            "component"=> "withdrawal/index",
+                            "component"=> "user_withdrawal/index",
                             'hidden'    => true,
                         ],
                     ],
