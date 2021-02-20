@@ -98,7 +98,7 @@
 <script>
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { getAllRecord,applyWithdrawal } from '@/api/withdrawal'
+import { getAllRecord,applyWithdrawal } from '@/api/user_withdrawal'
 import { mapGetters } from 'vuex'
 
 

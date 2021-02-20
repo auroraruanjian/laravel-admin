@@ -82,8 +82,29 @@ class AdminController extends Controller
                 ]
             ],
             [
-                "rule"          => "user_deposit",
+                "rule"          => "withdrawal",
                 "name"          => "Q币买入",
+                "extra"         => [
+                    "icon"      => "users",
+                    "redirect"  => "/withdrawal/index",
+                    "component" => "Layout"
+                ],
+                "description"   => "",
+                "child"         => [
+                    [
+                        "rule"=> "withdrawal/index",
+                        "name"=> "Q币买入",
+                        "extra"=> [
+                            "icon"      => "list",
+                            "component" => "withdrawal/index",
+                            'hidden'    => true,
+                        ],
+                    ],
+                ]
+            ],
+            [
+                "rule"          => "user_deposit",
+                "name"          => "保证金充值",
                 "extra"         => [
                     "icon"      => "users",
                     "redirect"  => "/user_deposit/index",
@@ -93,7 +114,7 @@ class AdminController extends Controller
                 "child"         => [
                     [
                         "rule"=> "user_deposit/index",
-                        "name"=> "Q币买入",
+                        "name"=> "保证金充值",
                         "extra"=> [
                             "icon"      => "list",
                             "component" => "user_deposit/index",

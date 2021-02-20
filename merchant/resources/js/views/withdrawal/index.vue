@@ -76,12 +76,12 @@
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="备注" prop="remark"></el-table-column>
-                <el-table-column align="header-center" label="处理时间" prop="done_at"></el-table-column>
+                <el-table-column align="header-center" label="完成时间" prop="done_at"></el-table-column>
                 <el-table-column align="header-center" label="商户名" prop="merchant_id"></el-table-column>
                 <el-table-column align="header-center" label="处理人" prop="cash_admin_id"></el-table-column>
                 <el-table-column align="header-center" label="使用卡号">
                     <template slot-scope="scope">
-                        {{ scope.row.extra.transfer_account }}
+                        {{ scope.row.extra.transfer_account_number }}
                     </template>
                 </el-table-column>
                 <el-table-column align="center" label="操作">
