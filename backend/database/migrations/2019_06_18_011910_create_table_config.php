@@ -97,24 +97,34 @@ class CreateTableConfig extends Migration
             ]
         ]);
 
-        $person_id = DB::table('config')->insertGetId([
+        $deposit_id = DB::table('config')->insertGetId([
             'parent_id'     => 0,
-            'title'         => '散户支付配置',
-            'key'           => 'person',
+            'title'         => '代收配置',
+            'key'           => 'deposit',
             'value'         => '',
             'is_disabled'   => 1,
             'description'   => '',
         ]);
         DB::table('config')->insert([
             [
-                'parent_id'     => $person_id,
-                'title'         => '订单模式',
+                'parent_id'     => $deposit_id,
+                'title'         => '散户订单模式',
                 'key'           => 'person_order_model',
                 'value'         => '1',
-                'type'          => '3',
+                'type'          => '2',
                 'extra'         => json_encode(['data'=>[['key'=>'抢单','value'=>'0'],['key'=>'自动分配','value'=>'1']]]),
                 'is_disabled'   => 1,
                 'description'   => '0:抢单 1:自动分配',
+            ],
+            [
+                'parent_id'     => $deposit_id,
+                'title'         => '平台最低保留费率',
+                'key'           => 'deposit_platform_min_rate',
+                'value'         => '0.2',
+                'type'          => '1',
+                'extra'         => '',
+                'is_disabled'   => 1,
+                'description'   => '表示可以开给代理的最低费率=第三方通道的费率+平台最低保留费率',
             ],
         ]);
         /*

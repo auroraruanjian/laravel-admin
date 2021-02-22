@@ -21,8 +21,8 @@ class CreateTableAgentUsers extends Migration
             $table->integer('top_id')->default(0)->comment('总代用户 ID，总代为 0');
             $table->integer('parent_id')->default(0)->comment('父级用户 ID，总代为 0');
             $table->jsonb('parent_tree')->default('[]')->comment('父级树');
-            $table->string('username',32)->comment('代理名');
-            $table->string('nickname',20)->unique()->comment('昵称');
+            $table->string('username',32)->unique()->comment('代理名');
+            $table->string('nickname',20)->comment('昵称');
             $table->string('password')->comment('密码');
             $table->tinyInteger('status')->default(0)->comment('状态:0 正常，1 冻结');
             $table->ipAddress('last_ip')->nullable()->comment('最后一次登录IP');
@@ -30,6 +30,7 @@ class CreateTableAgentUsers extends Migration
             $table->string('last_session', 64)->default('')->comment('最近登陆SESSIONID');
             $table->string('google_key', 16)->default('')->comment('谷歌登录器秘钥');
             $table->string('unionid')->nullable()->comment('微信登陆唯一ID');
+            $table->jsonb('extra')->default(json_encode(['rebates'=>'']))->comment('扩展数据，存放返点{rebates,}');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

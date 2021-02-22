@@ -19,9 +19,10 @@
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="创建时间" prop="created_at"></el-table-column>
+                <el-table-column align="header-center" label="备注" prop="created_at"></el-table-column>
                 <el-table-column align="center" label="操作">
                     <template slot-scope="scope" >
-                        <el-button type="success" @click="handleReceipted(scope.row.id)" v-if="scope.row.status==0" size="small">已收款</el-button>
+                        <el-button type="warning" @click="handleReceipted(scope.row.id)" v-if="scope.row.status==0" size="small">已收款</el-button>
                     </template>
                 </el-table-column>
             </el-table>

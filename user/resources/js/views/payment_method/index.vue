@@ -13,8 +13,8 @@
                 <el-table-column align="header-center" label="开户行" prop="branch"></el-table-column>
                 <el-table-column align="header-center" label="是否可用" prop="status">
                     <template slot-scope="scope">
-                        <el-tag type="success" v-if="scope.row.status==1">可用</el-tag>
-                        <el-tag type="danger"  v-if="scope.row.status==0">不可用</el-tag>
+                        <el-tag type="success" style="cursor: pointer" v-if="scope.row.status==1"  @click="handleChangeStatus(scope.row.id,0)">可用</el-tag>
+                        <el-tag type="danger"  style="cursor: pointer" v-if="scope.row.status==0"  @click="handleChangeStatus(scope.row.id,1)">不可用</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="是否删除" prop="is_delete" >
@@ -25,8 +25,8 @@
                 </el-table-column>
                 <el-table-column align="header-center" label="是否开启收款" prop="is_open">
                     <template slot-scope="scope">
-                        <el-tag type="success" v-if="scope.row.is_open==1">开启</el-tag>
-                        <el-tag type="danger"  v-if="scope.row.is_open==0">关闭</el-tag>
+                        <el-tag type="success" style="cursor: pointer" v-if="scope.row.is_open==1" @click="handleChangeIsOpen(scope.row.id,0)">开启</el-tag>
+                        <el-tag type="danger"  style="cursor: pointer" v-if="scope.row.is_open==0" @click="handleChangeIsOpen(scope.row.id,1)">关闭</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="每日收款限额" prop="limit_amount"></el-table-column>
@@ -35,7 +35,6 @@
                 <el-table-column align="center" label="操作">
                     <template slot-scope="scope" >
                         <el-button type="primary" size="small" @click="handleEdit(scope)">修改限额</el-button>
-                        <el-button type="success" size="small" @click="handleEdit(scope)">开启收款</el-button>
                         <el-button type="danger" size="small" @click="handleEdit(scope)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -83,7 +82,7 @@
 <script>
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { getAllMethod,editMethod,addMethod,getMethod,deleteMethod } from '@/api/payment_method'
+import { getAllMethod,editMethod,addMethod,getMethod,deleteMethod,putIsOpen,putAvailable } from '@/api/payment_method'
 import { mapGetters } from 'vuex'
 
 
@@ -187,6 +186,51 @@ export default {
                 type: type
             })
         },
+        handleChangeIsOpen( id , is_open ){
+            //
+            let tip_text = is_open==1 ? '开启' : '关闭';
+            this.$confirm('确定'+tip_text+'收款？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then( async () => {
+                let res = await putIsOpen({id,is_open});
+
+                let type = 'danger';
+                if( res.data.code == 1 ){
+                    type = 'success';
+                }
+
+                this.getAllPaymentMethod();
+
+                this.$message({
+                    type: type,
+                    message: res.data.msg
+                });
+            })
+        },
+        handleChangeStatus( id , status ){
+            let tip_text = status==1 ? '开启' : '关闭';
+            this.$confirm('确定'+tip_text+'此收款方式？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then( async () => {
+                let res = await putAvailable({id,status});
+
+                let type = 'danger';
+                if( res.data.code == 1 ){
+                    type = 'success';
+                }
+
+                this.getAllPaymentMethod();
+
+                this.$message({
+                    type: type,
+                    message: res.data.msg
+                });
+            })
+        }
     },
     watch: {
     }

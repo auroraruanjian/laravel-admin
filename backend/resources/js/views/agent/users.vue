@@ -24,13 +24,10 @@
             <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getAllAgentUsers" />
         </div>
 
-        <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Agent Users':'New Agent Users'">
+        <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑代理用户':'新增代理用户'">
             <el-form :model="agent_users" label-width="15%" label-position="right">
-                <el-form-item label="商户">
-                    <el-input v-model="agent_users.client_id" placeholder="商户" />
-                </el-form-item>
                 <el-form-item label="代理名">
-                    <el-input v-model="agent_users.username" placeholder="代理名" />
+                    <el-input v-model="agent_users.username" placeholder="代理名"  :disabled="dialogType==='edit'"/>
                 </el-form-item>
                 <el-form-item label="昵称">
                     <el-input v-model="agent_users.nickname" placeholder="昵称" />
@@ -45,10 +42,27 @@
                             inactive-color="#ddd">
                     </el-switch>
                 </el-form-item>
+                <el-form-item label="费率">
+                    <el-row v-for="(item,key) in agent_users.rebates" :key="key">
+                        <el-col :span="6">
+                            <el-checkbox v-model="item.status">{{item.name}}费率(%)</el-checkbox>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider
+                                :min="item.min_rate"
+                                :max="10"
+                                :step="0.1"
+                                :disabled="item.status!=true"
+                                v-model="item.rate"
+                                show-input>
+                            </el-slider>
+                        </el-col>
+                    </el-row>
+                </el-form-item>
             </el-form>
             <div style="text-align:right;">
-                <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-                <el-button type="primary" @click="confirm">Confirm</el-button>
+                <el-button type="danger" @click="dialogVisible=false">取消</el-button>
+                <el-button type="primary" @click="confirm">提交</el-button>
             </div>
         </el-dialog>
     </div>
@@ -63,12 +77,12 @@
 
     const defaultAgentUsers = {
         id:'',
-        client_id:'1',
         username: '',
         //user_group_id: '1',
         nickname: '',
         password:'',
         status:true,
+        rebates:[],
     };
 
     export default {
@@ -85,6 +99,7 @@
                 dialogVisible: false,
                 dialogType: 'new',
                 loading:false,
+                payment_method:[],
             };
         },
         computed: {
@@ -108,6 +123,7 @@
                 if( result.data.code == 1 ){
                     this.total = result.data.data.total;
                     this.agent_users_list = result.data.data.agent_users_list;
+                    this.payment_method = result.data.data.payment_method;
                 }else{
                     this.$message.error(result.data.message);
                 }
@@ -116,13 +132,42 @@
             handleAddAgentUser(){
                 this.agent_users = Object.assign({}, defaultAgentUsers)
                 this.dialogType = 'new'
+
+                this.agent_users.rebates = [];
+                for(let i in this.payment_method){
+                    this.agent_users.rebates.push({
+                        name:this.payment_method[i].name,
+                        rate:0,
+                        status:false,
+                        id:this.payment_method[i].id,
+                        min_rate:this.payment_method[i].min_rate,
+                    });
+                }
+
                 this.dialogVisible = true
             },
             async handleEdit( scope ){
                 this.loading =  true;
                 let current_users = await getAgentUsers(scope.row.id);
-                this.agent_users = current_users.data.data;
+                this.agent_users = Object.assign({},current_users.data.data);
                 this.dialogType = 'edit'
+
+                this.agent_users.status = this.agent_users.status == 1?true:false;
+
+                this.agent_users.rebates = [];
+                for(let i in this.payment_method){
+                    let rate = (typeof current_users.data.data.rebates[this.payment_method[i].id] != 'undefined')?current_users.data.data.rebates[this.payment_method[i].id].rate:0;
+                    let status = (typeof current_users.data.data.rebates[this.payment_method[i].id] != 'undefined')?current_users.data.data.rebates[this.payment_method[i].id].status:false;
+
+                    this.agent_users.rebates.push({
+                        name:this.payment_method[i].name,
+                        rate:rate,
+                        status:status,
+                        id:this.payment_method[i].id,
+                        min_rate:this.payment_method[i].min_rate,
+                    });
+                }
+
                 this.dialogVisible = true
                 this.loading =  false;
             },
@@ -149,36 +194,28 @@
             async confirm(){
                 const isEdit = this.dialogType === 'edit'
 
-                let type = 'error';
-                let message = '';
 
                 let response;
 
                 if (isEdit) {
-                    response = await editAgentUsers(this.users)
+                    response = await editAgentUsers(this.agent_users)
                 }else{
-                    response = await addAgentUsers(this.users)
+                    response = await addAgentUsers(this.agent_users)
                 }
 
+                let type = 'error';
                 if( response.data.code == 1 ){
                     type = 'success';
-                    message = `
-                            <div>Users name: ${this.users.title}</div>
-                          `;
-                }else{
-                    message = response.data.msg;
                 }
 
                 this.dialogVisible = false
 
                 this.getAllAgentUsers();
 
-                this.$notify({
-                    title: response.data.msg,
-                    dangerouslyUseHTMLString: true,
-                    message: message,
-                    type: type
-                })
+                this.$message({
+                    type: type,
+                    message: response.data.msg
+                });
             },
         },
         watch: {

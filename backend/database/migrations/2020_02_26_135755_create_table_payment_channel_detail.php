@@ -20,7 +20,7 @@ class CreateTablePaymentChannelDetail extends Migration
             $table->decimal('rate',15,4)->default(0)->comment('第三方费率(%),第三方收取平台的费率');
             $table->decimal('min_amount',15,4)->default(0)->comment('最低支付金额');
             $table->decimal('max_amount',15,4)->default(0)->comment('最高支付金额');
-            $table->boolean('status')->default(0)->comment('是否启用');
+            $table->boolean('status')->default(false)->comment('是否启用');
             $table->string('start_time')->default('00:00:00')->comment('每天开始时间');
             $table->string('end_time')->default('00:00:00')->comment('每天开始时间,如果结束时间小于开始时间，则表示跨天');
             $table->jsonb('extra')->default('{}')->comment('扩展参数');
@@ -42,7 +42,7 @@ class CreateTablePaymentChannelDetail extends Migration
                 'name'                  => '点对点支付',
                 'payment_category_id'   => 1,
                 'channel_param'         => json_encode([]),
-                'status'                => 0,
+                'status'                => true,
             ]
         ]);
 
@@ -54,7 +54,7 @@ class CreateTablePaymentChannelDetail extends Migration
                 'rate'                  => 1,
                 'min_amount'            => 0.01,
                 'max_amount'            => 10000,
-                'status'                => 1,
+                'status'                => true,
                 'start_time'            => '00:00:00',
                 'end_time'              => '00:00:00',
                 'extra'                 => json_encode([]),
@@ -66,7 +66,7 @@ class CreateTablePaymentChannelDetail extends Migration
                 'rate'                  => 1,
                 'min_amount'            => 0.01,
                 'max_amount'            => 10000,
-                'status'                => 1,
+                'status'                => true,
                 'start_time'            => '00:00:00',
                 'end_time'              => '00:00:00',
                 'extra'                 => json_encode([]),
@@ -78,7 +78,7 @@ class CreateTablePaymentChannelDetail extends Migration
                 'rate'                  => 1,
                 'min_amount'            => 0.01,
                 'max_amount'            => 10000,
-                'status'                => 1,
+                'status'                => true,
                 'start_time'            => '00:00:00',
                 'end_time'              => '00:00:00',
                 'extra'                 => json_encode([]),

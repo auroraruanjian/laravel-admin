@@ -19,7 +19,7 @@ class CreateTablePaymentCategory extends Migration
             $table->string('name', 32)->comment('中文名称');
             $table->jsonb('method_idents')->default('{}')->comment('支付方式');
             $table->jsonb('param')->default('[]')->comment('参数');
-            $table->boolean('status')->default(0)->comment('是否启用');
+            $table->boolean('status')->default(false)->comment('是否启用');
         });
 
         $this->_permission();

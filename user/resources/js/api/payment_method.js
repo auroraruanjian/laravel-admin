@@ -39,3 +39,19 @@ export function deleteMethod( id ){
         params:{id:id},
     });
 }
+
+export function putIsOpen( data ){
+    return fetch({
+        url: 'payment_method/isopen',
+        method: 'put',
+        data
+    });
+}
+
+export function putAvailable( data ){
+    return fetch({
+        url: 'payment_method/available',
+        method: 'put',
+        data
+    });
+}

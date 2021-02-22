@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Common\Models\AgentUsers;
+use Common\Models\PaymentChannelDetail;
+use Common\Models\PaymentMethod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AgentUsersController extends Controller
 {
@@ -29,7 +32,7 @@ class AgentUsersController extends Controller
             'users_list' => [],
         ];
 
-        $userslist = AgentUsers::select([
+        $data['agent_users_list'] = AgentUsers::select([
             'agent_users.id',
             'agent_users.username',
             'agent_users.nickname',
@@ -38,18 +41,35 @@ class AgentUsersController extends Controller
             'agent_users.last_time',
             'agent_users.created_at'
         ])
-            //->leftJoin('merchants','merchants.id','users.merchants_id')
-            //->leftJoin('user_group','user_group.id','users.user_group_id')
             ->orderBy('id', 'asc')
             ->skip($start)
             ->take($limit)
-            ->get();
+            ->get()
+            ->toArray();
 
         $data['total'] = AgentUsers::count();
 
-        if (!$userslist->isEmpty()) {
-            $data['agent_users_list'] = $userslist->toArray();
+        $data['payment_method'] = PaymentMethod::select([
+            'id',
+            'ident',
+            'name',
+        ])
+            ->where('status','=',true)
+            ->get()
+            ->toArray();
+
+        // 计算最小返点
+        foreach($data['payment_method'] as &$payment_method){
+            $min_rate = $this->_getMinRate( $payment_method['id'] );
+            if( $min_rate !== false ){
+                $payment_method['min_rate'] = $min_rate;
+            }else{
+                unset($payment_method);
+            }
         }
+
+        // 重建索引
+        $data['payment_method'] = array_merge($data['payment_method']);
 
         return $this->response(1, 'Success!', $data);
     }
@@ -57,12 +77,33 @@ class AgentUsersController extends Controller
     public function postCreate(Request $request)
     {
         $users                  = new AgentUsers();
-        $users->client_id       = $request->get('client_id');
         $users->username        = $request->get('username','');
         $users->nickname        = $request->get('nickname','');
         $users->password        = $request->get('password','');
         //$users->user_group_id   = $request->get('user_group_id');
         $users->status          = (int)$request->get('status',0)?true:false;
+
+        $request_rebates                = $request->get('rebates');
+
+        $rebates = [];
+        if( !empty($request_rebates) ){
+            // 判断返点是否合法
+            foreach($request_rebates as $rebate){
+                if( !$rebate['status'] ) continue;
+                $min_rate = $this->_getMinRate( $rebate['id'] );
+                if( $min_rate !== false && $rebate['rate'] >= $min_rate){
+                    $rebates[$rebate['id']] = [
+                        'payment_method_id' => $rebate['id'],
+                        'rate'              => $rebate['rate'],
+                        'status'            => $rebate['status']
+                    ];
+                }
+            }
+        }
+
+        $users->extra = json_encode([
+            'rebates'   => $rebates,
+        ]);
 
         if( $users->save() ){
             return $this->response(1, '添加成功');
@@ -78,10 +119,17 @@ class AgentUsersController extends Controller
         $users = AgentUsers::find($id);
 
         if (empty($users)) {
-            return $this->response(0, '配置不存在');
+            return $this->response(0, '代理不存在');
         }
 
         $users = $users->toArray();
+        $extra = isset($users['extra']) ? json_decode($users['extra'],true) : [];
+        $users['rebates'] = $extra['rebates'];
+//        if( !empty($extra['rebates']) ){
+//            foreach($extra['rebates'] as $rebate){
+//                $users['rebates'][$rebate['payment_method_id']] = $rebate;
+//            }
+//        }
 
         return $this->response(1, 'success', $users);
     }
@@ -91,17 +139,50 @@ class AgentUsersController extends Controller
         $id = (int)$request->get('id');
 
         $users = AgentUsers::find($id);
+        $extra = json_decode($users->extra,true);
 
         if (empty($users)) {
-            return $this->response(0, '配置不存在失败');
+            return $this->response(0, '代理不存在');
         }
 
-        $users->client_id       = $request->get('client_id');
-        $users->username        = $request->get('username','');
         $users->nickname        = $request->get('nickname','');
-        $users->password        = $request->get('password','');
-        //$users->user_group_id   = $request->get('user_group_id');
         $users->status          = (int)$request->get('status',0)?true:false;
+
+
+        $password        = $request->get('password','');
+        if( !empty($password) ){
+            $users->password = bcrypt($password);
+        }
+
+        $request_rebates        = $request->get('rebates');
+        $rebates = [];
+        if( !empty($request_rebates) ){
+            // 判断返点是否合法
+            foreach($request_rebates as $rebate){
+                if( !isset($extra['rebates']) &&
+                    !isset($extra['rebates'][$rebate['payment_method_id']]) &&
+                    $rebate['rate'] == 0 ){
+                    continue;
+                }
+
+                $min_rate = $this->_getMinRate( $rebate['id'] );
+                if( $min_rate !== false && $rebate['rate'] < $min_rate){
+                    return $this->response(0, $rebate['name'].'费率不能低于系统最低费率！');
+                }
+
+                // TODO：检查是否有上级，检查上级返点
+
+
+                $rebates[$rebate['id']] = [
+                    'payment_method_id' => $rebate['id'],
+                    'rate'              => $rebate['rate'],
+                    'status'            => $rebate['status']
+                ];
+            }
+        }
+
+        $extra['rebates'] = $rebates;
+        $users->extra = json_encode($extra);
 
         if ($users->save()) {
             return $this->response(1, '编辑成功');
@@ -117,6 +198,32 @@ class AgentUsersController extends Controller
             return $this->response(1,'删除成功！');
         }else{
             return $this->response(0,'删除失败！');
+        }
+    }
+
+    /**
+     * 获取通道最低返点
+     * @param $payment_method_id
+     * @return false|string
+     *
+     */
+    private function _getMinRate( $payment_method_id )
+    {
+        $detail_model = PaymentChannelDetail::select([
+            DB::raw('max(rate) as max_rate'),
+        ])
+            ->where([
+                //['status','=',true],
+                ['payment_method_id','=',$payment_method_id]
+            ])
+            ->groupBy('payment_method_id')
+            ->first();
+
+        if( !empty($detail_model) ){
+            $platform_min_rate = getSysConfig('deposit_platform_min_rate',0);
+            return $detail_model->max_rate + $platform_min_rate;
+        }else{
+            return false;
         }
     }
 }

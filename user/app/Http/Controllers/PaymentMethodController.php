@@ -76,4 +76,74 @@ class PaymentMethodController extends Controller
         }
         return $this->response(0,'error');
     }
+
+    /**
+     * 编辑收款信息
+     */
+    public function putEdit(Request $request)
+    {
+
+    }
+
+    /**
+     * 修改支付方式是否开启收款
+     * @param Request $request
+     */
+    public function putIsopen(Request $request)
+    {
+        $id = $request->get('id');
+        $is_open = $request->get('is_open') ? 1 : 0;
+
+        $user_payment = UserPaymentMethods::select([
+            'id',
+            'is_open'
+        ])
+            ->where([
+                ['user_id','=',auth()->id()],
+                ['id','=',$id]
+            ])
+            ->first();
+
+        if( empty($user_payment) ){
+            return $this->response(0,'对不起，支付方式不存在');
+        }
+
+        $user_payment->is_open = $is_open;
+        if( $user_payment->save() ){
+            return $this->response(1,'状态已修改成功！');
+        }
+
+        return $this->response(0,'状态已修改失败！');
+    }
+
+    /**
+     * 修改支付方式是否可用
+     * @param Request $request
+     */
+    public function putAvailable(Request $request)
+    {
+        $id = $request->get('id');
+        $status = $request->get('status') ? 1 : 0;
+
+        $user_payment = UserPaymentMethods::select([
+            'id',
+            'status'
+        ])
+            ->where([
+                ['user_id','=',auth()->id()],
+                ['id','=',$id]
+            ])
+            ->first();
+
+        if( empty($user_payment) ){
+            return $this->response(0,'对不起，支付方式不存在');
+        }
+
+        $user_payment->status = $status;
+        if( $user_payment->save() ){
+            return $this->response(1,'状态已修改成功！');
+        }
+
+        return $this->response(0,'状态已修改失败！');
+    }
 }

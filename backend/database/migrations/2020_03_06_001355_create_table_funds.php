@@ -14,7 +14,7 @@ class CreateTableFunds extends Migration
     public function up()
     {
         Schema::create('funds', function (Blueprint $table) {
-            $table->integer('type')->comment('类型：1商户 2散户 3代理');
+            $table->smallInteger('type')->comment('账变类型：1：代理 2：商户 3：散户');
             $table->integer('third_id')->comment('商户、用户、代理 ID');
             $table->decimal('balance', 14, 4)->default(0)->comment('帐户余额(可用+冻结)');
             $table->decimal('hold_balance', 14, 4)->default(0)->comment('冻结金额');

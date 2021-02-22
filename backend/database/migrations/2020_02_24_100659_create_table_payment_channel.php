@@ -20,7 +20,7 @@ class CreateTablePaymentChannel extends Migration
             $table->smallInteger('payment_category_id')->comment('支付渠道ID');
             $table->jsonb('channel_param')->default('[]')->comment('支付通道参数');
 //            $table->jsonb('methods_param')->default('[]')->comment('支付类型参数');
-            $table->tinyInteger('status')->default(0)->comment('状态：0：正常 1：管理员关闭 2：系统关闭');
+            $table->tinyInteger('status')->default(false)->comment('状态：0：正常 1：管理员关闭 2：系统关闭');
             $table->timestamps();
         });
 
