@@ -51,7 +51,7 @@ class CreateTablePaymentChannelDetail extends Migration
             [
                 'payment_channel_id'    => 1,
                 'payment_method_id'     => 1,
-                'rate'                  => 1,
+                'rate'                  => 1.3,
                 'min_amount'            => 0.01,
                 'max_amount'            => 10000,
                 'status'                => true,
@@ -63,7 +63,7 @@ class CreateTablePaymentChannelDetail extends Migration
             [
                 'payment_channel_id'    => 1,
                 'payment_method_id'     => 2,
-                'rate'                  => 1,
+                'rate'                  => 1.3,
                 'min_amount'            => 0.01,
                 'max_amount'            => 10000,
                 'status'                => true,
@@ -75,7 +75,7 @@ class CreateTablePaymentChannelDetail extends Migration
             [
                 'payment_channel_id'    => 1,
                 'payment_method_id'     => 3,
-                'rate'                  => 1,
+                'rate'                  => 1.3,
                 'min_amount'            => 0.01,
                 'max_amount'            => 10000,
                 'status'                => true,

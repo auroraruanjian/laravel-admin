@@ -25,7 +25,7 @@
         </div>
 
         <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑代理用户':'新增代理用户'">
-            <el-form :model="agent_users" label-width="15%" label-position="right">
+            <el-form :model="agent_users" label-width="18%" label-position="right">
                 <el-form-item label="代理名">
                     <el-input v-model="agent_users.username" placeholder="代理名"  :disabled="dialogType==='edit'"/>
                 </el-form-item>
@@ -42,8 +42,9 @@
                             inactive-color="#ddd">
                     </el-switch>
                 </el-form-item>
-                <el-form-item label="费率">
-                    <el-row v-for="(item,key) in agent_users.rebates" :key="key">
+                <el-form-item label="商户费率">
+                    <el-divider>商户代收手续费</el-divider>
+                    <el-row v-for="(item,key) in agent_users.rebates.deposit_rebates" :key="key">
                         <el-col :span="6">
                             <el-checkbox v-model="item.status">{{item.name}}费率(%)</el-checkbox>
                         </el-col>
@@ -54,6 +55,54 @@
                                 :step="0.1"
                                 :disabled="item.status!=true"
                                 v-model="item.rate"
+                                show-input>
+                            </el-slider>
+                        </el-col>
+                    </el-row>
+                    <el-divider>商户代付手续费</el-divider>
+                    <el-row>
+                        <el-col :span="6">
+                            <el-checkbox v-model="agent_users.rebates.withdrawal_rebate.status">商户代付手续费(元)</el-checkbox>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider
+                                :min="rebates_limit.withdrawal_rebate"
+                                :max="10"
+                                :step="0.1"
+                                :disabled="!agent_users.rebates.withdrawal_rebate.status"
+                                v-model="agent_users.rebates.withdrawal_rebate.amount"
+                                show-input>
+                            </el-slider>
+                        </el-col>
+                    </el-row>
+                    <el-divider>散户代收佣金</el-divider>
+                    <el-row>
+                        <el-col :span="6">
+                            <el-checkbox v-model="agent_users.rebates.user_deposit_rebate.status">散户代收佣金费率(%)</el-checkbox>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider
+                                :step="0.1"
+                                :min="0"
+                                :max="rebates_limit.user_deposit_rebate"
+                                :disabled="!agent_users.rebates.user_deposit_rebate.status"
+                                v-model="agent_users.rebates.user_deposit_rebate.rate"
+                                show-input>
+                            </el-slider>
+                        </el-col>
+                    </el-row>
+                    <el-divider>散户代付佣金</el-divider>
+                    <el-row>
+                        <el-col :span="6">
+                            <el-checkbox v-model="agent_users.rebates.user_withdrawal_rebate.status">散户代付佣金(元)</el-checkbox>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider
+                                :step="0.1"
+                                :min="0"
+                                :max="rebates_limit.user_withdrawal_rebate"
+                                :disabled="!agent_users.rebates.user_withdrawal_rebate.status"
+                                v-model="agent_users.rebates.user_withdrawal_rebate.amount"
                                 show-input>
                             </el-slider>
                         </el-col>
@@ -82,7 +131,12 @@
         nickname: '',
         password:'',
         status:true,
-        rebates:[],
+        rebates:{
+            deposit_rebates:{},
+            withdrawal_rebate:{},
+            user_deposit_rebate:{},
+            user_withdrawal_rebate:{},
+        },
     };
 
     export default {
@@ -100,6 +154,7 @@
                 dialogType: 'new',
                 loading:false,
                 payment_method:[],
+                rebates_limit:{},
             };
         },
         computed: {
@@ -124,6 +179,7 @@
                     this.total = result.data.data.total;
                     this.agent_users_list = result.data.data.agent_users_list;
                     this.payment_method = result.data.data.payment_method;
+                    this.rebates_limit = result.data.data.rebates_limit;
                 }else{
                     this.$message.error(result.data.message);
                 }
@@ -133,9 +189,9 @@
                 this.agent_users = Object.assign({}, defaultAgentUsers)
                 this.dialogType = 'new'
 
-                this.agent_users.rebates = [];
+                this.agent_users.rebates.deposit_rebates = [];
                 for(let i in this.payment_method){
-                    this.agent_users.rebates.push({
+                    this.agent_users.rebates.deposit_rebates.push({
                         name:this.payment_method[i].name,
                         rate:0,
                         status:false,
@@ -149,23 +205,33 @@
             async handleEdit( scope ){
                 this.loading =  true;
                 let current_users = await getAgentUsers(scope.row.id);
-                this.agent_users = Object.assign({},current_users.data.data);
+                this.agent_users = JSON.parse(JSON.stringify(current_users.data.data));
                 this.dialogType = 'edit'
 
                 this.agent_users.status = this.agent_users.status == 1?true:false;
 
-                this.agent_users.rebates = [];
+                this.agent_users.rebates.deposit_rebates = [];
                 for(let i in this.payment_method){
-                    let rate = (typeof current_users.data.data.rebates[this.payment_method[i].id] != 'undefined')?current_users.data.data.rebates[this.payment_method[i].id].rate:0;
-                    let status = (typeof current_users.data.data.rebates[this.payment_method[i].id] != 'undefined')?current_users.data.data.rebates[this.payment_method[i].id].status:false;
+                    let rate = (typeof current_users.data.data.rebates.deposit_rebates[this.payment_method[i].id] != 'undefined')?current_users.data.data.rebates.deposit_rebates[this.payment_method[i].id].rate:0;
+                    let status = (typeof current_users.data.data.rebates.deposit_rebates[this.payment_method[i].id] != 'undefined')?current_users.data.data.rebates.deposit_rebates[this.payment_method[i].id].status:false;
 
-                    this.agent_users.rebates.push({
+                    this.agent_users.rebates.deposit_rebates.push({
                         name:this.payment_method[i].name,
                         rate:rate,
                         status:status,
                         id:this.payment_method[i].id,
                         min_rate:this.payment_method[i].min_rate,
                     });
+                }
+
+                if( current_users.data.data.rebates.withdrawal_rebate instanceof Array && current_users.data.data.rebates.withdrawal_rebate.length == 0 ){
+                    this.agent_users.rebates.withdrawal_rebate = {};
+                }
+                if( current_users.data.data.rebates.user_deposit_rebate instanceof Array && current_users.data.data.rebates.user_deposit_rebate.length == 0 ){
+                    this.agent_users.rebates.user_deposit_rebate = {};
+                }
+                if( current_users.data.data.rebates.user_withdrawal_rebate instanceof Array && current_users.data.data.rebates.user_withdrawal_rebate.length == 0 ){
+                    this.agent_users.rebates.user_withdrawal_rebate = {};
                 }
 
                 this.dialogVisible = true

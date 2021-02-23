@@ -116,15 +116,56 @@ class CreateTableConfig extends Migration
                 'is_disabled'   => 1,
                 'description'   => '0:抢单 1:自动分配',
             ],
+        ]);
+
+        $rebates_id = DB::table('config')->insertGetId([
+            'parent_id'     => 0,
+            'title'         => '手续费配置',
+            'key'           => 'rebates',
+            'value'         => '',
+            'is_disabled'   => 1,
+            'description'   => '',
+        ]);
+        DB::table('config')->insert([
             [
-                'parent_id'     => $deposit_id,
-                'title'         => '平台最低保留费率',
-                'key'           => 'deposit_platform_min_rate',
-                'value'         => '0.2',
+                'parent_id'     => $rebates_id,
+                'title'         => '平台代收最低保留费率',
+                'key'           => 'rebates_deposit_platform_min_rate',
+                'value'         => '0',
                 'type'          => '1',
-                'extra'         => '',
+                'extra'         => '{}',
                 'is_disabled'   => 1,
-                'description'   => '表示可以开给代理的最低费率=第三方通道的费率+平台最低保留费率',
+                'description'   => '表示可以开给代理的最低费率(%)=第三方通道的费率(%)+平台最低保留费率(%)',
+            ],
+            [
+                'parent_id'     => $rebates_id,
+                'title'         => '平台代付最低手续费',
+                'key'           => 'rebates_withdrawal_rebate',
+                'value'         => '2',
+                'type'          => '1',
+                'extra'         => '{}',
+                'is_disabled'   => 1,
+                'description'   => '开给代理的商户代付手续费，元为单位，递增',
+            ],
+            [
+                'parent_id'     => $rebates_id,
+                'title'         => '平台散户代收佣金最高费率',
+                'key'           => 'rebates_user_deposit_rebate',
+                'value'         => '1.3',
+                'type'          => '1',
+                'extra'         => '{}',
+                'is_disabled'   => 1,
+                'description'   => '百分比，递减',
+            ],
+            [
+                'parent_id'     => $rebates_id,
+                'title'         => '平台散户代付佣金最高费率',
+                'key'           => 'rebates_user_withdrawal_rebate',
+                'value'         => '2',
+                'type'          => '1',
+                'extra'         => '{}',
+                'is_disabled'   => 1,
+                'description'   => '单位为元，递减',
             ],
         ]);
         /*

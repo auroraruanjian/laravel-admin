@@ -30,7 +30,7 @@ class CreateTableAgentUsers extends Migration
             $table->string('last_session', 64)->default('')->comment('最近登陆SESSIONID');
             $table->string('google_key', 16)->default('')->comment('谷歌登录器秘钥');
             $table->string('unionid')->nullable()->comment('微信登陆唯一ID');
-            $table->jsonb('extra')->default(json_encode(['rebates'=>'']))->comment('扩展数据，存放返点{rebates,}');
+            $table->jsonb('extra')->default(json_encode([]))->comment('扩展数据，存放返点{rebates,}');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

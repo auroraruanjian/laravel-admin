@@ -64,6 +64,14 @@ class ChildAgentController extends Controller
 
         $parent_tree = json_encode(array_merge(json_decode($user->parent_tree,true),[$user->id]));
 
+        $password = bcrypt($request->get('password'));
+        $repassword = bcrypt($request->get('repassword'));
+        if( $password != $repassword ){
+            return $this->response(0, '对不起，请检查密码和确认密码是否相同？');
+        }
+
+        $rebeats = [];
+
         DB::beginTransaction();
 
         $agent = new AgentUsers();
@@ -72,19 +80,20 @@ class ChildAgentController extends Controller
         $agent->parent_tree = $parent_tree;
         $agent->username    = $request->get('username');
         $agent->nickname    = $request->get('nickname');
-        $agent->password    = bcrypt($request->get('password'));
+        $agent->password    = $password;
         $agent->status      = 1;
         $agent->google_key  = '';
+        $agent->extra       = json_encode([
+            'rebates'       => $rebeats
+        ]);
 
         if( $agent->save() ){
-            // TODO：新增代理资金记录
+            // 新增代理资金记录
             $merchant_fund = DB::table('merchant_fund')->insert(['type'=>'3','third_id' => $agent->id]);
             if( !$merchant_fund ) {
                 DB::rollBack();
                 return $this->response(0, '资金添加失败');
             }
-
-            // TODO：新增支付费率
 
             DB::commit();
             return $this->response(1, '添加成功');
