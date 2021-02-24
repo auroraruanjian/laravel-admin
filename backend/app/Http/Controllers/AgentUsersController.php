@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Common\API\Rebates;
 use Common\Models\AgentUsers;
 use Common\Models\PaymentChannelDetail;
 use Common\Models\PaymentMethod;
@@ -59,8 +60,9 @@ class AgentUsersController extends Controller
             ->toArray();
 
         // 计算最小返点
+        $api_rebates = new Rebates();
         foreach($data['payment_method'] as &$payment_method){
-            $min_rate = $this->_getMinRate( $payment_method['id'] );
+            $min_rate = $api_rebates->getMinRate( $payment_method['id'] );
             if( $min_rate !== false ){
                 $payment_method['min_rate'] = $min_rate;
             }else{
@@ -93,61 +95,10 @@ class AgentUsersController extends Controller
 
         $request_rebates        = $request->get('rebates');
 
-        $rebates = [
-            'deposit_rebates'       => [],
-            'withdrawal_rebate'     => [],
-            'user_deposit_rebate'   => [],
-            'user_withdrawal_rebate'=> [],
-        ];
-        if( !empty($request_rebates) ){
-            // 判断返代收点是否合法
-            if( !empty($request_rebates['deposit_rebates']) ){
-                $rebates['deposit_rebates'] = [];
-                foreach($request_rebates['deposit_rebates'] as $rebate){
-                    if( !$rebate['status'] ) continue;
-                    $min_rate = $this->_getMinRate( $rebate['id'] );
-                    if( $min_rate !== false && $rebate['rate'] >= $min_rate){
-                        $rebates['deposit_rebates'][$rebate['id']] = [
-                            'payment_method_id' => $rebate['id'],
-                            'rate'              => $rebate['rate'],
-                            'status'            => $rebate['status']
-                        ];
-                    }
-                }
-            }
-
-            // 判断代付返点是否合法
-            $withdrawal_rate = getSysConfig('rebates_withdrawal_rebate',0);
-            if( !empty($request_rebates['withdrawal_rebate']) &&
-                isset($request_rebates['withdrawal_rebate']['status']) && isset($request_rebates['withdrawal_rebate']['amount']) &&
-                $request_rebates['withdrawal_rebate']['amount'] >= $withdrawal_rate){
-                $rebates['withdrawal_rebate'] = [
-                    'status'    => $request_rebates['withdrawal_rebate']['status'],
-                    'amount'    => $request_rebates['withdrawal_rebate']['amount'],
-                ];
-            }
-
-            // 判断散户代收佣金是否合法
-            $user_deposit_rebate = getSysConfig('rebates_user_deposit_rebate',0);
-            if( !empty($request_rebates['user_deposit_rebate']) &&
-                isset($request_rebates['user_deposit_rebate']['status']) && isset($request_rebates['user_deposit_rebate']['rate']) &&
-                $request_rebates['user_deposit_rebate']['rate'] <= $user_deposit_rebate){
-                $rebates['user_deposit_rebate'] = [
-                    'status'    => $request_rebates['user_deposit_rebate']['status'],
-                    'rate'    => $request_rebates['user_deposit_rebate']['rate'],
-                ];
-            }
-
-            // 判断散户代付佣金是否合法
-            $user_withdrawal_rebate = getSysConfig('rebates_user_withdrawal_rebate',0);
-            if( !empty($request_rebates['user_withdrawal_rebate']) &&
-                isset($request_rebates['user_withdrawal_rebate']['status']) && isset($request_rebates['user_withdrawal_rebate']['amount']) &&
-                $request_rebates['user_withdrawal_rebate']['amount'] <= $user_withdrawal_rebate){
-                $rebates['user_withdrawal_rebate'] = [
-                    'status'    => $request_rebates['user_withdrawal_rebate']['status'],
-                    'amount'    => $request_rebates['user_withdrawal_rebate']['amount'],
-                ];
-            }
+        $api_rebates = new Rebates();
+        $rebates = $api_rebates->generateAgent( $request_rebates );
+        if( !$rebates ){
+            return $this->response(0, $api_rebates->error_message);
         }
 
         $users->extra = json_encode([
@@ -173,7 +124,12 @@ class AgentUsersController extends Controller
 
         $users = $users->toArray();
         $extra = isset($users['extra']) ? json_decode($users['extra'],true) : [];
-        $users['rebates'] = $extra['rebates'];
+        $users['rebates'] = $extra['rebates']??[
+                'deposit_rebates'       => [],
+                'withdrawal_rebate'     => [],
+                'user_deposit_rebate'   => [],
+                'user_withdrawal_rebate'=> [],
+            ];;
 //        if( !empty($extra['rebates']) ){
 //            foreach($extra['rebates'] as $rebate){
 //                $users['rebates'][$rebate['payment_method_id']] = $rebate;
@@ -204,92 +160,11 @@ class AgentUsersController extends Controller
         }
 
         $request_rebates        = $request->get('rebates');
-        $rebates = [
-            'deposit_rebates'       => [],
-            'withdrawal_rebate'     => [],
-            'user_deposit_rebate'   => [],
-            'user_withdrawal_rebate'=> [],
-        ];
-        if( !empty($request_rebates) ){
-            // 判断返点是否合法
-            // 判断返代收点是否合法
-            if( !empty($request_rebates['deposit_rebates']) ){
-                foreach($request_rebates['deposit_rebates'] as $rebate){
-                    if( !isset($extra['rebates']) &&
-                        !isset($extra['rebates'][$rebate['payment_method_id']]) &&
-                        $rebate['rate'] == 0 ){
-                        continue;
-                    }
 
-                    $min_rate = $this->_getMinRate( $rebate['id'] );
-                    if( $min_rate !== false && $rebate['rate'] < $min_rate){
-                        return $this->response(0, $rebate['name'].'费率不能低于系统最低费率！');
-                    }
-
-                    // TODO：检查是否有上级，检查上级返点
-
-                    // TODO: 检查下级
-
-
-                    $rebates['deposit_rebates'][$rebate['id']] = [
-                        'payment_method_id' => $rebate['id'],
-                        'rate'              => $rebate['rate'],
-                        'status'            => $rebate['status']
-                    ];
-                }
-            }
-
-            // 判断代付返点是否合法
-            $withdrawal_rate = getSysConfig('rebates_withdrawal_rebate',0);
-
-            if( !empty($request_rebates['withdrawal_rebate']) &&
-                isset($request_rebates['withdrawal_rebate']['status']) && isset($request_rebates['withdrawal_rebate']['amount'])
-                ){
-                if( $request_rebates['withdrawal_rebate']['amount'] < $withdrawal_rate ){
-                    return $this->response(0, '代付返点配置错误！');
-                }
-
-                //TODO:获取下级返点，检查是否高于下级返点
-
-                $rebates['withdrawal_rebate'] = [
-                    'status'    => $request_rebates['withdrawal_rebate']['status'],
-                    'amount'    => $request_rebates['withdrawal_rebate']['amount'],
-                ];
-            }
-
-            // 判断散户代收佣金是否合法
-            $user_deposit_rebate = getSysConfig('rebates_user_deposit_rebate',0);
-            if( !empty($request_rebates['user_deposit_rebate']) &&
-                isset($request_rebates['user_deposit_rebate']['status']) && isset($request_rebates['user_deposit_rebate']['rate'])
-                ){
-                if( $request_rebates['user_deposit_rebate']['rate'] > $user_deposit_rebate ){
-                    return $this->response(0, '散户代收佣金配置错误！');
-                }
-
-                //TODO:获取下级返点，检查是否高于下级返点
-
-                $rebates['user_deposit_rebate'] = [
-                    'status'    => $request_rebates['user_deposit_rebate']['status'],
-                    'rate'    => $request_rebates['user_deposit_rebate']['rate'],
-                ];
-            }
-
-            // 判断散户代付佣金是否合法
-            $user_withdrawal_rebate = getSysConfig('rebates_user_withdrawal_rebate',0);
-            if( !empty($request_rebates['user_withdrawal_rebate']) &&
-                isset($request_rebates['user_withdrawal_rebate']['status']) && isset($request_rebates['user_withdrawal_rebate']['amount'])
-                ){
-                if( $request_rebates['user_withdrawal_rebate']['amount'] > $user_withdrawal_rebate ){
-                    return $this->response(0, '散户代付佣金配置错误！');
-                }
-
-                //TODO:获取下级返点，检查是否高于下级返点
-
-                $rebates['user_withdrawal_rebate'] = [
-                    'status'    => $request_rebates['user_withdrawal_rebate']['status'],
-                    'amount'    => $request_rebates['user_withdrawal_rebate']['amount'],
-                ];
-            }
+        $api_rebates = new Rebates();
+        $rebates = $api_rebates->generateAgent( $request_rebates, $users);
+        if( !$rebates ){
+            return $this->response(0, $api_rebates->error_message);
         }
 
         $extra['rebates'] = $rebates;
@@ -309,32 +184,6 @@ class AgentUsersController extends Controller
             return $this->response(1,'删除成功！');
         }else{
             return $this->response(0,'删除失败！');
-        }
-    }
-
-    /**
-     * 获取通道最低返点
-     * @param $payment_method_id
-     * @return false|string
-     *
-     */
-    private function _getMinRate( $payment_method_id )
-    {
-        $detail_model = PaymentChannelDetail::select([
-            DB::raw('max(rate) as max_rate'),
-        ])
-            ->where([
-                //['status','=',true],
-                ['payment_method_id','=',$payment_method_id]
-            ])
-            ->groupBy('payment_method_id')
-            ->first();
-
-        if( !empty($detail_model) ){
-            $platform_min_rate = getSysConfig('rebates_deposit_platform_min_rate',0);
-            return $detail_model->max_rate + $platform_min_rate;
-        }else{
-            return false;
         }
     }
 }

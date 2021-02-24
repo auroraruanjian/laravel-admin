@@ -2,13 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671224a9-92fb-49c6-aaaa-b3090c3b09d9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/common/API/Rebates.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/AdminController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent/app/Http/Controllers/ChildAgentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/ChildAgentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Middleware/Authenticate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Providers/AuthServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/resources/js/views/child_agent/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/agent/resources/js/views/child_agent/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/resources/js/views/merchant/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/agent/resources/js/views/merchant/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AgentUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AgentUsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2019_06_18_011910_create_table_config.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2019_06_18_011910_create_table_config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2020_02_26_135755_create_table_payment_channel_detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2020_02_26_135755_create_table_payment_channel_detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200226_create_table_agent_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200226_create_table_agent_users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/resources/js/views/agent/users.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/resources/js/views/agent/users.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +187,7 @@
       <workItem from="1613743960115" duration="12928000" />
       <workItem from="1613839681342" duration="12576000" />
       <workItem from="1613931724511" duration="2341000" />
-      <workItem from="1613934185980" duration="50512000" />
+      <workItem from="1613934185980" duration="72508000" />
     </task>
     <task id="LOCAL-00001" summary="代理后台">
       <created>1612015158568</created>
@@ -284,7 +287,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613954644392</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="管理后台 返点配置">
+      <created>1614040256169</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1614040256169</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,20 +322,21 @@
     </state>
     <state x="444" y="27" width="810" height="881" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1584.881@67.27.1584.881" timestamp="1611952432543" />
     <state x="469" y="27" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1688.881@67.27.1688.881" timestamp="1612034266406" />
-    <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1613590813923">
-      <screen x="67" y="27" width="1851" height="899" />
+    <state x="724" y="232" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1614091821396">
+      <screen x="67" y="27" width="1847" height="895" />
     </state>
+    <state x="724" y="232" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1847.895@67.27.1847.895" timestamp="1614091821396" />
     <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1851.899@67.27.1851.899" timestamp="1613590813923" />
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1611856336075">
       <screen x="67" y="27" width="1584" height="886" />
     </state>
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1584.886@67.27.1584.886" timestamp="1611856336075" />
-    <state x="434" y="27" width="920" height="899" key="CommitChangelistDialog2" timestamp="1613954644189">
+    <state x="434" y="27" width="920" height="899" key="CommitChangelistDialog2" timestamp="1614040256021">
       <screen x="67" y="27" width="1847" height="895" />
     </state>
     <state x="402" y="27" width="1008" height="881" key="CommitChangelistDialog2/67.27.1688.881@67.27.1688.881" timestamp="1612042062654" />
     <state x="403" y="27" key="CommitChangelistDialog2/67.27.1691.878@67.27.1691.878" timestamp="1612286982679" />
-    <state x="434" y="27" width="1101" height="895" key="CommitChangelistDialog2/67.27.1847.895@67.27.1847.895" timestamp="1613954644189" />
+    <state x="434" y="27" width="1101" height="895" key="CommitChangelistDialog2/67.27.1847.895@67.27.1847.895" timestamp="1614040256021" />
     <state x="265" y="27" width="920" height="899" key="CommitChangelistDialog2/67.27.1851.899@67.27.1851.899" timestamp="1613855994851" />
     <state x="241" y="101" width="1350" height="734" key="DiffContextDialog" timestamp="1613583289972">
       <screen x="67" y="27" width="1851" height="899" />
@@ -333,28 +344,28 @@
     <state x="226" y="100" width="1350" height="734" key="DiffContextDialog/67.27.1688.881@67.27.1688.881" timestamp="1612042061700" />
     <state x="241" y="101" key="DiffContextDialog/67.27.1847.895@67.27.1847.895" timestamp="1612372820787" />
     <state x="241" y="101" key="DiffContextDialog/67.27.1851.899@67.27.1851.899" timestamp="1613583289972" />
-    <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl" timestamp="1614011132136">
+    <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl" timestamp="1614091987408">
       <screen x="67" y="27" width="1847" height="895" />
     </state>
     <state x="614" y="265" width="380" height="487" key="FileChooserDialogImpl/67.27.1429.886@67.27.1429.886" timestamp="1612104405094" />
     <state x="681" y="262" width="380" height="402" key="FileChooserDialogImpl/67.27.1605.874@67.27.1605.874" timestamp="1611839811999" />
     <state x="713" y="264" width="424" height="484" key="FileChooserDialogImpl/67.27.1688.881@67.27.1688.881" timestamp="1612030125334" />
-    <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl/67.27.1847.895@67.27.1847.895" timestamp="1614011132136" />
+    <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl/67.27.1847.895@67.27.1847.895" timestamp="1614091987408" />
     <state x="776" y="268" width="424" height="484" key="FileChooserDialogImpl/67.27.1851.899@67.27.1851.899" timestamp="1613928340511" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1611577675775" />
-    <state x="753" y="393" width="398" height="159" key="NewPhpFileDialog" timestamp="1613937147337">
+    <state x="753" y="393" width="398" height="159" key="NewPhpFileDialog" timestamp="1614079698597">
       <screen x="67" y="27" width="1847" height="895" />
     </state>
     <state x="655" y="387" width="398" height="159" key="NewPhpFileDialog/67.27.1584.881@67.27.1584.881" timestamp="1611952294366" />
-    <state x="753" y="393" width="398" height="159" key="NewPhpFileDialog/67.27.1847.895@67.27.1847.895" timestamp="1613937147337" />
-    <state x="683" y="161" width="841" height="624" key="find.popup" timestamp="1613939448892">
+    <state x="753" y="393" width="398" height="159" key="NewPhpFileDialog/67.27.1847.895@67.27.1847.895" timestamp="1614079698597" />
+    <state x="683" y="161" width="841" height="624" key="find.popup" timestamp="1614109264530">
       <screen x="67" y="27" width="1847" height="895" />
     </state>
     <state x="595" y="27" width="638" height="886" key="find.popup/67.27.1584.886@67.27.1584.886" timestamp="1611942128131" />
     <state x="602" y="158" width="624" height="624" key="find.popup/67.27.1605.874@67.27.1605.874" timestamp="1611849106866" />
     <state x="630" y="27" width="876" height="881" key="find.popup/67.27.1688.881@67.27.1688.881" timestamp="1612042669709" />
     <state x="632" y="27" width="771" height="890" key="find.popup/67.27.1693.890@67.27.1693.890" timestamp="1612993895589" />
-    <state x="683" y="161" width="841" height="624" key="find.popup/67.27.1847.895@67.27.1847.895" timestamp="1613939448892" />
+    <state x="683" y="161" width="841" height="624" key="find.popup/67.27.1847.895@67.27.1847.895" timestamp="1614109264530" />
     <state x="685" y="27" width="843" height="899" key="find.popup/67.27.1851.899@67.27.1851.899" timestamp="1613932384712" />
     <state x="654" y="213" key="run.anything.popup" timestamp="1613946731064">
       <screen x="67" y="27" width="1847" height="895" />

@@ -19,7 +19,7 @@
                         </el-select>
                     </el-form-item>
                 </el-form>
-                <el-button style="float: right;" type="primary" @click="handleAddMerchant" v-permission="'merchant/create'" size="small">新增下级</el-button>
+                <el-button style="float: right;" type="primary" @click="handleAddMerchant" size="small">新增商户</el-button>
             </div>
 
             <el-table :data="merchant_list" style="width: 100%;margin-top:30px;" border fixed>
@@ -66,6 +66,7 @@
                 <el-form-item label="管理员确认资金密码" class="is-required">
                     <el-input v-model="Merchant.repay_password" placeholder="请再次输入资金密码" type="password" />
                 </el-form-item>
+                <!--
                 <el-form-item label="开通渠道">
                     <el-checkbox-group  v-model="Merchant.payment_method" >
                         <el-checkbox v-for="(item,key) in payment_method" :key="key" :label="item.id" @change="checkPaymentMethod(item)">{{ item.name }}</el-checkbox>
@@ -75,6 +76,40 @@
                     <el-input v-model="Merchant.payment_method_fee[item.id]" :placeholder="'请输入'+item.name+'费率'" :disabled="!Merchant.payment_method.includes(item.id)">
                         <template slot="append"> %</template>
                     </el-input>
+                </el-form-item>
+                -->
+                <el-form-item label="商户代收手续费">
+                    <el-row v-for="(item,key) in Merchant.rebates.deposit_rebates" :key="key">
+                        <el-col :span="6">
+                            <el-checkbox v-model="item.status">{{item.name}}费率(%)</el-checkbox>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider
+                                :min="item.min_rate"
+                                :max="10"
+                                :step="0.1"
+                                :disabled="item.status!=true"
+                                v-model="item.rate"
+                                show-input>
+                            </el-slider>
+                        </el-col>
+                    </el-row>
+                    <el-divider></el-divider>
+                    <el-row>
+                        <el-col :span="6">
+                            <el-checkbox v-model="Merchant.rebates.withdrawal_rebate.status">商户代付手续费(元)</el-checkbox>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider
+                                :min="rebates_limit.withdrawal_rebate"
+                                :max="10"
+                                :step="0.1"
+                                :disabled="!Merchant.rebates.withdrawal_rebate.status"
+                                v-model="Merchant.rebates.withdrawal_rebate.amount"
+                                show-input>
+                            </el-slider>
+                        </el-col>
+                    </el-row>
                 </el-form-item>
             </el-form>
             <div style="text-align:right;">
@@ -101,8 +136,14 @@ const defaultMerchant = {
     password:'',
     pay_password: '',
     status:true,
-    payment_method:[],
-    payment_method_fee:{},
+    // payment_method:[],
+    // payment_method_fee:{},
+    rebates:{
+        deposit_rebates:{},
+        withdrawal_rebate:{},
+        user_deposit_rebate:{},
+        user_withdrawal_rebate:{},
+    },
 };
 
 export default {
@@ -124,6 +165,7 @@ export default {
 
             },
             choose_area:"0",
+            rebates_limit:{},
         };
     },
     computed: {

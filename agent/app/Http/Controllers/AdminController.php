@@ -279,7 +279,7 @@ class AdminController extends Controller
                 'nickname'  => $user->nickname,
                 'last_time' => $user->last_time,
                 'last_ip'   => $user->last_ip,
-                'role_name' => $user->id==1?'超级管理员':$user->roles()->name??'',
+                'role_name' => '超级管理员',
                 'permission'=> $permission,
                 'wechat_status' => !empty($user->unionid)?true:false,
             ]
