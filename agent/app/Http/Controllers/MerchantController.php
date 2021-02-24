@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientCreateRequest;
 use App\Http\Requests\CommonIndexRequest;
+use Common\API\Rebates;
 use Common\Models\Funds;
 use Common\Models\Merchants;
 use Common\Models\MerchantUsers;
@@ -41,7 +42,8 @@ class MerchantController extends Controller
             'agent_id',
             'account',
             'nickname',
-            'status'
+            'status',
+            //'extra'
         ])
             ->where('agent_id','=',auth()->id())
             ->orderBy('merchants.id', 'asc')
@@ -55,7 +57,31 @@ class MerchantController extends Controller
             $data['merchant_list'] = $merchant->toArray();
         }
 
-        $data['payment_method'] = PaymentMethod::select(['id','ident','name'])->where('status','=','1')->get();
+        //$data['payment_method'] = PaymentMethod::select(['id','ident','name'])->where('status','=','1')->get();
+
+        $data['rebates_limit'] = [
+            'deposit'     => [],
+        ];
+        $self_extra = json_decode(auth()->user()->extra,true);
+        if( !empty($self_extra['rebates']) && !empty($self_extra['rebates']['deposit_rebates'])){
+            foreach( $self_extra['rebates']['deposit_rebates'] as $key => $deposit_rebates ){
+                if( $deposit_rebates['status'] ){
+                    $payment_method_name = PaymentMethod::where('id','=',$deposit_rebates['payment_method_id'])->value('name');
+                    if( empty($payment_method_name) ) continue;
+
+                    $data['rebates_limit']['deposit'][] = [
+                        'id'        => $deposit_rebates['payment_method_id'],
+                        'name'      => $payment_method_name,
+                        'min_rate'  => $deposit_rebates['rate'],
+                    ];
+                }
+            }
+        }
+
+        $data['rebates_limit']['withdrawal'] = false;
+        if( !empty($self_extra['rebates']) && !empty($self_extra['rebates']['withdrawal_rebate']) && $self_extra['rebates']['withdrawal_rebate']['status'] ){
+            $data['rebates_limit']['withdrawal'] = $self_extra['rebates']['withdrawal_rebate']['amount']??false;
+        }
 
         return $this->response(1, 'Success!', $data);
     }
@@ -64,6 +90,14 @@ class MerchantController extends Controller
     {
         $system_key = \Common\Helpers\RSA::new();
         $merchant_key = \Common\Helpers\RSA::new();
+
+        $request_rebates        = $request->get('rebates');
+
+        $api_rebates = new Rebates();
+        $rebates = $api_rebates->generateAgent( $request_rebates );
+        if( !$rebates ){
+            return $this->response(0, $api_rebates->error_message);
+        }
 
         DB::beginTransaction();
         $merchant             = new Merchants();
@@ -79,26 +113,13 @@ class MerchantController extends Controller
 
         $merchant->status     = (int)$request->get('status',0)?true:false;
 
-        $payment_method     = $request->get('payment_method');
-        $payment_method_fee = $request->get('payment_method_fee');
-
-        $extra = [
-            'fee' => [],
-        ];
-        if( !empty($payment_method) && !empty($payment_method_fee) ){
-            foreach( $payment_method_fee as $key => $fee ){
-                if( in_array($key,$payment_method) ){
-                    $extra['fee'][$key] = $fee;
-
-                    // TODO:手续费检查，是否低于代理自生
-                }
-            }
-        }
-        $merchant->extra = json_encode($extra);
+        $merchant->extra = json_encode( [
+            'rebates' => $rebates,
+        ]);
 
         if( $merchant->save() ){
             // 新增商户资金记录
-            $fund = DB::table('funds')->insert(['type'=>'1','third_id' => $merchant->id]);
+            $fund = DB::table('funds')->insert(['type'=>'2','third_id' => $merchant->id]);
             if( $fund ) {
                 // TODO:新增商户系统超级管理员
                 $merchant_user = new MerchantUsers();
@@ -127,31 +148,50 @@ class MerchantController extends Controller
     {
         $id = (int)$request->get('id');
 
-        $client = Merchants::find($id);
+        $merchant = Merchants::find($id);
 
-        if (empty($client)) {
+        if (empty($merchant)) {
             return $this->response(0, '配置不存在');
         }
 
-        $client = $client->toArray();
+        $merchant = $merchant->toArray();
 
-        return $this->response(1, 'success', $client);
+        $extra = isset($merchant['extra']) ? json_decode($merchant['extra'],true) : [];
+        $merchant['rebates'] = $extra['rebates']??[
+                'deposit_rebates'       => [],
+                'withdrawal_rebate'     => [],
+                'user_deposit_rebate'   => [],
+                'user_withdrawal_rebate'=> [],
+            ];
+
+        return $this->response(1, 'success', $merchant);
     }
 
     public function putEdit(Request $request)
     {
         $id = (int)$request->get('id');
 
-        $client = Merchants::find($id);
-
-        if (empty($client)) {
-            return $this->response(0, '配置不存在失败');
+        $merchant = Merchants::find($id);
+        if (empty($merchant)) {
+            return $this->response(0, '商户不存在');
         }
 
-        $client->account     = $request->get('account',0);
-        $client->status      = (int)$request->get('status',0)?true:false;
+        $extra = json_decode($merchant->extra,true);
 
-        if ($client->save()) {
+        $request_rebates        = $request->get('rebates');
+
+        $api_rebates = new Rebates();
+        $rebates = $api_rebates->generateAgent( $request_rebates,$merchant );
+        if( !$rebates ){
+            return $this->response(0, $api_rebates->error_message);
+        }
+        $extra['rebates'] = $rebates;
+        $merchant->extra = json_encode($extra);
+
+        $merchant->account     = $request->get('account',0);
+        $merchant->status      = (int)$request->get('status',0)?true:false;
+
+        if ($merchant->save()) {
             return $this->response(1, '编辑成功');
         } else {
             return $this->response(0, '编辑失败');

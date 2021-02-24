@@ -86,13 +86,6 @@ class AgentUsersController extends Controller
 
     public function postCreate(Request $request)
     {
-        $users                  = new AgentUsers();
-        $users->username        = $request->get('username','');
-        $users->nickname        = $request->get('nickname','');
-        $users->password        = $request->get('password','');
-        //$users->user_group_id   = $request->get('user_group_id');
-        $users->status          = (int)$request->get('status',0)?true:false;
-
         $request_rebates        = $request->get('rebates');
 
         $api_rebates = new Rebates();
@@ -101,15 +94,30 @@ class AgentUsersController extends Controller
             return $this->response(0, $api_rebates->error_message);
         }
 
+        DB::beginTransaction();
+        $users                  = new AgentUsers();
+        $users->username        = $request->get('username','');
+        $users->nickname        = $request->get('nickname','');
+        $users->password        = $request->get('password','');
+        //$users->user_group_id   = $request->get('user_group_id');
+        $users->status          = (int)$request->get('status',0)?true:false;
+
         $users->extra = json_encode([
             'rebates'   => $rebates,
         ]);
 
         if( $users->save() ){
-            return $this->response(1, '添加成功');
-        } else {
-            return $this->response(0, '添加失败');
+            // 新增商户资金记录
+            $fund = DB::table('funds')->insert(['type'=>'1','third_id' => $users->id]);
+
+            if( $fund ){
+                DB::commit();
+                return $this->response(1, '添加成功');
+            }
         }
+
+        DB::rollBack();
+        return $this->response(0, '添加失败');
     }
 
     public function getEdit(Request $request)

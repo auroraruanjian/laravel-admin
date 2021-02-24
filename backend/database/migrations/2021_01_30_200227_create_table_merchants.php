@@ -28,8 +28,9 @@ class CreateTableMerchants extends Migration
             $table->string('md5_key','')->comment('MD5签名校验秘钥');
             $table->jsonb('payment_channel')->default(json_encode([]))->comment('分配的支付通道以及费率');
             $table->tinyInteger('status')->default(0)->comment('状态:0 正常，1 冻结');
-            $table->jsonb('extra')->default(json_encode([]))->comment('扩展数据，保存费率');
+            $table->jsonb('extra')->default(json_encode([]))->comment('扩展数据，存放返点{rebates,} 费率数据');
 
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

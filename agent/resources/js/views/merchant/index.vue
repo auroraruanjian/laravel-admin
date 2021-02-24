@@ -101,7 +101,7 @@
                         </el-col>
                         <el-col :span="16">
                             <el-slider
-                                :min="rebates_limit.withdrawal_rebate"
+                                :min="rebates_limit.withdrawal"
                                 :max="10"
                                 :step="0.1"
                                 :disabled="!Merchant.rebates.withdrawal_rebate.status"
@@ -136,13 +136,9 @@ const defaultMerchant = {
     password:'',
     pay_password: '',
     status:true,
-    // payment_method:[],
-    // payment_method_fee:{},
     rebates:{
         deposit_rebates:{},
         withdrawal_rebate:{},
-        user_deposit_rebate:{},
-        user_withdrawal_rebate:{},
     },
 };
 
@@ -152,7 +148,6 @@ export default {
         return {
             Merchant: Object.assign({}, defaultMerchant),
             merchant_list: [],
-            payment_method:[],
             total: 0,
             listQuery: {
                 page: 1,
@@ -189,7 +184,7 @@ export default {
             if( result.data.code == 1 ){
                 this.total = result.data.data.total;
                 this.merchant_list = result.data.data.merchant_list;
-                this.payment_method = result.data.data.payment_method;
+                this.rebates_limit = result.data.data.rebates_limit;
             }else{
                 this.$message.error(result.data.message);
             }
@@ -201,13 +196,41 @@ export default {
         handleAddMerchant(){
             this.Merchant = Object.assign({}, defaultMerchant)
 
+            this.Merchant.rebates.deposit_rebates = [];
+            for(let item of this.rebates_limit['deposit']){
+                this.Merchant.rebates.deposit_rebates.push({
+                    name:item.name,
+                    rate:0,
+                    status:false,
+                    id:item.id,
+                    min_rate:item.min_rate,
+                });
+            }
+
             this.dialogType = 'new'
             this.dialogVisible = true
         },
         async handleEdit( scope ){
             this.loading =  true;
             let current_Merchant = await getMerchant(scope.row.id);
-            this.Merchant = current_Merchant.data.data;
+            this.Merchant = JSON.parse(JSON.stringify(current_Merchant.data.data));
+
+            this.Merchant.rebates.deposit_rebates = [];
+            for(let item of this.rebates_limit['deposit']){
+                let rate = (typeof current_Merchant.data.data.rebates.deposit_rebates[item.id] != 'undefined')?current_Merchant.data.data.rebates.deposit_rebates[item.id].rate:0;
+                let status = (typeof current_Merchant.data.data.rebates.deposit_rebates[item.id] != 'undefined')?current_Merchant.data.data.rebates.deposit_rebates[item.id].status:false;
+
+                this.Merchant.rebates.deposit_rebates.push({
+                    name:item.name,
+                    rate:rate,
+                    status:status,
+                    id:item.id,
+                    min_rate:item.min_rate,
+                });
+            }
+            if( current_Merchant.data.data.rebates.withdrawal_rebate instanceof Array && current_users.data.data.rebates.withdrawal_rebate.length == 0 ){
+                this.agent_users.rebates.withdrawal_rebate = {};
+            }
 
             this.dialogType = 'edit'
             this.dialogVisible = true
@@ -247,11 +270,6 @@ export default {
                 type: type
             })
         },
-        checkPaymentMethod( item )
-        {
-            console.log(item);
-            return false;
-        }
     },
     watch: {
         parent_id(){

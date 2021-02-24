@@ -136,7 +136,7 @@ class ChildAgentController extends Controller
 
         if( $agent->save() ){
             // 新增代理资金记录
-            $merchant_fund = DB::table('funds')->insert(['type'=>'3','third_id' => $agent->id]);
+            $merchant_fund = DB::table('funds')->insert(['type'=>'1','third_id' => $agent->id]);
             if( !$merchant_fund ) {
                 DB::rollBack();
                 return $this->response(0, '资金添加失败');
@@ -168,7 +168,7 @@ class ChildAgentController extends Controller
                 'withdrawal_rebate'     => [],
                 'user_deposit_rebate'   => [],
                 'user_withdrawal_rebate'=> [],
-            ];;
+            ];
 
         return $this->response(1, 'success', $agent_user);
     }
@@ -178,6 +178,7 @@ class ChildAgentController extends Controller
         $id = (int)$request->get('id');
 
         $agent = AgentUsers::find($id);
+        $extra = json_decode($agent->extra,true);
 
         if (empty($agent)) {
             return $this->response(0, '代理不存在！');
