@@ -94,7 +94,7 @@ class MerchantController extends Controller
         $request_rebates        = $request->get('rebates');
 
         $api_rebates = new Rebates();
-        $rebates = $api_rebates->generateAgent( $request_rebates );
+        $rebates = $api_rebates->generateMerchant( $request_rebates );
         if( !$rebates ){
             return $this->response(0, $api_rebates->error_message);
         }
@@ -181,7 +181,7 @@ class MerchantController extends Controller
         $request_rebates        = $request->get('rebates');
 
         $api_rebates = new Rebates();
-        $rebates = $api_rebates->generateAgent( $request_rebates,$merchant );
+        $rebates = $api_rebates->generateMerchant( $request_rebates,$merchant );
         if( !$rebates ){
             return $this->response(0, $api_rebates->error_message);
         }

@@ -194,8 +194,9 @@ export default {
 
         },
         handleAddMerchant(){
-            this.Merchant = Object.assign({}, defaultMerchant)
+            this.Merchant = JSON.parse(JSON.stringify(defaultMerchant));//Object.assign({}, defaultMerchant)
 
+            console.log(this.Merchant.rebates,defaultMerchant);
             this.Merchant.rebates.deposit_rebates = [];
             for(let item of this.rebates_limit['deposit']){
                 this.Merchant.rebates.deposit_rebates.push({
@@ -206,6 +207,10 @@ export default {
                     min_rate:item.min_rate,
                 });
             }
+            this.Merchant.rebates.withdrawal_rebate = {
+                status:false,
+                amount:0
+            };
 
             this.dialogType = 'new'
             this.dialogVisible = true
