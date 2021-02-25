@@ -27,8 +27,30 @@
                 <el-table-column align="header-center" label="账户" prop="account"></el-table-column>
                 <el-table-column align="header-center" label="商家姓名" prop="nickname"></el-table-column>
                 <el-table-column align="header-center" label="余额" prop="balance"></el-table-column>
-                <el-table-column align="header-center" label="通道" prop="balance"></el-table-column>
-                <el-table-column align="header-center" label="费率" prop="balance"></el-table-column>
+                <el-table-column align="header-center" label="通道" width="180">
+                    <template slot-scope="scope">
+                        <div v-for="(item,key) in rebates_limit.deposit">
+                            {{ scope.row.extra.rebates.deposit_rebates[item.id].payment_method_name }}:
+                            <el-tag type="success" v-if="scope.row.extra.rebates.deposit_rebates[item.id].status">已开通</el-tag>
+                            <el-tag type="danger" v-else>未开通</el-tag>
+                        </div>
+                        <div v-if="typeof scope.row.extra.rebates.withdrawal_rebate != 'undefined' && typeof scope.row.extra.rebates.withdrawal_rebate.status != 'undefined' ">
+                            代付通道:
+                            <el-tag type="success" v-if="scope.row.extra.rebates.withdrawal_rebate.status">已开通</el-tag>
+                            <el-tag type="danger" v-else>未开通</el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column align="header-center" label="费率" width="200">
+                    <template slot-scope="scope">
+                        <div v-for="(item,key) in rebates_limit.deposit">
+                            {{ scope.row.extra.rebates.deposit_rebates[item.id].payment_method_name+'费率' }}:<span style="color:red">{{ scope.row.extra.rebates.deposit_rebates[item.id].rate }}</span> %
+                        </div>
+                        <div v-if="typeof scope.row.extra.rebates.withdrawal_rebate != 'undefined' && typeof scope.row.extra.rebates.withdrawal_rebate.status != 'undefined' ">
+                            代付手续费:<span style="color:red">{{ scope.row.extra.rebates.withdrawal_rebate.amount }}</span> %
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column align="header-center" label="今日收款" prop="balance"  width="220"></el-table-column>
                 <el-table-column align="header-center" label="今日收款分类(已扣手续费)" prop="last_ip" width="150"></el-table-column>
                 <el-table-column align="header-center" label="今日收款分类(未扣手续费)" prop="last_ip" width="150"></el-table-column>

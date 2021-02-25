@@ -38,13 +38,19 @@ class MerchantController extends Controller
         ];
 
         $merchant = Merchants::select([
-            'id',
-            'agent_id',
-            'account',
-            'nickname',
-            'status',
-            //'extra'
+            'merchants.id',
+            'merchants.agent_id',
+            'merchants.account',
+            'merchants.nickname',
+            'merchants.status',
+            'merchants.extra',
+            'funds.balance',
+            'funds.hold_balance',
         ])
+            ->leftJoin('funds',function($join){
+                $join->on('funds.third_id','merchants.id')
+                    ->where('funds.type','=','2');
+            })
             ->where('agent_id','=',auth()->id())
             ->orderBy('merchants.id', 'asc')
             ->skip($start)
@@ -57,7 +63,28 @@ class MerchantController extends Controller
             $data['merchant_list'] = $merchant->toArray();
         }
 
-        //$data['payment_method'] = PaymentMethod::select(['id','ident','name'])->where('status','=','1')->get();
+
+        $payment_method = PaymentMethod::select([
+            'id',
+            'ident',
+            'name',
+        ])
+            ->where('status','=',true)
+            ->get()
+            ->toArray();
+        $_prefix_payment_method = [];
+        foreach($payment_method as &$payment_method){
+            $_prefix_payment_method[$payment_method['id']] = $payment_method;
+        }
+
+        foreach( $data['merchant_list'] as &$merchant ){
+            $merchant['extra'] = json_decode($merchant['extra'],true);
+            if( !empty($merchant['extra']['rebates']) && !empty($merchant['extra']['rebates']['deposit_rebates']) ){
+                foreach( $merchant['extra']['rebates']['deposit_rebates'] as $key => $deposit_rebate ){
+                    $merchant['extra']['rebates']['deposit_rebates'][$key]['payment_method_name'] = $_prefix_payment_method[$key]['name']??'';
+                }
+            }
+        }
 
         $data['rebates_limit'] = [
             'deposit'     => [],
@@ -66,8 +93,8 @@ class MerchantController extends Controller
         if( !empty($self_extra['rebates']) && !empty($self_extra['rebates']['deposit_rebates'])){
             foreach( $self_extra['rebates']['deposit_rebates'] as $key => $deposit_rebates ){
                 if( $deposit_rebates['status'] ){
-                    $payment_method_name = PaymentMethod::where('id','=',$deposit_rebates['payment_method_id'])->value('name');
-                    if( empty($payment_method_name) ) continue;
+                    if( empty($_prefix_payment_method[$deposit_rebates['payment_method_id']]) ) continue;
+                    $payment_method_name = $_prefix_payment_method[$deposit_rebates['payment_method_id']]['name'];
 
                     $data['rebates_limit']['deposit'][] = [
                         'id'        => $deposit_rebates['payment_method_id'],
