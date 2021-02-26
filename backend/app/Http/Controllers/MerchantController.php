@@ -42,7 +42,7 @@ class MerchantController extends Controller
         ])
             ->leftJoin('funds',function( $join ){
                 $join->on('funds.third_id','=','merchants.id')
-                    ->where('funds.type','=','1');
+                    ->where('funds.type','=','2');
             })
             ->orderBy('merchants.id', 'asc')
             ->skip($start)

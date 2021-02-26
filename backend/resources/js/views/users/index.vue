@@ -45,6 +45,41 @@
                             inactive-color="#ddd">
                     </el-switch>
                 </el-form-item>
+
+                <el-form-item label="商户费率">
+                    <el-divider>散户代收佣金</el-divider>
+                    <el-row>
+                        <el-col :span="6">
+                            <el-checkbox v-model="users.rebates.user_deposit_rebate.status">散户代收佣金费率(%)</el-checkbox>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider
+                                :step="0.1"
+                                :min="0"
+                                :max="rebates_limit.user_deposit_rebate"
+                                :disabled="!users.rebates.user_deposit_rebate.status"
+                                v-model="users.rebates.user_deposit_rebate.rate"
+                                show-input>
+                            </el-slider>
+                        </el-col>
+                    </el-row>
+                    <el-divider>散户代付佣金</el-divider>
+                    <el-row>
+                        <el-col :span="6">
+                            <el-checkbox v-model="users.rebates.user_withdrawal_rebate.status">散户代付佣金(元)</el-checkbox>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider
+                                :step="0.1"
+                                :min="0"
+                                :max="rebates_limit.user_withdrawal_rebate"
+                                :disabled="!users.rebates.user_withdrawal_rebate.status"
+                                v-model="users.rebates.user_withdrawal_rebate.amount"
+                                show-input>
+                            </el-slider>
+                        </el-col>
+                    </el-row>
+                </el-form-item>
             </el-form>
             <div style="text-align:right;">
                 <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
@@ -69,6 +104,10 @@
         nickname: '',
         password:'',
         status:true,
+        rebates:{
+            user_deposit_rebate:{},
+            user_withdrawal_rebate:{},
+        }
     };
 
     export default {
@@ -85,6 +124,7 @@
                 dialogVisible: false,
                 dialogType: 'new',
                 loading:false,
+                rebates_limit:{},
             };
         },
         computed: {
@@ -108,6 +148,7 @@
                 if( result.data.code == 1 ){
                     this.total = result.data.data.total;
                     this.users_list = result.data.data.users_list;
+                    this.rebates_limit = result.data.data.rebates_limit;
                 }else{
                     this.$message.error(result.data.message);
                 }
