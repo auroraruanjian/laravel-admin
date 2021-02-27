@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Common\API\MerchantFund;
+use Common\API\Funds;
 use Common\Models\Deposits;
 use Common\Models\Orders;
 use Illuminate\Http\Request;
@@ -160,9 +160,9 @@ class DepositsController extends Controller
                 $order->amount = $deposit->manual_amount;
                 $order->comment = $deposit->admin_remark;
                 $order->ip = request()->ip();
-                if (!MerchantFund::modifyFund($order, 'ZXCZ')) {
+                if (!Funds::modifyFund($order, 'ZXCZ')) {
                     DB::rollback();
-                    return $this->response(1, MerchantFund::$error_msg);
+                    return $this->response(1, Funds::$error_msg);
                 }
 
                 $deposit->status = $status;

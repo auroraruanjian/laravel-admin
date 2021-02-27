@@ -12,6 +12,26 @@ class AgentUsersSeeder extends Seeder
     public function run()
     {
         //
-        factory(\Common\Models\AgentUsers::class, 5)->create();
+        //factory(\Common\Models\AgentUsers::class, 5)->create();
+        DB::table('agent_users')->insert([
+            'username' => '童丽',
+            'nickname' => '童丽',
+            'password' => bcrypt('123456'),
+            'extra' => json_encode([
+                'rebates'   => [
+                    'deposit_rebates'       => [],
+                    'withdrawal_rebate'     => [],
+                    'user_deposit_rebate'   => [],
+                    'user_withdrawal_rebate'=> [],
+                ]
+            ])
+        ]);
+
+        DB::table('funds')->insert([
+            [
+                'type'          => 1,
+                'third_id'      => 1,
+            ],
+        ]);
     }
 }

@@ -24,7 +24,11 @@ class MerchantsSeeder extends Seeder
                 'merchant_private_key'  => $merchant['private'],
                 'md5_key'               => '3c6e0b8a9c15224a8228b9a98ca1531d',
                 'status'                => 0,
-            ],
+                'extra'                 => json_encode([
+                    'deposit_rebate'   => [],
+                    'withdrawal_rebate'=> [],
+                ]),
+            ]
         ]);
 
         DB::table('merchant_users')->insert([
@@ -39,7 +43,7 @@ class MerchantsSeeder extends Seeder
 
         DB::table('funds')->insert([
             [
-                'type'          => 1,
+                'type'          => 2,
                 'third_id'      => 1,
             ],
         ]);

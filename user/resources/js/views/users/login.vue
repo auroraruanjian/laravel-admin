@@ -92,7 +92,7 @@
             }
             return {
                 loginForm: {
-                    username: '童丽',
+                    username: 'nick188',
                     password: '123456'
                 },
                 loginRules: {

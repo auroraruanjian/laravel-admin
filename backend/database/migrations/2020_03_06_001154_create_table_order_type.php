@@ -20,7 +20,7 @@ class CreateTableOrderType extends Migration
             $table->tinyInteger('display')->default(0)->comment('是否显示给用户，0：不显示，1：显示）');
             $table->tinyInteger('operation')->default(0)->comment('账变对余额影响的操作, 0：无操作, 1：加钱，2：扣钱');
             $table->tinyInteger('hold_operation')->default(0)->comment('冻结金额影响的操作, 0：无操作, 1：加钱，2：扣钱');
-            $table->smallInteger('category')->default(0)->comment('分类，1, 冲提:2, 三方：3');
+            $table->smallInteger('category')->default(0)->comment('分类，1:冲提 ,2:代理, 3:商户 4:散户');
             $table->string('description', 32)->default('')->comment('帐变类型描述');
         });
 
@@ -30,6 +30,17 @@ class CreateTableOrderType extends Migration
     private function _data()
     {
         DB::table('order_type')->insert([
+
+            [
+                'name'           => '派单冻结余额到冻结账户',
+                'ident'          => 'PDDJ',
+                'display'        => 1,
+                'operation'      => 2,
+                'hold_operation' => 1,
+                'category'       => 4,
+                'description'    => '散户接单，冻结余额',
+            ],
+            /*
             [
                 'name'           => '在线充值',
                 'ident'          => 'ZXCZ',
@@ -139,6 +150,7 @@ class CreateTableOrderType extends Migration
                 'category'       => 2,
                 'description'    => '管理员减扣',
             ],
+            */
         ]);
     }
 

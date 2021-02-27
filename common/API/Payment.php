@@ -11,6 +11,8 @@ use Common\Models\PaymentMethod;
 use Common\Models\UserPaymentMethods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Validator;
 
 class Payment
@@ -87,6 +89,10 @@ class Payment
 
                     // TODO: 检测限额
 
+                    // TODO: 检测散户保证金是否充足
+
+                    //
+
                     $account_number = $user_payment_method[0]['id'];
                     $payee_user_id  = $user_payment_method[0]['user_id'];
                 }
@@ -94,6 +100,11 @@ class Payment
         }else{
             $account_number = $channel_detail['channel_param']['merchant_id']??$channel_detail['channel_param']['appid'];
         }
+
+        // 生成附言：
+        $deposit_postscript = Str::random(4);
+
+        DB::beginTransaction();
 
         // 添加支付订单记录
         $deposits_model = new Deposits();
@@ -114,10 +125,30 @@ class Payment
             'method'            => $this->decrypt_data['method'],
             'bank_code'         => $this->decrypt_data['bank_code']??'',
         ]);
+        $deposits_model->remark = $deposit_postscript;
 
         try {
             // 保存订单记录
-            $deposits_model->save();
+            if( $deposits_model->save() ){
+                // 如果是散户接单，则冻结散户保证金
+                if( $payee_user_id != 0 ){
+                    $order = new Orders();
+                    $order->type = 3;
+                    $order->from_id = $payee_user_id;
+                    $order->amount = $this->decrypt_data['amount'];
+                    $order->comment = '充值订单号：'.$deposits_model->id;
+                    $order->ip = request()->ip();
+
+                    $order_type_ident = 'PDDJ';
+                    if( !Funds::modifyFund( $order , $order_type_ident ) ){
+                        Log::error("充值订单'.$order_type_ident . '[#' . $deposits_model->id . ' - 附言:' . $deposit_postscript . ']'.'生成失败!");
+                        DB::rollBack();
+                        return [-13,'充值订单生成失败！'.Funds::$error_msg , []];
+                    }
+                }
+
+                DB::commit();
+            }
         } catch (\PDOException $e) {
             \Log::error($e);
             // TODO:触发系统告警-程序
@@ -389,9 +420,9 @@ class Payment
                     $order->comment = $deposit_record->id;
                     $order->ip = request()->ip();
 
-                    if( !MerchantFund::modifyFund( $order , 'ZXCZ' ) ){
+                    if( !Funds::modifyFund( $order , 'ZXCZ' ) ){
                         DB::rollBack();
-                        \Log::error('充提帐变写入失败！：'.MerchantFund::$error_msg, ['third_order'=>$third_order]);
+                        \Log::error('充提帐变写入失败！：'.Funds::$error_msg, ['third_order'=>$third_order]);
                         return $return_data;
                     }
 
@@ -403,9 +434,9 @@ class Payment
                         $order->client_type = 1;
                         $order->comment = $deposit_record->id;
                         $order->ip = request()->ip();
-                        if( !MerchantFund::modifyFund( $order , 'CZSXF' ) ){
+                        if( !Funds::modifyFund( $order , 'CZSXF' ) ){
                             DB::rollBack();
-                            \Log::error('手续费帐变写入失败！'.MerchantFund::$error_msg, ['third_order'=>$third_order]);
+                            \Log::error('手续费帐变写入失败！'.Funds::$error_msg, ['third_order'=>$third_order]);
                             return $return_data;
                         }
                     }

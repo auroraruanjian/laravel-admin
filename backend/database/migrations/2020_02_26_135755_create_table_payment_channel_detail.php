@@ -42,7 +42,7 @@ class CreateTablePaymentChannelDetail extends Migration
                 'name'                  => '点对点支付',
                 'payment_category_id'   => 1,
                 'channel_param'         => json_encode([]),
-                'status'                => true,
+                'status'                => 0,
             ]
         ]);
 

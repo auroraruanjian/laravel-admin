@@ -25,8 +25,6 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
         'extra' => json_encode([
             'rebates'   => [
-                'deposit_rebates'       => [],
-                'withdrawal_rebate'     => [],
                 'user_deposit_rebate'   => [],
                 'user_withdrawal_rebate'=> [],
             ]
@@ -39,5 +37,13 @@ $factory->define(\Common\Models\AgentUsers::class, function (Faker $faker) {
         'username' => $faker->name,
         'nickname' => $faker->name,
         'password' => bcrypt('123456'),
+        'extra' => json_encode([
+            'rebates'   => [
+                'deposit_rebates'       => [],
+                'withdrawal_rebate'     => [],
+                'user_deposit_rebate'   => [],
+                'user_withdrawal_rebate'=> [],
+            ]
+        ])
     ];
 });
