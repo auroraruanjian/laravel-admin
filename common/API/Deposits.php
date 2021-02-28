@@ -2,6 +2,7 @@
 namespace Common\API;
 
 
+use Carbon\Carbon;
 use Common\Models\AgentUsers;
 use Common\Models\Charge;
 use Common\Models\Merchants;
@@ -32,7 +33,7 @@ class Deposits
      * @param integer $status
      * @return mixed
      */
-    public static function done( $id , $status)
+    public static function done( $id , $status ,$real_amount = null ,$admin_id=0 )
     {
         $deposit = \Common\Models\Deposits::select([
             'id',
@@ -58,6 +59,7 @@ class Deposits
         // 成功
         }else{
             $deposit->status = 2;
+            $deposit->real_amount = !is_null($real_amount)?$real_amount:$deposit->amount;
 
             // 商户余额增加
             $order = new Orders();
@@ -72,6 +74,9 @@ class Deposits
                 Log::error(self::$error_message);
                 return false;
             }
+
+            // 记录商户订单ID
+            $deposit->order_id = $order->id;
 
 
             // -------------------------------------------------------------------
@@ -331,6 +336,9 @@ class Deposits
             // -------------------------------------------------------------------
         }
         // 如果为散户接单，则 返还或扣除 散户冻结金额
+
+        $deposit->done_at = Carbon::now();
+        $deposit->cash_admin_id = $admin_id;
 
         // 修改订单状态
         if( $deposit->save() ){

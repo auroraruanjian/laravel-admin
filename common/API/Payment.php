@@ -102,7 +102,7 @@ class Payment
         }
 
         // 生成附言：
-        $deposit_postscript = Str::random(4);
+        $deposit_postscript = Str::random(6);
 
         DB::beginTransaction();
 
@@ -125,7 +125,7 @@ class Payment
             'method'            => $this->decrypt_data['method'],
             'bank_code'         => $this->decrypt_data['bank_code']??'',
         ]);
-        $deposits_model->remark = $deposit_postscript;
+        $deposits_model->remark = '附言:'.$deposit_postscript;
 
         try {
             // 保存订单记录

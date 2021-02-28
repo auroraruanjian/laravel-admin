@@ -4,28 +4,36 @@
             <div class="handle-box">
                 <el-row :gutter="20">
                     <el-form :inline="true" :model="form" size="small">
-                        <el-form-item label="日期查询">
-                            <el-date-picker
-                                style="width: 350px;"
-                                v-model="form.time"
-                                type="monthrange"
-                                range-separator="至"
-                                start-placeholder="开始时间"
-                                end-placeholder="结束时间">
-                            </el-date-picker>
-                        </el-form-item>
-                        <el-form-item label="帐变类型">
-                            <el-select v-model="form.order_type_id" placeholder="帐变类型">
-                                <el-option label="区域一" value="shanghai"></el-option>
-                                <el-option label="区域二" value="beijing"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="用户名查询">
-                            <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="getAllRecord">查询</el-button>
-                        </el-form-item>
+                        <el-col :span="8">
+                            <el-form-item label="日期查询">
+                                <el-date-picker
+                                    style="width: 350px;"
+                                    v-model="form.time"
+                                    type="datetimerange"
+                                    range-separator="至"
+                                    start-placeholder="开始时间"
+                                    end-placeholder="结束时间">
+                                </el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
+                            <el-form-item label="帐变类型">
+                                <el-select v-model="form.order_type_id" placeholder="帐变类型">
+                                    <el-option label="全部" value=""></el-option>
+                                    <el-option v-for="(item,key) in order_type" :key="key" :label="item.name" :value="item.id"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
+                            <el-form-item label="用户名查询">
+                                <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-form-item>
+                                <el-button type="primary" @click="getAllRecord">查询</el-button>
+                            </el-form-item>
+                        </el-col>
                     </el-form>
                 </el-row>
             </div>
@@ -92,10 +100,13 @@ export default {
             },
             loading:false,
             form:{
-                order_type_id:0,
+                time:[
+
+                ],
+                order_type_id:'',
                 username:'',
-                time:[],
-            }
+            },
+            order_type:[],
         };
     },
     computed: {
@@ -112,12 +123,13 @@ export default {
         async getAllRecord(){
             this.loading =  true;
 
-            let data = this.listQuery;
+            let data = Object.assign(this.listQuery,this.form);
             let result = await getAllRecord(data);
 
             if( result.data.code == 1 ){
                 this.total = result.data.data.total;
                 this.orders = result.data.data.orders;
+                this.order_type = result.data.data.order_type;
             }else{
                 this.$message.error(result.data.msg);
             }

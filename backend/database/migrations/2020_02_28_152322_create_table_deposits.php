@@ -19,7 +19,7 @@ class CreateTableDeposits extends Migration
             $table->smallInteger('payment_channel_detail_id')->comment('支付通道ID');
 
             $table->decimal('amount', 15, 4)->comment('交易金额');
-            $table->decimal('real_amount', 15, 4)->nullable()->comment('实际支付金额');
+            $table->decimal('real_amount', 15, 4)->default(0)->comment('实际支付金额');
 
             $table->string('merchant_order_no',60)->comment('商户订单号');
             $table->string('third_order_no', 100)->default('')->comment('银行交易流水或是第三方交易流水');
@@ -28,7 +28,7 @@ class CreateTableDeposits extends Migration
             $table->string('accountant_admin_id')->nullable()->comment('会计，通过审核的管理员');
             $table->string('cash_admin_id')->nullable()->comment('出纳，确认充值的管理员');
 
-            $table->tinyInteger('status')->default(0)->comment('状态，０支付中，１已审核，２充值成功，３充值失败');
+            $table->tinyInteger('status')->default(0)->comment('状态，０支付中，１已审核，２充值成功，３充值失败，4超时订单，5:作废订单');
             $table->tinyInteger('report_status')->default(0)->comment('报表汇总状态：0. 未开始; 1. 进行中; 2. 完成');
 
             $table->string('manual_postscript')->default('')->comment('人工输入附言');

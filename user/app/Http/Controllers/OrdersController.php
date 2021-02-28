@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Common\Models\Orders;
+use Common\Models\OrderType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +27,22 @@ class OrdersController extends Controller
 
         $start = ($page - 1) * $limit;
 
-        $order_type_id = $request->get('order_type_id');
+        $param = [];
+        $param['order_type_id'] = $request->get('order_type_id');
+        $param['time']          = $request->get('time');
+        $param['username']      = $request->get('username');
+
+        $where = function( $query ) use( $param ) {
+            if( !empty($param['time']) ){
+                $query = $query->whereBetween('orders.created_at',[$param['time'][0],$param['time'][1]]);
+            }
+            if( !empty($param['order_type_id']) ){
+                $query = $query->where('orders.order_type_id','=',$param['order_type_id']);
+            }
+
+            return $query->where('orders.type','=','3');
+        };
+
         $user = auth()->user();
 
         // TODO:获取 银行卡记录等
@@ -53,12 +69,9 @@ class OrdersController extends Controller
                 $query->where('orders.from_id', '=',$user->id)
                     ->orWhere('orders.to_id','=',$user->id);
             })
-            ->where([
-                ['orders.type','=','3']
-            ]);
+            ->where($where);
 
-        $orders = $model
-            ->skip($start)
+        $orders = $model->skip($start)
             ->take($limit)
             ->orderBy('id','desc')
             ->get()
@@ -70,9 +83,19 @@ class OrdersController extends Controller
 
         $total = $model->count();
 
+        $order_type = OrderType::select([
+            'id',
+            'ident',
+            'name'
+        ])
+            ->whereIn('category',[1,4])
+            ->get()
+            ->toArray();
+
         return $this->response(1,'success',[
             'orders'    => $orders,
             'total'     => $total,
+            'order_type'=> $order_type
         ]);
     }
 
