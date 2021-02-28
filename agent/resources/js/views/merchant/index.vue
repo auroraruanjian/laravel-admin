@@ -30,8 +30,8 @@
                 <el-table-column align="header-center" label="通道" width="180">
                     <template slot-scope="scope">
                         <div v-for="(item,key) in rebates_limit.deposit">
-                            {{ scope.row.extra.rebates.deposit_rebates[item.id].payment_method_name }}:
-                            <el-tag type="success" v-if="scope.row.extra.rebates.deposit_rebates[item.id].status">已开通</el-tag>
+                            {{ item.name }}:
+                            <el-tag type="success" v-if="typeof scope.row.extra.rebates.deposit_rebates[item.id] != 'undefined' && scope.row.extra.rebates.deposit_rebates[item.id].status">已开通</el-tag>
                             <el-tag type="danger" v-else>未开通</el-tag>
                         </div>
                         <div v-if="typeof scope.row.extra.rebates.withdrawal_rebate != 'undefined' && typeof scope.row.extra.rebates.withdrawal_rebate.status != 'undefined' ">
@@ -44,7 +44,9 @@
                 <el-table-column align="header-center" label="费率" width="200">
                     <template slot-scope="scope">
                         <div v-for="(item,key) in rebates_limit.deposit">
-                            {{ scope.row.extra.rebates.deposit_rebates[item.id].payment_method_name+'费率' }}:<span style="color:red">{{ scope.row.extra.rebates.deposit_rebates[item.id].rate }}</span> %
+                            {{ item.name+'费率' }}:<span style="color:red">
+                            {{ typeof scope.row.extra.rebates.deposit_rebates[item.id]!='undefined'?scope.row.extra.rebates.deposit_rebates[item.id].rate:'' }}
+                        </span> %
                         </div>
                         <div v-if="typeof scope.row.extra.rebates.withdrawal_rebate != 'undefined' && typeof scope.row.extra.rebates.withdrawal_rebate.status != 'undefined' ">
                             代付手续费:<span style="color:red">{{ scope.row.extra.rebates.withdrawal_rebate.amount }}</span> %
@@ -100,7 +102,7 @@
                     </el-input>
                 </el-form-item>
                 -->
-                <el-form-item label="商户代收手续费">
+                <el-form-item label="商户手续费">
                     <el-row v-for="(item,key) in Merchant.rebates.deposit_rebates" :key="key">
                         <el-col :span="6">
                             <el-checkbox v-model="item.status">{{item.name}}费率(%)</el-checkbox>
@@ -255,8 +257,8 @@ export default {
                     min_rate:item.min_rate,
                 });
             }
-            if( current_Merchant.data.data.rebates.withdrawal_rebate instanceof Array && current_users.data.data.rebates.withdrawal_rebate.length == 0 ){
-                this.agent_users.rebates.withdrawal_rebate = {};
+            if( current_Merchant.data.data.rebates.withdrawal_rebate instanceof Array && current_Merchant.data.data.rebates.withdrawal_rebate.length == 0 ){
+                this.Merchant.rebates.withdrawal_rebate = {};
             }
 
             this.dialogType = 'edit'

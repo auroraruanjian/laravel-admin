@@ -72,7 +72,7 @@ class AdminController extends Controller
                 "child"         => [
                     [
                         "rule"=> "orders/index",
-                        "name"=> "Q币售出",
+                        "name"=> "Q币买卖",
                         "extra"=> [
                             "icon"      => "list",
                             "component" => "orders/index",

@@ -14,14 +14,21 @@ class UsersSeeder extends Seeder
 
         DB::table('users')->insert([
             [
+                'agent_id'      => 1,
                 'username'      => 'nick188',
                 'nickname'      => '测试',
                 'password'      => bcrypt('123456'),
                 'status'        => true,
                 'extra'         => json_encode([
                     'rebates'   => [
-                        'user_deposit_rebate'   => [],
-                        'user_withdrawal_rebate'=> [],
+                        "user_deposit_rebate" => [
+                            "rate" => 1.0,
+                            "status" => true
+                        ],
+                        "user_withdrawal_rebate"=> [
+                            "amount"=> 1.6,
+                            "status"=> true
+                        ]
                     ]
                 ]),
             ],

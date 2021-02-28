@@ -31,12 +31,24 @@
             </div>
 
             <el-table :data="orders" style="width: 100%;margin-top:30px;" border fixed>
-                <!--<el-table-column align="header-center" label="账户名称" prop="amount"></el-table-column>-->
-                <el-table-column align="header-center" label="账变类型" prop="order_type_name"></el-table-column>
-                <el-table-column align="header-center" label="账变金额" prop="amount"></el-table-column>
-                <el-table-column align="header-center" label="账变前余额/冻结">
+                <el-table-column align="header-center" label="编号" prop="id"></el-table-column>
+                <el-table-column align="header-center" label="账变类型" prop="order_type_name">
                     <template slot-scope="scope" >
-                        {{ scope.row.pre_balance }} / {{ scope.row.pre_hold_balance }}
+                        <el-tag>{{ scope.row.operation==1?"[+]":(scope.row.operation==2?"[-]":"[h]") }} {{ scope.row.order_type_name }}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column align="header-center" label="收入">
+                    <template slot-scope="scope" >
+                        <el-tag type="success"  v-if="scope.row.operation == 1">
+                            {{ new Intl.NumberFormat(['en-US'], {minimumFractionDigits:4}).format(scope.row.amount) }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column align="header-center" label="支出">
+                    <template slot-scope="scope" >
+                        <el-tag type="danger" v-if="(scope.row.operation == 2 || (scope.row.hold_operation == 2 && scope.row.operation == 0))">
+                            {{ new Intl.NumberFormat(['en-US'], {minimumFractionDigits:4}).format(scope.row.amount) }}
+                        </el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="账变后余额/冻结">
@@ -44,9 +56,13 @@
                         {{ scope.row.balance }} / {{ scope.row.hold_balance }}
                     </template>
                 </el-table-column>
-                <el-table-column align="header-center" label="账变时间" prop="order_type_name"></el-table-column>
-                <el-table-column align="header-center" label="资金变动类型" prop="order_type_name"></el-table-column>
-                <el-table-column align="header-center" label="备注" prop="order_type_name"></el-table-column>
+                <el-table-column align="header-center" label="账变前余额/冻结">
+                    <template slot-scope="scope" >
+                        {{ scope.row.pre_balance }} / {{ scope.row.pre_hold_balance }}
+                    </template>
+                </el-table-column>
+                <el-table-column align="header-center" label="账变时间" prop="created_at"></el-table-column>
+                <el-table-column align="header-center" label="备注" prop="comment"></el-table-column>
                 <el-table-column align="center" label="操作">
                     <template slot-scope="scope" >
                     </template>

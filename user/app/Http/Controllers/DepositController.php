@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Common\Models\Deposits;
+use Common\API\Deposits as API_Deposits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,43 +48,10 @@ class DepositController extends Controller
         $id = $request->get('id');
         $status = $request->get('status');
 
-        $deposit = Deposits::select([
-            'id',
-            'status',
-            'amount',
-        ])
-            ->where('id',$id)
-            ->first();
-
-        if( empty($deposit) ){
-            return $this->response(0,'订单不存在');
-        }
-
-        DB::beginTransaction();
-
-        // 失败
-        if( $status != true){
-            $deposit->status = 3;
-        // 成功
-        }else{
-            $deposit->status = 2;
-            // TODO:扣减散户保证金
-
-            // TODO:计算代理、散户返点
-
-            // TODO:增加返点
-        }
-
-        // 修改订单状态
-        if( $deposit->save() ){
-
-
-            DB::commit();
+        if( API_Deposits::done( $id , $status ) ){
             return $this->response(1,'状态修改成功！');
+        }else{
+            return $this->response(0,API_Deposits::$error_message);
         }
-
-        DB::rollBack();
-        return $this->response(0,'状态修改失败！');
-
     }
 }

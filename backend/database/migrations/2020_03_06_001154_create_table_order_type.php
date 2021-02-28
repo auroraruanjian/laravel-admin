@@ -30,7 +30,6 @@ class CreateTableOrderType extends Migration
     private function _data()
     {
         DB::table('order_type')->insert([
-
             [
                 'name'           => '派单冻结余额到冻结账户',
                 'ident'          => 'PDDJ',
@@ -40,16 +39,52 @@ class CreateTableOrderType extends Migration
                 'category'       => 4,
                 'description'    => '散户接单，冻结余额',
             ],
-            /*
+            [
+                'name'           => '支付失败冻结余额返还到余额',
+                'ident'          => 'PDDJFH',
+                'display'        => 1,
+                'operation'      => 1,
+                'hold_operation' => 2,
+                'category'       => 4,
+                'description'    => '支付失败，返还冻结冻结到余额',
+            ],
+            [
+                'name'           => '支付成功真实扣款',
+                'ident'          => 'PDDJKQ',
+                'display'        => 1,
+                'operation'      => 0,
+                'hold_operation' => 2,
+                'category'       => 4,
+                'description'    => '支付成功，扣除冻结金额',
+            ],
             [
                 'name'           => '在线充值',
                 'ident'          => 'ZXCZ',
                 'display'        => 1,
                 'operation'      => 1,
                 'hold_operation' => 0,
-                'category'       => 2,
-                'description'    => '在线支付充值',
+                'category'       => 1,
+                'description'    => '代收成功，商户金额增加',
             ],
+            [
+                'name'           => '代收佣金',
+                'ident'          => 'DSYJ',
+                'display'        => 1,
+                'operation'      => 1,
+                'hold_operation' => 0,
+                'category'       => 1,
+                'description'    => '代收成功，派发代理和散户佣金',
+            ],
+            [
+                'name'           => '代收手续费',
+                'ident'          => 'DSSXF',
+                'display'        => 1,
+                'operation'      => 2,
+                'hold_operation' => 0,
+                'category'       => 1,
+                'description'    => '代收手续费',
+            ],
+            /*
             [
                 'name'           => '理赔充值',
                 'ident'          => 'LPCZ',

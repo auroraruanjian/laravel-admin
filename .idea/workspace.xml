@@ -2,20 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671224a9-92fb-49c6-aaaa-b3090c3b09d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/database/seeds/UsersSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/database/migrations/2021_02_28_07000_create_table_charge.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/Models/Charge.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/Models/Rebates.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/DepositsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/DepositsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2020_02_26_135755_create_table_payment_channel_detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2020_02_26_135755_create_table_payment_channel_detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/app/Http/Controllers/MerchantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/agent/app/Http/Controllers/MerchantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent/resources/js/views/merchant/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/agent/resources/js/views/merchant/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/database/migrations/2020_03_06_001154_create_table_order_type.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2020_03_06_001154_create_table_order_type.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200227_create_table_merchants.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200227_create_table_merchants.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200228_create_table_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200228_create_table_users.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/database/seeds/AgentUsersSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeds/AgentUsersSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeds/DatabaseSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/database/seeds/MerchantsSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeds/MerchantsSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/API/MerchantFund.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/API/Funds.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/seeds/UsersSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeds/UsersSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/API/Deposits.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/API/Deposits.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/API/Payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/API/Payment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/DepositsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/bak/DepositsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/DepositsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/user/app/Http/Controllers/bak/DepositsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/resources/js/views/users/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/views/users/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/API/Rebates.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/API/Rebates.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/user/app/Http/Controllers/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/DepositController.php" beforeDir="false" afterPath="$PROJECT_DIR$/user/app/Http/Controllers/DepositController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/user/app/Http/Controllers/OrdersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/ChildAgentController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/ConfigController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/DepositsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/HomeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/LogController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/MerchantController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/NoticesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/OrdersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/PaymentCategoryController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/PaymentChannelController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/PaymentMethodController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/PermissionController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/RoleController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/UserGroupController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/bak/UsersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/resources/js/views/deposit/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/views/deposit/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/resources/js/views/orders/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/views/orders/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +161,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/backend/database/seeds" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../code" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -151,11 +172,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/common/Models" />
+      <recent name="$PROJECT_DIR$/backend/database/migrations" />
       <recent name="$PROJECT_DIR$/backend/database/seeds" />
       <recent name="$PROJECT_DIR$/user/resources/js/views" />
       <recent name="$PROJECT_DIR$/user/resources/js/api" />
-      <recent name="$PROJECT_DIR$/user/app/Http/Controllers" />
-      <recent name="$PROJECT_DIR$/common/Models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/user/app/Http/Controllers/bak" />
@@ -191,7 +212,7 @@
       <workItem from="1613743960115" duration="12928000" />
       <workItem from="1613839681342" duration="12576000" />
       <workItem from="1613931724511" duration="2341000" />
-      <workItem from="1613934185980" duration="106456000" />
+      <workItem from="1613934185980" duration="143781000" />
     </task>
     <task id="LOCAL-00001" summary="代理后台">
       <created>1612015158568</created>
@@ -333,7 +354,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614300869159</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="帐变=">
+      <created>1614386354830</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1614386354830</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,7 +383,8 @@
     <MESSAGE value="管理后台 返点配置" />
     <MESSAGE value="商户返点" />
     <MESSAGE value="用户佣金" />
-    <option name="LAST_COMMIT_MESSAGE" value="用户佣金" />
+    <MESSAGE value="帐变=" />
+    <option name="LAST_COMMIT_MESSAGE" value="帐变=" />
   </component>
   <component name="WindowStateProjectService">
     <state x="507" y="27" width="810" height="881" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1614374630162">
@@ -364,21 +393,21 @@
     <state x="444" y="27" width="810" height="881" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1584.881@67.27.1584.881" timestamp="1611952432543" />
     <state x="469" y="27" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1688.881@67.27.1688.881" timestamp="1612034266406" />
     <state x="507" y="27" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1847.895@67.27.1847.895" timestamp="1614374630162" />
-    <state x="724" y="232" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1614300363927">
+    <state x="724" y="232" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1614389260828">
       <screen x="67" y="27" width="1847" height="895" />
     </state>
-    <state x="724" y="232" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1847.895@67.27.1847.895" timestamp="1614300363927" />
+    <state x="724" y="232" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1847.895@67.27.1847.895" timestamp="1614389260828" />
     <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1851.899@67.27.1851.899" timestamp="1613590813923" />
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1611856336075">
       <screen x="67" y="27" width="1584" height="886" />
     </state>
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1584.886@67.27.1584.886" timestamp="1611856336075" />
-    <state x="434" y="27" width="920" height="899" key="CommitChangelistDialog2" timestamp="1614300869044">
+    <state x="434" y="27" width="920" height="899" key="CommitChangelistDialog2" timestamp="1614386354682">
       <screen x="67" y="27" width="1847" height="895" />
     </state>
     <state x="402" y="27" width="1008" height="881" key="CommitChangelistDialog2/67.27.1688.881@67.27.1688.881" timestamp="1612042062654" />
     <state x="403" y="27" key="CommitChangelistDialog2/67.27.1691.878@67.27.1691.878" timestamp="1612286982679" />
-    <state x="434" y="27" width="1101" height="895" key="CommitChangelistDialog2/67.27.1847.895@67.27.1847.895" timestamp="1614300869044" />
+    <state x="434" y="27" width="1101" height="895" key="CommitChangelistDialog2/67.27.1847.895@67.27.1847.895" timestamp="1614386354682" />
     <state x="265" y="27" width="920" height="899" key="CommitChangelistDialog2/67.27.1851.899@67.27.1851.899" timestamp="1613855994851" />
     <state x="241" y="101" width="1350" height="734" key="DiffContextDialog" timestamp="1613583289972">
       <screen x="67" y="27" width="1851" height="899" />
@@ -386,13 +415,13 @@
     <state x="226" y="100" width="1350" height="734" key="DiffContextDialog/67.27.1688.881@67.27.1688.881" timestamp="1612042061700" />
     <state x="241" y="101" key="DiffContextDialog/67.27.1847.895@67.27.1847.895" timestamp="1612372820787" />
     <state x="241" y="101" key="DiffContextDialog/67.27.1851.899@67.27.1851.899" timestamp="1613583289972" />
-    <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl" timestamp="1614378979542">
+    <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl" timestamp="1614529400323">
       <screen x="67" y="27" width="1847" height="895" />
     </state>
     <state x="614" y="265" width="380" height="487" key="FileChooserDialogImpl/67.27.1429.886@67.27.1429.886" timestamp="1612104405094" />
     <state x="681" y="262" width="380" height="402" key="FileChooserDialogImpl/67.27.1605.874@67.27.1605.874" timestamp="1611839811999" />
     <state x="713" y="264" width="424" height="484" key="FileChooserDialogImpl/67.27.1688.881@67.27.1688.881" timestamp="1612030125334" />
-    <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl/67.27.1847.895@67.27.1847.895" timestamp="1614378979542" />
+    <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl/67.27.1847.895@67.27.1847.895" timestamp="1614529400323" />
     <state x="776" y="268" width="424" height="484" key="FileChooserDialogImpl/67.27.1851.899@67.27.1851.899" timestamp="1613928340511" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1614262968639" />
     <state x="753" y="393" width="398" height="159" key="NewPhpFileDialog" timestamp="1614079698597">
@@ -400,23 +429,24 @@
     </state>
     <state x="655" y="387" width="398" height="159" key="NewPhpFileDialog/67.27.1584.881@67.27.1584.881" timestamp="1611952294366" />
     <state x="753" y="393" width="398" height="159" key="NewPhpFileDialog/67.27.1847.895@67.27.1847.895" timestamp="1614079698597" />
-    <state x="683" y="161" width="841" height="624" key="find.popup" timestamp="1614383773745">
+    <state x="683" y="161" width="841" height="624" key="find.popup" timestamp="1614535307738">
       <screen x="67" y="27" width="1847" height="895" />
     </state>
     <state x="595" y="27" width="638" height="886" key="find.popup/67.27.1584.886@67.27.1584.886" timestamp="1611942128131" />
     <state x="602" y="158" width="624" height="624" key="find.popup/67.27.1605.874@67.27.1605.874" timestamp="1611849106866" />
     <state x="630" y="27" width="876" height="881" key="find.popup/67.27.1688.881@67.27.1688.881" timestamp="1612042669709" />
     <state x="632" y="27" width="771" height="890" key="find.popup/67.27.1693.890@67.27.1693.890" timestamp="1612993895589" />
-    <state x="683" y="161" width="841" height="624" key="find.popup/67.27.1847.895@67.27.1847.895" timestamp="1614383773745" />
+    <state x="683" y="161" width="841" height="624" key="find.popup/67.27.1847.895@67.27.1847.895" timestamp="1614535307738" />
     <state x="685" y="27" width="843" height="899" key="find.popup/67.27.1851.899@67.27.1851.899" timestamp="1613932384712" />
-    <state x="654" y="213" key="run.anything.popup" timestamp="1613946731064">
+    <state x="654" y="213" key="run.anything.popup" timestamp="1614396022477">
       <screen x="67" y="27" width="1847" height="895" />
     </state>
-    <state x="654" y="213" key="run.anything.popup/67.27.1847.895@67.27.1847.895" timestamp="1613946731064" />
-    <state x="574" y="214" width="672" height="678" key="search.everywhere.popup" timestamp="1612030080131">
-      <screen x="67" y="27" width="1688" height="881" />
+    <state x="654" y="213" key="run.anything.popup/67.27.1847.895@67.27.1847.895" timestamp="1614396022477" />
+    <state x="622" y="217" width="736" height="689" key="search.everywhere.popup" timestamp="1614456294545">
+      <screen x="67" y="27" width="1847" height="895" />
     </state>
     <state x="574" y="214" width="672" height="678" key="search.everywhere.popup/67.27.1688.881@67.27.1688.881" timestamp="1612030080131" />
+    <state x="622" y="217" width="736" height="689" key="search.everywhere.popup/67.27.1847.895@67.27.1847.895" timestamp="1614456294545" />
     <state x="659" y="376" width="490" height="181" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1612022265063">
       <screen x="67" y="27" width="1688" height="881" />
     </state>

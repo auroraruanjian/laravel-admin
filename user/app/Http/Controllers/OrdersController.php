@@ -21,8 +21,12 @@ class OrdersController extends Controller
 
     public function getIndex(Request $request)
     {
-        $order_type_id = $request->get('order_type_id');
+        $page  = (int)$request->get('page', 1);
+        $limit = (int)$request->get('limit');
 
+        $start = ($page - 1) * $limit;
+
+        $order_type_id = $request->get('order_type_id');
         $user = auth()->user();
 
         // TODO:获取 银行卡记录等
@@ -40,7 +44,9 @@ class OrdersController extends Controller
             'orders.ip',
             'orders.comment',
             'orders.created_at',
-            'order_type.name as order_type_name'
+            'order_type.name as order_type_name',
+            'order_type.operation',
+            'order_type.hold_operation',
         ])
             ->leftJoin('order_type','order_type.id','orders.order_type_id')
             ->where(function($query) use ($user){
@@ -50,7 +56,18 @@ class OrdersController extends Controller
             ->where([
                 ['orders.type','=','3']
             ]);
-        $orders = $model->get();
+
+        $orders = $model
+            ->skip($start)
+            ->take($limit)
+            ->orderBy('id','desc')
+            ->get()
+            ->toArray();
+
+        foreach( $orders as &$order ){
+            $order['id'] = id_encode($order['id']);
+        }
+
         $total = $model->count();
 
         return $this->response(1,'success',[

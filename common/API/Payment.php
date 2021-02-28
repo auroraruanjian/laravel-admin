@@ -136,7 +136,7 @@ class Payment
                     $order->type = 3;
                     $order->from_id = $payee_user_id;
                     $order->amount = $this->decrypt_data['amount'];
-                    $order->comment = '充值订单号：'.$deposits_model->id;
+                    $order->comment = '充值订单号：'.id_encode($deposits_model->id);
                     $order->ip = request()->ip();
 
                     $order_type_ident = 'PDDJ';
@@ -551,7 +551,8 @@ class Payment
             //'system_private_key',
             'merchant_public_key',
             //'merchant_private_key',
-            'md5_key'
+            'md5_key',
+            'extra'
         ])
             ->where('account',$merchant_id)
             ->first();
@@ -561,7 +562,10 @@ class Payment
             return false;
         }
 
-        return  $merchant->toArray();
+        $merchant = $merchant->toArray();
+        $merchant['extra'] = json_decode($merchant['extra'],true);
+
+        return  $merchant;
     }
 
     /**
@@ -584,6 +588,8 @@ class Payment
         if( !$this->merchant ){
             return [-3, '商户不存在！'];
         }
+
+        // TODO:检查商户是否开通渠道，以及手续费是否配置正确
 
         // 商户使用商户私钥加密数据请求平台接口，平台使用商户公钥解密数据
         $this->decrypt_data = $this->_decrypt($request->get('data'));

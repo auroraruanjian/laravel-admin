@@ -18,11 +18,12 @@ class CreateTableUsers extends Migration
          */
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('top_id')->default(0)->comment('总代用户 ID，总代为 0');
-            $table->integer('parent_id')->default(0)->comment('父级用户 ID，总代为 0');
-            $table->jsonb('parent_tree')->default('[]')->comment('父级树');
+//            $table->integer('top_id')->default(0)->comment('总代用户 ID，总代为 0');
+//            $table->integer('parent_id')->default(0)->comment('父级用户 ID，总代为 0');
+//            $table->jsonb('parent_tree')->default('[]')->comment('父级树');
             //$table->smallInteger('user_group_id')->comment('用户组 ID');
             //$table->integer('merchant_id')->nullable()->comment('商户号ID');
+            $table->integer('agent_id')->default(0)->comment('代理的ID,0:表示系统');
             $table->string('username',32)->comment('用户名');
             $table->string('nickname',20)->unique()->comment('昵称');
             $table->string('password')->comment('密码');

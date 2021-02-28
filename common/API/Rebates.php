@@ -141,10 +141,12 @@ class Rebates
             // 判断返代收点是否合法
             if( !empty($request_rebates['deposit_rebates']) ){
                 foreach($request_rebates['deposit_rebates'] as $rebate){
-                    if( !isset($extra['rebates']) &&
-                        !isset($extra['rebates'][$rebate['id']]) &&
-                        $rebate['rate'] == 0 ){
-                        continue;
+                    if( $original_rebates!= null ){
+                        if( !isset($original_rebates['rebates']) &&
+                            !isset($original_rebates['rebates']['deposit_rebates'][$rebate['id']]) &&
+                            $rebate['rate'] == 0 ){
+                            continue;
+                        }
                     }
 
                     $min_rate = $this->getMinRate( $rebate['id'] );

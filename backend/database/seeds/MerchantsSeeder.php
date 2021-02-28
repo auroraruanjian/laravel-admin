@@ -14,8 +14,35 @@ class MerchantsSeeder extends Seeder
         $system = Common\Helpers\RSA::new();
         $merchant = Common\Helpers\RSA::new();
 
+        $extra = [
+            "rebates" => [
+                "deposit_rebates" => [
+                    "1" => [
+                        "rate" => 6,
+                        "status" => true,
+                        "payment_method_id" => 1
+                    ],
+                    "2" => [
+                        "rate" => 6.4,
+                        "status" => true,
+                        "payment_method_id" => 2
+                    ],
+                    "3" => [
+                        "rate" => 6,
+                        "status" => true,
+                        "payment_method_id" => 3
+                    ]
+                ],
+                "withdrawal_rebate"=>[
+                    "amount" =>  7.5,
+                    "status" => true
+                ]
+            ]
+        ];
+
         DB::table('merchants')->insert([
             [
+                'agent_id'              => 1,
                 'account'               => 'zf10000000001',
                 'nickname'              => '测试',
                 'system_public_key'     => $system['public'],
@@ -24,10 +51,7 @@ class MerchantsSeeder extends Seeder
                 'merchant_private_key'  => $merchant['private'],
                 'md5_key'               => '3c6e0b8a9c15224a8228b9a98ca1531d',
                 'status'                => 0,
-                'extra'                 => json_encode([
-                    'deposit_rebate'   => [],
-                    'withdrawal_rebate'=> [],
-                ]),
+                'extra'                 => json_encode($extra),
             ]
         ]);
 

@@ -86,10 +86,13 @@ export default {
                     id:id,
                     status:true,
                 });
-                let type = 'danger';
+                let type = 'error';
                 if(  result.data.code == 1 ){
                     type = 'success';
                 }
+
+                this.getAllRecord();
+
                 this.$message({
                     type: type,
                     message: result.data.msg

@@ -18,7 +18,7 @@ class CreateTableMerchants extends Migration
          */
         Schema::create('merchants', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('agent_id')->default(0)->comment('代理的ID');
+            $table->integer('agent_id')->default(0)->comment('代理的ID,0:表示系统');
             $table->string('account',60)->comment('商户号');
             $table->string('nickname',20)->comment('昵称');
             $table->text('system_public_key','')->comment('系统公钥');
