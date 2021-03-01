@@ -8,27 +8,35 @@
                             <el-form-item label="日期查询">
                                 <el-date-picker
                                     style="width: 350px;"
-                                    v-model="form"
-                                    type="monthrange"
+                                    v-model="form.time"
+                                    type="datetimerange"
                                     range-separator="至"
                                     start-placeholder="开始时间"
                                     end-placeholder="结束时间">
                                 </el-date-picker>
                             </el-form-item>
                             <el-form-item label="渠道查询">
-                                <el-select v-model="form" placeholder="请选择">
-                                    <el-option label="转卡" value="1"></el-option>
-                                    <el-option label="支付宝转卡" value="2"></el-option>
+                                <el-select v-model="form.payment_method_id" placeholder="请选择">
+                                    <el-option label="全部" value=""></el-option>
+                                    <el-option
+                                        v-for="(item,key) in payment_method"
+                                        :key="key"
+                                        :label="item.name"
+                                        :value="item.id">
+                                    </el-option>
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="状态查询">
-                                <el-select v-model="form" placeholder="请选择">
+                                <el-select v-model="form.status" placeholder="请选择">
+                                    <el-option label="全部" value=""></el-option>
                                     <el-option label="未到帐" value="1"></el-option>
                                     <el-option label="已到帐" value="2"></el-option>
+                                    <el-option label="超时订单" value="4"></el-option>
+                                    <el-option label="作废订单" value="5"></el-option>
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="编号查询">
-                                <el-input v-model="form.id" placeholder="请输入订单号"></el-input>
+                                <el-input v-model="form.deposit_id" placeholder="请输入订单号"></el-input>
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="warning" @click="getAllRecord">查询</el-button>
@@ -42,14 +50,14 @@
             <el-table :data="deposits" style="width: 100%;margin-top:30px;" border fixed>
                 <el-table-column align="header-center" label="平台编号" prop="id"></el-table-column>
                 <el-table-column align="header-center" label="商户编号" prop="merchant_order_no"></el-table-column>
-                <el-table-column align="header-center" label="付款人" prop="id"></el-table-column>
-                <el-table-column align="header-center" label="收款渠道" prop="payment_channel_detail_id"></el-table-column>
+                <el-table-column align="header-center" label="付款人"></el-table-column>
+                <el-table-column align="header-center" label="收款渠道" prop="payment_method_name"></el-table-column>
                 <el-table-column align="header-center" label="到帐金额" prop="real_amount"></el-table-column>
                 <el-table-column align="header-center" label="标准金额" prop="amount"></el-table-column>
                 <el-table-column align="header-center" label="结算金额" prop="amount"></el-table-column>
-                <el-table-column align="header-center" label="商户/平台手续费">
+                <el-table-column align="header-center" label="手续费">
                     <template slot-scope="scope" >
-                        {{ scope.row.merchant_fee }} / {{ scope.row.third_fee }}
+                        {{ scope.row.merchant_fee }}
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="订单时间" prop="created_at"></el-table-column>
@@ -58,7 +66,9 @@
                         <el-tag type="info" v-if="scope.row.status==0">支付中</el-tag>
                         <el-tag type="warning" v-else-if="scope.row.status==1">已审核</el-tag>
                         <el-tag type="success" v-else-if="scope.row.status==2">充值成功</el-tag>
-                        <el-tag type="danger" v-else>充值失败</el-tag>
+                        <el-tag type="danger" v-else-if="scope.row.status==3">充值失败</el-tag>
+                        <el-tag type="danger" v-else-if="scope.row.status==4">超时订单</el-tag>
+                        <el-tag type="danger" v-else>作废订单</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="商户确认状态" prop="push_status">
@@ -99,8 +109,12 @@ export default {
             },
             loading:false,
             form:{
-                id : '',
+                deposit_id : '',
+                payment_method_id : '',
+                status:'',
+                time:[],
             },
+            payment_method:[]
         };
     },
     computed: {
@@ -117,12 +131,13 @@ export default {
         async getAllRecord(){
             this.loading =  true;
 
-            let data = this.listQuery;
+            let data = Object.assign(this.listQuery,this.form);
             let result = await getAllRecord(data);
 
             if( result.data.code == 1 ){
                 this.total = result.data.data.total;
                 this.deposits = result.data.data.deposits;
+                this.payment_method = result.data.data.payment_method;
             }else{
                 this.$message.error(result.data.msg);
             }

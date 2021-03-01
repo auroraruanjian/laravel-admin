@@ -26,7 +26,7 @@
                         </el-col>
                         <el-col :span="4">
                             <el-form-item label="状态查询">
-                                <el-select v-model="form.status" placeholder="渠道类型">
+                                <el-select v-model="form.status" placeholder="状态">
                                     <el-option label="全部" value=""></el-option>
                                     <el-option label="未到帐" value="1"></el-option>
                                     <el-option label="已到帐" value="2"></el-option>
@@ -61,7 +61,9 @@
                         <el-tag type="info" v-if="scope.row.status==0">支付中</el-tag>
                         <el-tag type="warning" v-else-if="scope.row.status==1">已审核</el-tag>
                         <el-tag type="success" v-else-if="scope.row.status==2">充值成功</el-tag>
-                        <el-tag type="danger" v-else>充值失败</el-tag>
+                        <el-tag type="danger" v-else-if="scope.row.status==3">充值失败</el-tag>
+                        <el-tag type="danger" v-else-if="scope.row.status==4">超时订单</el-tag>
+                        <el-tag type="danger">作废订单</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="新增时间" prop="created_at"></el-table-column>
