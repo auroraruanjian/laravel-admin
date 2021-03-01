@@ -92,7 +92,11 @@ class DepositController extends Controller
                     ]);
             })
             ->where($where);
-        $deposits = $model->get()->toArray();
+        $deposits = $model->skip($start)
+            ->take($limit)
+            ->orderBy('deposits.id','desc')
+            ->get()
+            ->toArray();
         $total = $model->count();
 
         foreach($deposits as &$deposit){

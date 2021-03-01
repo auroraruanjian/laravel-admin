@@ -130,8 +130,8 @@ class AdminController extends Controller
                 ]
             ],
             [
-                "rule"          => "profit",
-                "name"          => "收益统计",
+                "rule"          => "report",
+                "name"          => "收款统计",
                 "extra"         => [
                     "icon"      => "users",
                     "component" => "Layout"
