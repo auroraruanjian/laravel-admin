@@ -27,7 +27,7 @@ class Orders
             }
 
             if( !empty($param['type']) ){
-                $query = $query->where('orders.type','=','3');
+                $query = $query->where('orders.type','=',$param['type']);
             }
 
             return $query->whereRaw(' true ');

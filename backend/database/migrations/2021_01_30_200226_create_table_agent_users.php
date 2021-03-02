@@ -47,13 +47,21 @@ class CreateTableAgentUsers extends Migration
 
         $id = DB::table('admin_role_permissions')->insertGetId([
             'parent_id'   => 0,
-            'rule'        => 'member',
-            'name'        => '会员管理',
+            'rule'        => 'agent_system',
+            'name'        => '代理系统',
             'extra'       => json_encode(['icon' => 'list','component'=>'Layout']),
         ]);
 
-        $users_id = DB::table('admin_role_permissions')->insertGetId([
-            'parent_id'   => $id,
+        $this->_addAgentIndex( $id );
+        $this->_addAgentWithdrawalVerify( $id );
+        $this->_addAgentOrders( $id );
+        $this->_addAgentProfit( $id );
+    }
+
+    private function _addAgentIndex( $parent_id )
+    {
+        $agent_id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
             'rule'        => 'agent_users/',
             'name'        => '代理管理',
             'extra'       => json_encode(['icon' => 'users','component'=>'SubPage','redirect'=>'/agent_users/index']),
@@ -61,22 +69,79 @@ class CreateTableAgentUsers extends Migration
 
         DB::table('admin_role_permissions')->insert([
             [
-                'parent_id'   => $users_id,
+                'parent_id'   => $agent_id,
                 'rule'        => 'agent_users/index',
                 'name'        => '代理列表',
                 'extra'       => json_encode(['hidden' => true,'component'=>'agent/users']),
             ],
             [
-                'parent_id'   => $users_id,
+                'parent_id'   => $agent_id,
                 'rule'        => 'agent_users/create',
                 'name'        => '增加代理',
                 'extra'       => json_encode(['hidden' => true]),
             ],
             [
-                'parent_id'   => $users_id,
+                'parent_id'   => $agent_id,
                 'rule'        => 'agent_users/delete',
                 'name'        => '删除代理',
                 'extra'       => json_encode(['hidden' => true]),
+            ],
+        ]);
+    }
+
+    private function _addAgentWithdrawalVerify( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
+            'rule'        => 'agent_withdrawal/',
+            'name'        => '代理提现审核',
+            'extra'       => json_encode(['icon' => 'users','component'=>'SubPage','redirect'=>'/agent_withdrawal/index']),
+        ]);
+
+        DB::table('admin_role_permissions')->insert([
+            [
+                'parent_id'   => $id,
+                'rule'        => 'agent_withdrawal/index',
+                'name'        => '代理提现列表',
+                'extra'       => json_encode(['hidden' => true,'component'=>'agent/users']),
+            ],
+        ]);
+    }
+
+    private function _addAgentOrders( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
+            'rule'        => 'agent_orders/',
+            'name'        => '代理账变',
+            'extra'       => json_encode(['icon' => 'users','component'=>'SubPage','redirect'=>'/agent_orders/index']),
+        ]);
+
+        DB::table('admin_role_permissions')->insert([
+            [
+                'parent_id'   => $id,
+                'rule'        => 'agent_orders/index',
+                'name'        => '代理账变列表',
+                'extra'       => json_encode(['hidden' => true,'component'=>'agent_orders/index']),
+            ],
+        ]);
+    }
+
+    private function _addAgentProfit( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
+            'rule'        => 'agent_profit/',
+            'name'        => '代理收益统计',
+            'extra'       => json_encode(['icon' => 'users','component'=>'SubPage','redirect'=>'/agent_profit/index']),
+        ]);
+
+        DB::table('admin_role_permissions')->insert([
+            [
+                'parent_id'   => $id,
+                'rule'        => 'agent_profit/index',
+                'name'        => '代理收益统计报表',
+                'extra'       => json_encode(['hidden' => true,'component'=>'agent/users']),
             ],
         ]);
     }

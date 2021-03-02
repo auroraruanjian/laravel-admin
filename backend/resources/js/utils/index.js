@@ -418,10 +418,10 @@ export function createRouter( apiRouters ){
                     router.hidden = true;
 
                     if( typeof val.extra.component != "undefined" && val.extra.component != null ){
-                        router.component = val.extra.component=='Layout'?Layout:_import(val.extra.component)
+                        router.component = val.extra.component=='Layout'?Layout:(val.extra.component=='SubPage')?SubPage:_import(val.extra.component)
                     }
                 }else{
-                    router.component = val.extra.component=='Layout'?Layout:_import(val.extra.component)
+                    router.component = val.extra.component=='Layout'?Layout:(val.extra.component=='SubPage')?SubPage:_import(val.extra.component)
                     alwaysShow  = true;
                 }
             }catch(e){

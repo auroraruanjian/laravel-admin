@@ -40,14 +40,26 @@ class CreateTableMerchants extends Migration
 
     private function _permission()
     {
-        $row = DB::table('admin_role_permissions')->where('name', '会员管理')->where('parent_id', 0)->first();
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => 0,
+            'rule'        => 'merchant_system',
+            'name'        => '商户系统',
+            'extra'       => json_encode(['icon' => 'list','component'=>'Layout']),
+        ]);
 
-        if (empty($row)) {
-            return;
-        }
+        $this->_addMerchantIndex( $id );
+        $this->_addMerchantOrders( $id );
+        $this->_addMerchantDeposit( $id );
+        $this->_addMerchantWithdrawal( $id );
+        $this->_addMerchantSelfDeposit( $id );
+        $this->_addMerchantSelfWithdrawal( $id );
+        $this->_addMerchantProfit( $id );
+    }
 
-        $merchant_id = DB::table('admin_role_permissions')->insertGetId([
-            'parent_id'   => $row->id,
+    private function _addMerchantIndex( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
             'rule'        => 'merchant/index',
             'name'        => '商户管理',
             'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
@@ -55,23 +67,83 @@ class CreateTableMerchants extends Migration
 
         DB::table('admin_role_permissions')->insert([
             [
-                'parent_id'   => $merchant_id,
+                'parent_id'   => $id,
                 'rule'        => 'merchant/create',
                 'name'        => '增加商户',
                 'extra'       => json_encode(['hidden' => true]),
             ],
             [
-                'parent_id'   => $merchant_id,
+                'parent_id'   => $id,
                 'rule'        => 'merchant/edit',
                 'name'        => '编辑商户',
                 'extra'       => json_encode(['hidden' => true]),
             ],
             [
-                'parent_id'   => $merchant_id,
+                'parent_id'   => $id,
                 'rule'        => 'merchant/delete',
                 'name'        => '删除商户',
                 'extra'       => json_encode(['hidden' => true]),
             ],
+        ]);
+    }
+
+    private function _addMerchantOrders( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
+            'rule'        => 'merchant_orders/index',
+            'name'        => '商户账变',
+            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+        ]);
+    }
+
+    private function _addMerchantDeposit( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
+            'rule'        => 'merchant_deposit/index',
+            'name'        => '商户代收订单',
+            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+        ]);
+    }
+
+    private function _addMerchantWithdrawal( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
+            'rule'        => 'merchant_withdrawal/index',
+            'name'        => '商户代付订单',
+            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+        ]);
+    }
+
+    private function _addMerchantSelfDeposit( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
+            'rule'        => 'merchant_self_deposit/index',
+            'name'        => '商户充值审核',
+            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+        ]);
+    }
+
+    private function _addMerchantSelfWithdrawal( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
+            'rule'        => 'merchant_self_withdrawal/index',
+            'name'        => '商户提款审核',
+            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+        ]);
+    }
+
+    private function _addMerchantProfit( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id'   => $parent_id,
+            'rule'        => 'merchant_profit/index',
+            'name'        => '商户盈亏统计',
+            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
         ]);
     }
 
