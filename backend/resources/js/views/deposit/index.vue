@@ -1,81 +1,96 @@
 <template>
     <div class="app-container" v-loading="loading">
         <div class="container">
-            <el-form ref="form" :model="search" label-width="80px" size="small">
-                <el-row :gutter="80" >
-                    <el-col :span="8">
-                        <el-form-item label="订单编号">
-                            <el-input v-model="search.id"></el-input>
-                        </el-form-item>
+            <!--
+            <el-row :gutter="80" >
+                <el-col :span="8">
+                    <el-form-item label="订单编号">
+                        <el-input v-model="search.id"></el-input>
+                    </el-form-item>
 
-                        <el-form-item label="用户搜索">
-                            <el-radio v-model="search.id" label="1">手动输入</el-radio>
-                            <el-radio v-model="search.id" label="2">总代列表</el-radio>
-                        </el-form-item>
+                    <el-form-item label="用户搜索">
+                        <el-radio v-model="search.id" label="1">手动输入</el-radio>
+                        <el-radio v-model="search.id" label="2">总代列表</el-radio>
+                    </el-form-item>
 
-                        <el-form-item label="用户名">
-                            <el-input v-model="search.id"></el-input>
-                        </el-form-item>
-                    </el-col>
+                    <el-form-item label="用户名">
+                        <el-input v-model="search.id"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="账变时间">
+                        <el-date-picker
+                            v-model="search.time"
+                            type="datetimerange"
+                            range-separator="至"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期">
+                        </el-date-picker>
+                    </el-form-item>
+
+                    <el-form-item label="管理员">
+                        <el-select v-model="search" placeholder="请选择" style="display: block;">
+                            <el-option
+                                v-for="item in admin_list"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="账变金额">
+                        <el-input v-model="search.id"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="IP地址">
+                        <el-input v-model="search.id"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            -->
+            <el-row :gutter="20">
+                <el-form :inline="true" :model="form" size="small">
                     <el-col :span="8">
-                        <el-form-item label="账变时间">
+                        <el-form-item label="日期查询">
                             <el-date-picker
-                                v-model="search.time"
+                                style="width: 350px;"
+                                v-model="form.time"
                                 type="datetimerange"
                                 range-separator="至"
-                                start-placeholder="开始日期"
-                                end-placeholder="结束日期">
+                                start-placeholder="开始时间"
+                                end-placeholder="结束时间">
                             </el-date-picker>
-                        </el-form-item>
-
-                        <el-form-item label="管理员">
-                            <el-select v-model="search" placeholder="请选择" style="display: block;">
-                                <el-option
-                                    v-for="item in admin_list"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-
-                        <el-form-item label="账变金额">
-                            <el-input v-model="search.id"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-
-                        <!--
-                        <el-form-item label="用户组别">
-                            <el-select v-model="search" placeholder="请选择" style="display: block;">
-                                <el-option
-                                    v-for="item in user_group"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                </el-option>
+                        <el-form-item label="通道类型">
+                            <el-select v-model="form.payment_method_id" placeholder="帐变类型">
+                                <el-option label="全部" value=""></el-option>
+                                <el-option v-for="(item,key) in payment_method" :key="key" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
-                        -->
-
-                        <el-form-item label="IP地址">
-                            <el-input v-model="search.id"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="订单号查询">
+                            <el-input v-model="form.deposit_id" placeholder="请输入订单号"></el-input>
                         </el-form-item>
                     </el-col>
-                </el-row>
+                </el-form>
+            </el-row>
 
-                <el-row justify="center" type="flex">
-                    <el-button type="primary" icon="el-icon-search" @click="getDeposits" size="small">搜索</el-button>
-                    <el-button type="warning" icon="el-icon-circle-plus-outline" @click="handleExport" size="small">导出</el-button>
-                </el-row>
-            </el-form>
+            <el-row justify="center" type="flex">
+                <el-button type="primary" icon="el-icon-search" @click="getDeposits" size="small">搜索</el-button>
+                <el-button type="warning" icon="el-icon-circle-plus-outline" @click="handleExport" size="small">导出</el-button>
+            </el-row>
         </div>
 
         <div class="container" style="margin-top:20px;">
             <el-table :data="deposit_list" style="width: 100%;" border >
                 <el-table-column align="center" label="订单号" prop="id"></el-table-column>
                 <el-table-column align="header-center" label="商户号" prop="account"></el-table-column>
-                <el-table-column align="header-center" label="支付通道" prop="payment_channel_name"></el-table-column>
+                <!--<el-table-column align="header-center" label="支付通道" prop="payment_channel_name"></el-table-column>-->
                 <el-table-column align="header-center" label="支付类型" prop="payment_method_name"></el-table-column>
                 <el-table-column align="header-center" label="金额" prop="amount"></el-table-column>
                 <el-table-column align="header-center" label="实际支付金额" prop="">
@@ -85,8 +100,8 @@
                 </el-table-column>
                 <el-table-column align="header-center" label="商户订单号" prop="merchant_order_no"></el-table-column>
                 <el-table-column align="header-center" label="账变ID" prop="order_id"></el-table-column>
-                <el-table-column align="header-center" label="会计" prop="accountant_admin"></el-table-column>
-                <el-table-column align="header-center" label="出纳" prop="cash_admin"></el-table-column>
+                <el-table-column align="header-center" label="会计" prop="accountant_admin_name"></el-table-column>
+                <el-table-column align="header-center" label="出纳" prop="cash_admin_name"></el-table-column>
                 <el-table-column align="header-center" label="推送状态" prop="push_status">
                     <template slot-scope="scope">
                         <el-tag type="info" v-if="scope.row.push_status==0">未推送</el-tag>
@@ -213,11 +228,6 @@
         name: "deposits",
         data(){
             return {
-                search:{
-                    id: '',
-                    time : [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-                },
-                admin_list: [],
                 deposit:[],
                 deal_form:Object.assign({}, defaultForm),
                 verify_form:Object.assign({}, defaultVerifyForm),
@@ -230,6 +240,12 @@
                 dialogVisible: false,
                 dialogType: 'new',
                 loading:false,
+                payment_method:[],
+                form:{
+                    time:[],
+                    payment_method_id:'',
+                    deposit_id:'',
+                }
             };
         },
         computed: {
@@ -243,13 +259,13 @@
             async getDeposits(){
                 this.loading =  true;
 
-                let data = this.listQuery;
-                data.parent_id = this.parent_id;
+                let data = Object.assign(this.listQuery,this.form);
                 let result = await getDeposits(data);
 
                 if( result.data.code == 1 ){
                     this.total = result.data.data.total;
                     this.deposit_list = result.data.data.deposits;
+                    this.payment_method = result.data.data.payment_method;
                 }else{
                     this.$message.error(result.data.message);
                 }

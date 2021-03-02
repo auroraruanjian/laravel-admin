@@ -1,104 +1,102 @@
 <template>
     <div class="app-container" v-loading="loading">
         <div class="container">
-            <el-form ref="form" :model="form" label-width="80px" size="small">
-                <el-row :gutter="20">
-                    <el-form :inline="true" :model="form" size="small">
-                        <el-col :span="8">
-                            <el-form-item label="日期查询">
-                                <el-date-picker
-                                    style="width: 350px;"
-                                    v-model="form.time"
-                                    type="datetimerange"
-                                    range-separator="至"
-                                    start-placeholder="开始时间"
-                                    end-placeholder="结束时间">
-                                </el-date-picker>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="8">
-                            <el-form-item label="帐变类型">
-                                <el-select v-model="form.order_type_id" placeholder="帐变类型">
-                                    <el-option label="全部" value=""></el-option>
-                                    <el-option v-for="(item,key) in order_type" :key="key" :label="item.name" :value="item.id"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="8">
-                            <el-form-item label="用户名查询">
-                                <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-form>
-                </el-row>
-
-                <!--
-                <el-row :gutter="80" >
+            <el-row :gutter="20">
+                <el-form :inline="true" :model="form" size="small">
                     <el-col :span="8">
-                        <el-form-item label="订单编号">
-                            <el-input v-model="search.id"></el-input>
-                        </el-form-item>
-
-                        <el-form-item label="用户搜索">
-                            <el-radio v-model="search.id" label="1">手动输入</el-radio>
-                            <el-radio v-model="search.id" label="2">总代列表</el-radio>
-                        </el-form-item>
-
-                        <el-form-item label="用户名">
-                            <el-input v-model="search.id"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-form-item label="账变时间">
+                        <el-form-item label="日期查询">
                             <el-date-picker
-                                    v-model="search.time"
-                                    type="datetimerange"
-                                    range-separator="至"
-                                    start-placeholder="开始日期"
-                                    end-placeholder="结束日期">
+                                style="width: 350px;"
+                                v-model="form.time"
+                                type="datetimerange"
+                                range-separator="至"
+                                start-placeholder="开始时间"
+                                end-placeholder="结束时间">
                             </el-date-picker>
                         </el-form-item>
-
-                        <el-form-item label="管理员">
-                            <el-select v-model="search" placeholder="请选择" style="display: block;">
-                                <el-option
-                                        v-for="item in admin_list"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="帐变类型">
+                            <el-select v-model="form.order_type_id" placeholder="帐变类型">
+                                <el-option label="全部" value=""></el-option>
+                                <el-option v-for="(item,key) in order_type" :key="key" :label="item.name" :value="item.id"></el-option>
                             </el-select>
-                        </el-form-item>
-
-                        <el-form-item label="账变金额">
-                            <el-input v-model="search.id"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-
-                        <el-form-item label="用户组别">
-                            <el-select v-model="search" placeholder="请选择" style="display: block;">
-                                <el-option
-                                        v-for="item in user_group"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-
-                        <el-form-item label="IP地址">
-                            <el-input v-model="search.id"></el-input>
+                        <el-form-item label="用户名查询">
+                            <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
                         </el-form-item>
                     </el-col>
-                </el-row>
-                -->
+                </el-form>
+            </el-row>
 
-                <el-row justify="center" type="flex">
-                    <el-button type="primary" icon="el-icon-search" @click="getOrders" size="small">搜索</el-button>
-                    <el-button type="warning" icon="el-icon-circle-plus-outline" @click="handleExport" size="small">导出</el-button>
-                </el-row>
-            </el-form>
+            <!--
+            <el-row :gutter="80" >
+                <el-col :span="8">
+                    <el-form-item label="订单编号">
+                        <el-input v-model="search.id"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="用户搜索">
+                        <el-radio v-model="search.id" label="1">手动输入</el-radio>
+                        <el-radio v-model="search.id" label="2">总代列表</el-radio>
+                    </el-form-item>
+
+                    <el-form-item label="用户名">
+                        <el-input v-model="search.id"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="账变时间">
+                        <el-date-picker
+                                v-model="search.time"
+                                type="datetimerange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期">
+                        </el-date-picker>
+                    </el-form-item>
+
+                    <el-form-item label="管理员">
+                        <el-select v-model="search" placeholder="请选择" style="display: block;">
+                            <el-option
+                                    v-for="item in admin_list"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="账变金额">
+                        <el-input v-model="search.id"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+
+                    <el-form-item label="用户组别">
+                        <el-select v-model="search" placeholder="请选择" style="display: block;">
+                            <el-option
+                                    v-for="item in user_group"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="IP地址">
+                        <el-input v-model="search.id"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            -->
+
+            <el-row justify="center" type="flex">
+                <el-button type="primary" icon="el-icon-search" @click="getOrders" size="small">搜索</el-button>
+                <el-button type="warning" icon="el-icon-circle-plus-outline" @click="handleExport" size="small">导出</el-button>
+            </el-row>
         </div>
 
         <div class="container" style="margin-top:20px;">

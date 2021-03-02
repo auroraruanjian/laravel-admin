@@ -368,4 +368,74 @@ class Deposits
 
         return true;
     }
+
+    /**
+     * 获取支付记录
+     * @param $param
+     * @param $start
+     * @param $limit
+     */
+    public static function getData( $param , $start , $limit )
+    {
+        $where = function ($query) use($param){
+            if( !empty($param['time']) ){
+                $query = $query->whereBetween('orders.created_at',[$param['time'][0],$param['time'][1]]);
+            }
+            if( !empty($param['deposit_id']) ){
+                $param['deposit_id'] = id_decode($param['deposit_id']);
+                if( !empty($param['deposit_id']) ){
+                    $query = $query->where('deposit.id','=',$param['deposit_id']);
+                }else{
+                    $query = $query->whereRaw(" false ");
+                }
+            }
+            if( !empty($param['payment_method_id']) ){
+                $query = $query->where('payment_method.id','=',$param['payment_method_id']);
+            }
+            return $query->whereRaw(" true ");
+        };
+
+        $deposits_model = \Common\Models\Deposits::select([
+            'deposits.id',
+            'merchants.account',
+            //'deposits.payment_channel_detail_id',
+            'payment_channel.name as payment_channel_name',
+            'payment_method.name as payment_method_name',
+            'deposits.amount',
+            'deposits.real_amount',
+            'deposits.manual_amount',
+            'deposits.merchant_order_no',
+            //'deposits.third_order_no',
+            'deposits.order_id',
+            'deposits.accountant_admin_id',
+            'deposits.cash_admin_id',
+            'au1.nickname as accountant_admin_name',
+            'au2.nickname as cash_admin_name',
+            'deposits.status',
+            'deposits.push_status',
+            //'deposits.push_at',
+            'deposits.done_at',
+            'deposits.created_at'
+        ])
+            ->leftJoin('payment_channel_detail','payment_channel_detail.id','deposits.payment_channel_detail_id')
+            ->leftJoin('payment_channel','payment_channel.id','payment_channel_detail.payment_channel_id')
+            ->leftJoin('payment_method','payment_method.id','payment_channel_detail.payment_method_id')
+            ->leftJoin('merchants','merchants.id','deposits.merchant_id')
+            ->leftJoin('admin_users as au1','au1.id','deposits.accountant_admin_id')
+            ->leftJoin('admin_users as au2','au2.id','deposits.cash_admin_id')
+            ->orderBy('id', 'asc')
+            ->where($where);
+
+
+        $deposits = $deposits_model->skip($start)
+            ->take($limit)
+            ->get()
+            ->toArray();
+        $total = $deposits_model->count();
+
+        return [
+            'deposits'  => $deposits,
+            'total'     => $total
+        ];
+    }
 }

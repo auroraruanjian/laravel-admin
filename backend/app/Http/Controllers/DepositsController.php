@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Common\API\Funds;
 use Common\Models\Deposits;
 use Common\Models\Orders;
+use Common\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use DB;
 
@@ -28,50 +29,31 @@ class DepositsController extends Controller
 
         $start = ($page - 1) * $limit;
 
-        $data = [
-            'total'       => 0,
-            'deposits'    => [],
-        ];
+        $param = [];
+        $param['payment_method_id'] = $request->get('payment_method_id');
+        $param['time']              = $request->get('time');
+        $param['deposit_id']        = $request->get('deposit_id');
 
-        $deposits = Deposits::select([
-            'deposits.id',
-            'merchants.account',
-            //'deposits.payment_channel_detail_id',
-            'payment_channel.name as payment_channel_name',
-            'payment_method.name as payment_method_name',
-            'deposits.amount',
-            'deposits.real_amount',
-            'deposits.manual_amount',
-            'deposits.merchant_order_no',
-            //'deposits.third_order_no',
-            'deposits.order_id',
-            'deposits.accountant_admin',
-            'deposits.cash_admin',
-            'deposits.status',
-            'deposits.push_status',
-            //'deposits.push_at',
-            'deposits.done_at',
-            'deposits.created_at'
-        ])
-            ->leftJoin('payment_channel_detail','payment_channel_detail.id','deposits.payment_channel_detail_id')
-            ->leftJoin('payment_channel','payment_channel.id','payment_channel_detail.payment_channel_id')
-            ->leftJoin('payment_method','payment_method.id','payment_channel_detail.payment_method_id')
-            ->leftJoin('merchants','merchants.id','deposits.merchant_id')
-            ->orderBy('id', 'asc')
-            ->skip($start)
-            ->take($limit)
-            ->get();
+        $data = \Common\API\Deposits::getData($param,$start,$limit);
 
-        $data['total'] = Deposits::count();
-
-        if (!$deposits->isEmpty()) {
-            $data['deposits'] = $deposits->toArray();
-            foreach( $data['deposits'] as $key => &$val ){
-                $val['id'] = id_encode($val['id']);
-            }
+        foreach( $data['deposits'] as $key => &$val ){
+            $val['id'] = id_encode($val['id']);
         }
 
-        return $this->response(1, 'Success!', $data);
+        $payment_method = PaymentMethod::select([
+            'id',
+            'ident',
+            'name',
+        ])
+            ->where('status','=',true)
+            ->get()
+            ->toArray();
+
+        return $this->response(1, 'Success!', [
+            'total'       => $data['total'],
+            'deposits'    => $data['deposits'],
+            'payment_method' => $payment_method
+        ]);
     }
 
     /**
@@ -99,7 +81,7 @@ class DepositsController extends Controller
             'deposits.merchant_fee',
             'deposits.manual_postscript',
             'deposits.third_order_no',
-            'deposits.accountant_admin',
+            'deposits.accountant_admin_id',
             'deposits.deal_at',
         ])
             ->leftJoin('payment_channel_detail','payment_channel_detail.id','deposits.payment_channel_detail_id')
