@@ -53,8 +53,8 @@ class CreateTableAgentUsers extends Migration
         ]);
 
         $this->_addAgentIndex( $id );
-        $this->_addAgentWithdrawalVerify( $id );
         $this->_addAgentOrders( $id );
+        $this->_addAgentWithdrawalVerify( $id );
         $this->_addAgentProfit( $id );
     }
 

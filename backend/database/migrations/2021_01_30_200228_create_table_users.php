@@ -56,11 +56,11 @@ class CreateTableUsers extends Migration
         ]);
 
         $this->_addUserIndex( $id );
+        $this->_addUserOrders( $id );
         $this->_addUserDeposit( $id );
         $this->_addUserWithdrawal( $id );
         $this->_addUserSelfDeposit( $id );
         $this->_addUserSelfWithdrawal( $id );
-        $this->_addUserOrders( $id );
         $this->_addUserProfit( $id );
     }
 
@@ -92,6 +92,16 @@ class CreateTableUsers extends Migration
                 'name'        => '删除散户',
                 'extra'       => json_encode(['hidden' => true]),
             ],
+        ]);
+    }
+
+    private function _addUserOrders( $parent_id )
+    {
+        $id = DB::table('admin_role_permissions')->insertGetId([
+            'parent_id' => $parent_id,
+            'rule' => 'user_orders/',
+            'name' => '散户账变',
+            'extra' => json_encode(['icon' => 'users', 'component' => 'user_orders/index']),
         ]);
     }
 
@@ -130,16 +140,6 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_self_withdrawal/',
             'name' => '散户提款审核',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'users/index']),
-        ]);
-    }
-
-    private function _addUserOrders( $parent_id )
-    {
-        $id = DB::table('admin_role_permissions')->insertGetId([
-            'parent_id' => $parent_id,
-            'rule' => 'user_orders/',
-            'name' => '散户账变',
             'extra' => json_encode(['icon' => 'users', 'component' => 'users/index']),
         ]);
     }

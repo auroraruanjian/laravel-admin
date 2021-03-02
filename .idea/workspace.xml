@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671224a9-92fb-49c6-aaaa-b3090c3b09d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AgentOrdersController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/resources/js/api/agent_orders.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/resources/js/views/agent_orders/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/MerchantOrdersController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/UserOrdersController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/resources/js/api/merchant_orders.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/resources/js/api/user_orders.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/resources/js/views/merchant_orders/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/resources/js/views/user_orders/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200226_create_table_agent_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200226_create_table_agent_users.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200227_create_table_merchants.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200227_create_table_merchants.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200228_create_table_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200228_create_table_users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_02_28_07000_create_table_charge.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_02_28_070000_create_table_charge.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/resources/js/utils/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/resources/js/utils/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/API/Orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/common/API/Orders.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,10 +155,10 @@
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/backend/resources/js/api" />
-      <recent name="$PROJECT_DIR$/backend/resources/js/views/agent_orders" />
+      <recent name="$PROJECT_DIR$/backend/resources/js/views" />
       <recent name="$PROJECT_DIR$/backend/app/Http/Controllers" />
+      <recent name="$PROJECT_DIR$/backend/resources/js/views/agent_orders" />
       <recent name="$PROJECT_DIR$/common/API" />
-      <recent name="$PROJECT_DIR$/common/Models" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -188,7 +188,7 @@
       <workItem from="1613839681342" duration="12576000" />
       <workItem from="1613931724511" duration="2341000" />
       <workItem from="1613934185980" duration="158948000" />
-      <workItem from="1614618565141" duration="28582000" />
+      <workItem from="1614618565141" duration="29676000" />
     </task>
     <task id="LOCAL-00001" summary="代理后台">
       <created>1612015158568</created>
@@ -372,7 +372,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614664165051</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="管理后台 菜单拆分">
+      <created>1614718528996</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1614718528996</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -400,7 +407,8 @@
     <MESSAGE value="商户订单管理和账变管理" />
     <MESSAGE value="账变管理" />
     <MESSAGE value="管理后台-》充值管理" />
-    <option name="LAST_COMMIT_MESSAGE" value="管理后台-》充值管理" />
+    <MESSAGE value="管理后台 菜单拆分" />
+    <option name="LAST_COMMIT_MESSAGE" value="管理后台 菜单拆分" />
   </component>
   <component name="WindowStateProjectService">
     <state x="507" y="27" width="810" height="881" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1614374630162">
@@ -415,18 +423,19 @@
     <state x="674" y="231" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1706.890@67.27.1706.890" timestamp="1614662838248" />
     <state x="724" y="232" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1847.895@67.27.1847.895" timestamp="1614389260828" />
     <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1851.899@67.27.1851.899" timestamp="1613590813923" />
-    <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1611856336075">
-      <screen x="67" y="27" width="1584" height="886" />
+    <state x="933" y="325" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1614718555536">
+      <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1584.886@67.27.1584.886" timestamp="1611856336075" />
-    <state x="406" y="27" width="920" height="890" key="CommitChangelistDialog2" timestamp="1614664164959">
-      <screen x="67" y="27" width="1706" height="890" />
+    <state x="933" y="325" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1851.899@67.27.1851.899" timestamp="1614718555536" />
+    <state x="265" y="27" width="920" height="890" key="CommitChangelistDialog2" timestamp="1614718528860">
+      <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="402" y="27" width="1008" height="881" key="CommitChangelistDialog2/67.27.1688.881@67.27.1688.881" timestamp="1612042062654" />
     <state x="403" y="27" key="CommitChangelistDialog2/67.27.1691.878@67.27.1691.878" timestamp="1612286982679" />
     <state x="406" y="27" width="920" height="890" key="CommitChangelistDialog2/67.27.1706.890@67.27.1706.890" timestamp="1614664164959" />
     <state x="434" y="27" width="1101" height="895" key="CommitChangelistDialog2/67.27.1847.895@67.27.1847.895" timestamp="1614535373092" />
-    <state x="265" y="27" width="920" height="899" key="CommitChangelistDialog2/67.27.1851.899@67.27.1851.899" timestamp="1613855994851" />
+    <state x="265" y="27" width="920" height="899" key="CommitChangelistDialog2/67.27.1851.899@67.27.1851.899" timestamp="1614718528860" />
     <state x="241" y="101" width="1350" height="734" key="DiffContextDialog" timestamp="1613583289972">
       <screen x="67" y="27" width="1851" height="899" />
     </state>

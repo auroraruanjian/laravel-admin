@@ -93,7 +93,7 @@ class CreateTableMerchants extends Migration
             'parent_id'   => $parent_id,
             'rule'        => 'merchant_orders/index',
             'name'        => '商户账变',
-            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+            'extra'       => json_encode(['icon' => 'client','component'=>'merchant_orders/index']),
         ]);
     }
 
