@@ -61,6 +61,7 @@ class CreateTableUsers extends Migration
         $this->_addUserWithdrawal( $id );
         $this->_addUserSelfDeposit( $id );
         $this->_addUserSelfWithdrawal( $id );
+        $this->_addUserPaymentMethod( $id );
         $this->_addUserProfit( $id );
     }
 
@@ -101,7 +102,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_orders/',
             'name' => '散户账变',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'user_orders/index']),
+            'extra' => json_encode(['icon' => 'users', 'component' => 'orders/user']),
         ]);
     }
 
@@ -111,7 +112,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_deposit/',
             'name' => '散户代收订单',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'users/index']),
+            'extra' => json_encode(['icon' => 'users', 'component' => 'deposit/user']),
         ]);
     }
 
@@ -150,7 +151,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_payment_method/',
             'name' => '散户收款方式',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'users/index']),
+            'extra' => json_encode(['icon' => 'users', 'component' => 'users/payment_method']),
         ]);
     }
 

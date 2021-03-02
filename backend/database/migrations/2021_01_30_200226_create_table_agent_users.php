@@ -122,7 +122,7 @@ class CreateTableAgentUsers extends Migration
                 'parent_id'   => $id,
                 'rule'        => 'agent_orders/index',
                 'name'        => '代理账变列表',
-                'extra'       => json_encode(['hidden' => true,'component'=>'agent_orders/index']),
+                'extra'       => json_encode(['hidden' => true,'component'=>'orders/agent']),
             ],
         ]);
     }
