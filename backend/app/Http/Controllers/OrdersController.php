@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Common\Models\Orders;
+use Common\API\Orders;
+use Common\Models\OrderType;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -27,6 +28,26 @@ class OrdersController extends Controller
 
         $start = ($page - 1) * $limit;
 
+        $param = [];
+        $param['order_type_id'] = $request->get('order_type_id');
+        $param['time']          = $request->get('time');
+
+        $data = Orders::getData($param,$start,$limit);
+
+        $order_type = OrderType::select([
+            'id',
+            'ident',
+            'name'
+        ])
+            ->get()
+            ->toArray();
+
+        return $this->response(1,'success',[
+            'orders'    => $data['orders'],
+            'total'     => $data['total'],
+            'order_type'=> $order_type
+        ]);
+        /*
         $data = [
             'total'       => 0,
             'orders'      => [],
@@ -47,5 +68,6 @@ class OrdersController extends Controller
         }
 
         return $this->response(1, 'Success!', $data);
+        */
     }
 }

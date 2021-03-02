@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Common\Models\Orders;
+use Common\API\Orders;
 use Common\Models\OrderType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +32,28 @@ class OrdersController extends Controller
         $param['time']          = $request->get('time');
         $param['username']      = $request->get('username');
 
+        // 用户类型
+        $param['type'] = 3;
+        $param['third_id'] = auth()->id();
+
+        $data = Orders::getData($param,$start,$limit);
+
+        $order_type = OrderType::select([
+            'id',
+            'ident',
+            'name'
+        ])
+            ->whereIn('category',[1,4])
+            ->get()
+            ->toArray();
+
+        return $this->response(1,'success',[
+            'orders'    => $data['orders'],
+            'total'     => $data['total'],
+            'order_type'=> $order_type
+        ]);
+
+        /*
         $where = function( $query ) use( $param ) {
             if( !empty($param['time']) ){
                 $query = $query->whereBetween('orders.created_at',[$param['time'][0],$param['time'][1]]);
@@ -97,6 +119,7 @@ class OrdersController extends Controller
             'total'     => $total,
             'order_type'=> $order_type
         ]);
+        */
     }
 
 }

@@ -1,7 +1,38 @@
 <template>
     <div class="app-container" v-loading="loading">
         <div class="container">
-            <el-form ref="form" :model="search" label-width="80px" size="small">
+            <el-form ref="form" :model="form" label-width="80px" size="small">
+                <el-row :gutter="20">
+                    <el-form :inline="true" :model="form" size="small">
+                        <el-col :span="8">
+                            <el-form-item label="日期查询">
+                                <el-date-picker
+                                    style="width: 350px;"
+                                    v-model="form.time"
+                                    type="datetimerange"
+                                    range-separator="至"
+                                    start-placeholder="开始时间"
+                                    end-placeholder="结束时间">
+                                </el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="帐变类型">
+                                <el-select v-model="form.order_type_id" placeholder="帐变类型">
+                                    <el-option label="全部" value=""></el-option>
+                                    <el-option v-for="(item,key) in order_type" :key="key" :label="item.name" :value="item.id"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="用户名查询">
+                                <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-form>
+                </el-row>
+
+                <!--
                 <el-row :gutter="80" >
                     <el-col :span="8">
                         <el-form-item label="订单编号">
@@ -61,6 +92,7 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
+                -->
 
                 <el-row justify="center" type="flex">
                     <el-button type="primary" icon="el-icon-search" @click="getOrders" size="small">搜索</el-button>
@@ -74,15 +106,23 @@
                 <el-table-column align="center" label="ID" prop="id"></el-table-column>
                 <el-table-column align="header-center" label="账变时间" prop="created_at"></el-table-column>
                 <el-table-column align="header-center" label="商户ID" prop="from_merchant_id"></el-table-column>
-                <el-table-column align="header-center" label="账变类型" prop="order_type_id"></el-table-column>
-                <el-table-column align="header-center" label="支出" prop="amount">
-                    <template slot-scope="scope">
-                        <el-tag type="error" v-if="scope.row.amount<0">{{ scope.row.amount }}</el-tag>
+                <el-table-column align="header-center" label="账变类型" width="190">
+                    <template slot-scope="scope" >
+                        <el-tag>{{ scope.row.operation==1?"[+]":(scope.row.operation==2?"[-]":"[h]") }} {{ scope.row.order_type_name }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="收入">
-                    <template slot-scope="scope">
-                        <el-tag type="success" v-if="scope.row.amount>=0">{{ scope.row.amount }}</el-tag>
+                    <template slot-scope="scope" >
+                        <el-tag type="success"  v-if="scope.row.operation == 1">
+                            {{ new Intl.NumberFormat(['en-US'], {minimumFractionDigits:4}).format(scope.row.amount) }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column align="header-center" label="支出">
+                    <template slot-scope="scope" >
+                        <el-tag type="danger" v-if="(scope.row.operation == 2 || (scope.row.hold_operation == 2 && scope.row.operation == 0))">
+                            {{ new Intl.NumberFormat(['en-US'], {minimumFractionDigits:4}).format(scope.row.amount) }}
+                        </el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column align="header-center" label="后余额/冻结">
@@ -116,11 +156,11 @@
         data(){
             return {
                 loading:false,
-                search:{
-                    id: '',
-                    time : [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+                form:{
+                    time:[
+                    ],
+                    order_type_id:'',
                 },
-                user_group: [],
                 admin_list: [],
                 orders: [],
                 total: 0,
@@ -128,6 +168,7 @@
                     page: 1,
                     limit: 20
                 },
+                order_type:[],
             };
         },
         computed: {
@@ -141,13 +182,13 @@
             async getOrders(){
                 this.loading =  true;
 
-                let data = this.listQuery;
-                data.parent_id = this.parent_id;
+                let data = Object.assign(this.listQuery,this.form);
                 let result = await getOrders(data);
 
                 if( result.data.code == 1 ){
                     this.total = result.data.data.total;
                     this.orders = result.data.data.orders;
+                    this.order_type = result.data.data.order_type;
                 }else{
                     this.$message.error(result.data.message);
                 }

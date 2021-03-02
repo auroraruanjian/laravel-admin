@@ -40,7 +40,7 @@
 
             <el-table :data="orders" style="width: 100%;margin-top:30px;" border fixed>
                 <el-table-column align="header-center" label="编号" prop="id"></el-table-column>
-                <el-table-column align="header-center" label="账变类型" prop="order_type_name">
+                <el-table-column align="header-center" label="账变类型" prop="order_type_name" width="190">
                     <template slot-scope="scope" >
                         <el-tag>{{ scope.row.operation==1?"[+]":(scope.row.operation==2?"[-]":"[h]") }} {{ scope.row.order_type_name }}</el-tag>
                     </template>

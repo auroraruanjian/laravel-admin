@@ -212,7 +212,7 @@ class AdminController extends Controller
         return [
             'code'      => 1,
             'data'      => [
-                'id'        => $user->id,
+                'id'        => auth()->id(),
                 'username'  => $user->username,
                 'nickname'  => $user->nickname,
                 'last_time' => $user->last_time,
