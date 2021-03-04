@@ -74,7 +74,7 @@ class Payment
             if( $person_order_model == 1 ){
                 // 如果是银行转账,则获取 散户银行卡
                 if( $channel_detail['payment_method_ident'] == 'transfer' ){
-                    $user_payment_method = UserBanks::select(['id','user_id','extra','limit_amount'])->where([
+                    $user_payment_method = UserBanks::select(['id','user_id','account_number','limit_amount'])->where([
                         ['type','=','1'],
                         ['status','=','1'],
                         ['is_delete','=','1'],
@@ -93,8 +93,8 @@ class Payment
 
                     //
 
-                    $account_number = $user_payment_method[0]['id'];
                     $payee_user_id  = $user_payment_method[0]['user_id'];
+                    $account_number = $user_payment_method[0]['account_number'];
                 }
             }
         }else{

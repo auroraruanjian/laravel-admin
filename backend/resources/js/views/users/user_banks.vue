@@ -34,6 +34,9 @@
                 <el-table-column align="header-center" label="持卡人姓名" prop="account_name"></el-table-column>
                 <el-table-column align="header-center" label="银行卡号" prop="account_number"></el-table-column>
                 <el-table-column align="header-center" label="银行名称" prop="bank_name"></el-table-column>
+                <el-table-column align="header-center" label="省/市/区县">
+                    <template slot-scope="scope">{{scope.row.province}}/{{scope.row.city}}/{{scope.row.district}}</template>
+                </el-table-column>
                 <el-table-column align="header-center" label="开户行" prop="branch"></el-table-column>
                 <el-table-column align="header-center" label="是否可用" prop="status">
                     <template slot-scope="scope">
@@ -107,7 +110,7 @@
 <script>
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { getAllMethod,putIsOpen,putAvailable } from '@/api/user_payment_method'
+import { getAllMethod,putIsOpen,putAvailable } from '@/api/user_banks'
 import { mapGetters } from 'vuex'
 
 
@@ -122,7 +125,7 @@ const defaultMethod = {
 };
 
 export default {
-    name: "UserPaymentMethodIndex",
+    name: "UserBanksIndex",
     data(){
         return {
             payment_method: Object.assign({}, defaultMethod),

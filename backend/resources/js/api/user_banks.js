@@ -2,7 +2,7 @@ import fetch from '@/utils/fetch'
 
 export function getAllMethod( data ) {
     return fetch({
-        url: 'user_payment_method',
+        url: 'user_banks',
         method: 'get',
         params:data
     });
@@ -10,7 +10,7 @@ export function getAllMethod( data ) {
 
 export function putIsOpen( data ){
     return fetch({
-        url: 'payment_method/isopen',
+        url: 'user_banks/isopen',
         method: 'put',
         data
     });
@@ -18,7 +18,7 @@ export function putIsOpen( data ){
 
 export function putAvailable( data ){
     return fetch({
-        url: 'payment_method/available',
+        url: 'user_banks/available',
         method: 'put',
         data
     });

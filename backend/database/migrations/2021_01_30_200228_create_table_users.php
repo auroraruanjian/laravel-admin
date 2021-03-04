@@ -152,7 +152,28 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_payment_method/',
             'name' => '散户收款方式',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'users/payment_method']),
+            'extra'       => json_encode(['icon' => 'users','component'=>'SubPage']),
+        ]);
+
+        DB::table('admin_role_permissions')->insert([
+            [
+                'parent_id'   => $id,
+                'rule'        => 'users/user_banks',
+                'name'        => '散户收款银行卡',
+                'extra'       => json_encode(['component'=>'users/user_banks']),
+            ],
+            [
+                'parent_id'   => $id,
+                'rule'        => 'users/wechat',
+                'name'        => '散户收款微信',
+                'extra'       => json_encode(['component'=>'users/user_banks']),
+            ],
+            [
+                'parent_id'   => $id,
+                'rule'        => 'users/alipay',
+                'name'        => '散户收款支付宝',
+                'extra'       => json_encode(['component'=>'users/user_banks']),
+            ],
         ]);
     }
 

@@ -19,7 +19,7 @@ class CreateTableUserBanks extends Migration
             $table->string('account_name',20)->comment('账户名');
             $table->string('account_number',18)->comment('卡号');
             $table->smallInteger('banks_id')->comment('银行ID');
-            $table->string('province_id',32)->comment('省份');
+            $table->integer('province_id')->comment('省份');
             $table->integer('city_id')->comment('开户城市');
             $table->integer('district_id')->comment('开户地区');
             $table->string('branch',64)->comment('分行/开户行');

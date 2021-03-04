@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Common\Models\UserBanks;
 use Illuminate\Http\Request;
 
-class UserPaymentMethodController extends Controller
+class UserBanksController extends Controller
 {
     //
     /**
@@ -40,18 +40,29 @@ class UserPaymentMethodController extends Controller
         };
 
         $model = UserBanks::select([
-            'user_payment_methods.id',
-            'user_payment_methods.user_id',
-            'user_payment_methods.extra',
-            'user_payment_methods.status',
-            'user_payment_methods.is_delete',
-            'user_payment_methods.is_open',
-            'user_payment_methods.limit_amount',
-            'user_payment_methods.created_at',
+            'user_banks.id',
+            'user_banks.user_id',
+            'user_banks.account_name',
+            'user_banks.account_name',
+            'user_banks.account_number',
+            'user_banks.branch',
+            'user_banks.status',
+            'user_banks.is_delete',
+            'user_banks.is_open',
+            'user_banks.limit_amount',
+            'user_banks.created_at',
             'users.username',
             'users.nickname',
+            'banks.name as bank_name',
+            'r1.name as province',
+            'r2.name as city',
+            'r3.name as district',
         ])
-            ->leftJoin('users','users.id','user_payment_methods.user_id')
+            ->leftJoin('users','users.id','user_banks.user_id')
+            ->leftJoin('banks','banks.id','user_banks.banks_id')
+            ->leftJoin('regions as r1','r1.id','user_banks.province_id')
+            ->leftJoin('regions as r2','r2.id','user_banks.city_id')
+            ->leftJoin('regions as r3','r3.id','user_banks.district_id')
             ->where($where);
 
         // TODO:获取 银行卡记录等
@@ -63,9 +74,6 @@ class UserPaymentMethodController extends Controller
             ->take($limit)
             ->get()
             ->toArray();
-        foreach( $payment_method_list as  $key => $item ){
-            $payment_method_list[$key] = array_merge($payment_method_list[$key],json_decode($item['extra'],true));
-        }
 
         return $this->response(1,'success',[
             'banks'                 => $banks,

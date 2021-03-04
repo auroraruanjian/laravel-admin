@@ -116,10 +116,10 @@ class DepositController extends Controller
 
             if( isset($deposit['payment_channel_id']) && $deposit['payment_channel_id'] == 1){
                 $user_payment_method = UserBanks::select([
-                    'user_payment_methods.extra',
-                    'user_payment_methods.type',
+                    'user_payment_methods.account_name',
+                    'user_payment_methods.account_number',
                 ])
-                    ->where('user_payment_methods.id','=',$deposit['account_number'])
+                    ->where('user_payment_methods.account_number','=',$deposit['account_number'])
                     ->first();
 
                 if( $user_payment_method->type == 1 ){
