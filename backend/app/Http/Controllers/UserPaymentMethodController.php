@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Common\Models\UserPaymentMethods;
+use Common\Models\UserBanks;
 use Illuminate\Http\Request;
 
 class UserPaymentMethodController extends Controller
@@ -39,7 +39,7 @@ class UserPaymentMethodController extends Controller
             return $query->whereRaw(' true ');
         };
 
-        $model = UserPaymentMethods::select([
+        $model = UserBanks::select([
             'user_payment_methods.id',
             'user_payment_methods.user_id',
             'user_payment_methods.extra',
@@ -83,7 +83,7 @@ class UserPaymentMethodController extends Controller
         $id = $request->get('id');
         $is_open = $request->get('is_open') ? 1 : 0;
 
-        $user_payment = UserPaymentMethods::select([
+        $user_payment = UserBanks::select([
             'id',
             'is_open'
         ])
@@ -114,7 +114,7 @@ class UserPaymentMethodController extends Controller
         $id = $request->get('id');
         $status = $request->get('status') ? 1 : 0;
 
-        $user_payment = UserPaymentMethods::select([
+        $user_payment = UserBanks::select([
             'id',
             'status'
         ])

@@ -6,7 +6,7 @@ use Common\Helpers\RSA;
 use Common\Models\Merchants;
 use Common\Models\Orders;
 use Common\Models\Withdrawals as WithdrawalModel;
-use Common\Models\UserPaymentMethods;
+use Common\Models\UserBanks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;

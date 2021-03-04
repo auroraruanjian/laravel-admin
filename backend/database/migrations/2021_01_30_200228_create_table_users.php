@@ -27,6 +27,7 @@ class CreateTableUsers extends Migration
             $table->string('username',32)->comment('用户名');
             $table->string('nickname',20)->unique()->comment('昵称');
             $table->string('password')->comment('密码');
+            $table->string('security_password')->nullable()->comment('密码');
             $table->tinyInteger('status')->default(0)->comment('状态:0 正常，1 冻结');
             $table->ipAddress('last_ip')->nullable()->comment('最后一次登录IP');
             $table->timestamp('last_time')->nullable()->comment('最后登录时间');

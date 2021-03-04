@@ -42,17 +42,16 @@ class UsersSeeder extends Seeder
             ],
         ]);
 
-        DB::table('user_payment_methods')->insert([
+        DB::table('user_banks')->insert([
             [
-                'type'       => 1,
                 'user_id'    => 1,
-                'extra'      => json_encode([
-                    'account_name'      => '张三',
-                    'account_number'    => '6465432198765432165',
-                    'banks_id'          => 1,  //$bank_id
-                    'branch'            => '北京',
-                    'province'          => '北京'
-                ]),
+                'account_name'  => '张三',
+                'account_number'=> '646543219876543216',
+                'banks_id'      => 1,  //$bank_id
+                'province_id'   => 2,
+                'city_id'       => 36,
+                'district_id'   => 398,
+                'branch'        => '朝阳支行',
                 'status'        => 1,
                 'is_delete'     => 1,
                 'is_open'       => 1,

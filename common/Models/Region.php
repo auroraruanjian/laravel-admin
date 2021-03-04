@@ -4,9 +4,8 @@ namespace Common\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserPaymentMethods extends Model
+class Region extends Model
 {
-    protected $table='user_payment_methods';
-
+    protected $table = 'regions';
     public $timestamps = false;
 }

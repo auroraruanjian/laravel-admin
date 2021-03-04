@@ -18,22 +18,36 @@ class AdminController extends Controller
 
         $permission = [
             [
-                "rule"          => "payment_method",
+                "rule"          => "user_banks",
                 "name"          => "收款方式",
                 "extra"         => [
                     "icon"      => "users",
-                    "redirect"  => "/payment_method/index",
                     "component" => "Layout"
                 ],
                 "description"   => "",
                 "child"         => [
                     [
-                        "rule"=> "payment_method/index",
-                        "name"=> "收款方式",
+                        "rule"=> "user_banks/index",
+                        "name"=> "收款银行卡",
                         "extra"=> [
                             "icon"      => "list",
-                            "component" => "payment_method/index",
-                            'hidden'    => true,
+                            "component" => "user_banks/index",
+                        ],
+                    ],
+                    [
+                        "rule"=> "user_banks/wechat",
+                        "name"=> "收款微信",
+                        "extra"=> [
+                            "icon"      => "list",
+                            "component" => "user_banks/index",
+                        ],
+                    ],
+                    [
+                        "rule"=> "user_banks/alipay",
+                        "name"=> "收款支付宝",
+                        "extra"=> [
+                            "icon"      => "list",
+                            "component" => "user_banks/index",
                         ],
                     ],
                 ]

@@ -8,7 +8,7 @@ use Common\Models\Merchants;
 use Common\Models\Orders;
 use Common\Models\PaymentChannelDetail;
 use Common\Models\PaymentMethod;
-use Common\Models\UserPaymentMethods;
+use Common\Models\UserBanks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -74,7 +74,7 @@ class Payment
             if( $person_order_model == 1 ){
                 // 如果是银行转账,则获取 散户银行卡
                 if( $channel_detail['payment_method_ident'] == 'transfer' ){
-                    $user_payment_method = UserPaymentMethods::select(['id','user_id','extra','limit_amount'])->where([
+                    $user_payment_method = UserBanks::select(['id','user_id','extra','limit_amount'])->where([
                         ['type','=','1'],
                         ['status','=','1'],
                         ['is_delete','=','1'],

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Common\Models\Deposits;
 use Common\Models\PaymentMethod;
-use Common\Models\UserPaymentMethods;
+use Common\Models\UserBanks;
 use Illuminate\Http\Request;
 
 class DepositController extends Controller

@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use Common\Models\Deposits;
 use Common\API\Deposits as API_Deposits;
 use Common\Models\PaymentMethod;
-use Common\Models\UserPaymentMethods;
+use Common\Models\UserBanks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -65,7 +65,7 @@ class DepositController extends Controller
                         $query = $query->where('deposits.id','=',$deposit_id);
                     }
                 }else{
-                    $user_payment_method = UserPaymentMethods::whereRaw("extra->>'account_number' = '".$param['id_or_account_number']."'")->first('id');
+                    $user_payment_method = UserBanks::whereRaw("extra->>'account_number' = '".$param['id_or_account_number']."'")->first('id');
                     if( !empty($user_payment_method) ){
                         $query = $query->where('deposits.account_number','=',$user_payment_method->id);
                     }else{
@@ -115,7 +115,7 @@ class DepositController extends Controller
             $deposit['payee_account_number'] = '';
 
             if( isset($deposit['payment_channel_id']) && $deposit['payment_channel_id'] == 1){
-                $user_payment_method = UserPaymentMethods::select([
+                $user_payment_method = UserBanks::select([
                     'user_payment_methods.extra',
                     'user_payment_methods.type',
                 ])
