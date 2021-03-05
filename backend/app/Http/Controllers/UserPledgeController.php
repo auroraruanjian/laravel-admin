@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Common\Models\Bank;
+use Common\Models\Region;
 use Common\Models\UserBanks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class UserBanksController extends Controller
+class UserPledgeController extends Controller
 {
     //
     /**
@@ -25,16 +28,6 @@ class UserBanksController extends Controller
 
         $start = ($page - 1) * $limit;
 
-        $param = [];
-        $param['username'] = $request->get('username');
-
-        $where = function( $query ) use ($param){
-            if( !empty($param['username']) ){
-                $query = $query->where('users.username','=',$param['username']);
-            }
-            return $query->whereRaw(' true ');
-        };
-
         $model = UserBanks::select([
             'user_banks.id',
             'user_banks.user_id',
@@ -43,23 +36,17 @@ class UserBanksController extends Controller
             'user_banks.account_number',
             'user_banks.branch',
             'user_banks.status',
-            'user_banks.is_delete',
-            'user_banks.is_open',
-            'user_banks.limit_amount',
             'user_banks.created_at',
-            'users.username',
-            'users.nickname',
             'banks.name as bank_name',
             'r1.name as province',
             'r2.name as city',
             'r3.name as district',
         ])
-            ->leftJoin('users','users.id','user_banks.user_id')
             ->leftJoin('banks','banks.id','user_banks.banks_id')
             ->leftJoin('regions as r1','r1.id','user_banks.province_id')
             ->leftJoin('regions as r2','r2.id','user_banks.city_id')
             ->leftJoin('regions as r3','r3.id','user_banks.district_id')
-            ->where($where);
+            ->where('user_id','=',0);
 
         $payment_method_list = $model->skip($start)
             ->take($limit)
@@ -70,6 +57,67 @@ class UserBanksController extends Controller
             'payment_method_list'   => $payment_method_list,
             'total'                 => $model->count(),
         ]);
+    }
+
+    public function getCreate(Request $request)
+    {
+        $flag = $request->get('flag', '');
+        if ($flag == 'get_city') {
+            $id = (int)$request->get('parent_id', 0);
+            $city = Region::select(['id', 'parent_id', 'name', 'level'])->where('parent_id', $id)->get()->toArray();
+            foreach ($city as &$value) {
+                if ($value['level'] < 3) {
+                    $value['cities'] = array();
+                }
+            }
+            return $this->response(1,'success',$city);
+        }
+
+        $user = auth()->user();
+        $has_security_password = false;
+        if (!empty($user->security_password)) {
+            $has_security_password = true;
+        }
+
+        if (!$has_security_password) {
+            //return $this->response(0,'为了您的账户安全，请先设置资金密码!');
+        }
+
+        $banks = Bank::select(['id', 'name', 'ident'])->where('disabled', false)->get()->toArray();
+        $province = Region::select(['id', 'name', 'level'])->where('parent_id', 0)->get()->toArray();
+        foreach ($province as &$v) {
+            $v['cities'] = array();
+        }
+
+        return $this->response(1,'success',[
+            'banks'     => $banks,
+            'province'  => $province
+        ]);
+    }
+
+    public function postCreate(Request $request)
+    {
+        $account_name       = $request->get('account_name');
+        $account_number     = $request->get('account_number');
+        $bank_id            = $request->get('bank_id');
+        $branch             = $request->get('branch');
+        $province           = $request->get('province');
+
+        $user_payment_method = new UserBanks();
+        $user_payment_method->user_id       = 0;
+        $user_payment_method->account_name = $account_name;
+        $user_payment_method->account_number = $account_number;
+        $user_payment_method->banks_id = $bank_id;
+        $user_payment_method->branch = $branch;
+        $user_payment_method->province_id = $province[0];
+        $user_payment_method->city_id = $province[1];
+        $user_payment_method->district_id = $province[2];
+        $user_payment_method->limit_amount  = 0;
+
+        if( $user_payment_method->save() ){
+            return $this->response(1,'success');
+        }
+        return $this->response(0,'error');
     }
 
     /**
@@ -86,6 +134,7 @@ class UserBanksController extends Controller
             'is_open'
         ])
             ->where([
+                ['user_id','=',0],
                 ['id','=',$id]
             ])
             ->first();
@@ -116,6 +165,7 @@ class UserBanksController extends Controller
             'status'
         ])
             ->where([
+                ['user_id','=',0],
                 ['id','=',$id]
             ])
             ->first();

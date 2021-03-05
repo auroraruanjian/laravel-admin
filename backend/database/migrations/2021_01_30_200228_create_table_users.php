@@ -158,9 +158,21 @@ class CreateTableUsers extends Migration
         DB::table('admin_role_permissions')->insert([
             [
                 'parent_id'   => $id,
-                'rule'        => 'users/user_banks',
+                'rule'        => 'user_banks/index',
                 'name'        => '散户收款银行卡',
                 'extra'       => json_encode(['component'=>'users/user_banks']),
+            ],
+            [
+                'parent_id'   => $id,
+                'rule'        => 'user_banks/isopen',
+                'name'        => '是否开启散户收款银行卡',
+                'extra'       => json_encode(['hidden'=>true]),
+            ],
+            [
+                'parent_id'   => $id,
+                'rule'        => 'user_banks/available',
+                'name'        => '散户收款银行卡是否可用',
+                'extra'       => json_encode(['hidden'=>true]),
             ],
             [
                 'parent_id'   => $id,
@@ -173,6 +185,30 @@ class CreateTableUsers extends Migration
                 'rule'        => 'users/alipay',
                 'name'        => '散户收款支付宝',
                 'extra'       => json_encode(['component'=>'users/user_banks']),
+            ],
+            [
+                'parent_id'   => $id,
+                'rule'        => 'user_pledge/index',
+                'name'        => '代收保证金收款银行卡',
+                'extra'       => json_encode(['component'=>'users/user_pledge']),
+            ],
+            [
+                'parent_id'   => $id,
+                'rule'        => 'users_pledge/create',
+                'name'        => '新增代收保证金收款银行卡',
+                'extra'       => json_encode(['hidden'=>true]),
+            ],
+            [
+                'parent_id'   => $id,
+                'rule'        => 'users_pledge/isopen',
+                'name'        => '是否开启保证金收款银行卡',
+                'extra'       => json_encode(['hidden'=>true]),
+            ],
+            [
+                'parent_id'   => $id,
+                'rule'        => 'users_pledge/available',
+                'name'        => '保证金收款银行卡是否可用',
+                'extra'       => json_encode(['hidden'=>true]),
             ],
         ]);
     }
