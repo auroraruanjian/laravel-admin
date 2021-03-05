@@ -23,8 +23,8 @@ class CreateTableUserDeposits extends Migration
             $table->string('third_order_no', 100)->default('')->comment('银行交易流水或是第三方交易流水');
 
             $table->integer('order_id')->nullable()->comment('本站帐变流水号');
-            $table->string('accountant_admin_id')->nullable()->comment('会计，通过审核的管理员');
-            $table->string('cash_admin_id')->nullable()->comment('出纳，确认充值的管理员');
+            $table->integer('accountant_admin_id')->nullable()->comment('会计，通过审核的管理员');
+            $table->integer('cash_admin_id')->nullable()->comment('出纳，确认充值的管理员');
 
             $table->tinyInteger('status')->default(0)->comment('状态，０支付中，１已审核，２充值成功，３充值失败');
             $table->tinyInteger('report_status')->default(0)->comment('报表汇总状态：0. 未开始; 1. 进行中; 2. 完成');

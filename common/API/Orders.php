@@ -33,8 +33,7 @@ class Orders
             return $query->whereRaw(' true ');
         };
 
-        // TODO:获取 银行卡记录等
-        $model = OrdersModel::select([
+        $filed = [
             'orders.id',
             'orders.type',
             'orders.from_id',
@@ -51,9 +50,22 @@ class Orders
             'order_type.name as order_type_name',
             'order_type.operation',
             'order_type.hold_operation',
-        ])
+            'admin_users.username as admin_username'
+        ];
+        if( $param['type'] == 3 ){
+            $filed = array_merge($filed,['users.username']);
+        }
+
+        // TODO:获取 银行卡记录等
+        $model = OrdersModel::select($filed)
             ->leftJoin('order_type','order_type.id','orders.order_type_id')
-            ->where($where);
+            ->leftJoin('admin_users','admin_users.id','orders.admin_user_id');
+
+        if( $param['type'] == 3 ){
+            $model = $model->leftJoin('users','users.id','orders.from_id');
+        }
+
+        $model = $model->where($where);
 
         $orders = $model->skip($start)
             ->take($limit)

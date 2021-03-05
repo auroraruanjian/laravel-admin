@@ -157,7 +157,7 @@
                     loading:false,
                     form:{
                         bank_id:0,
-                        amount:0,
+                        amount:'',
                     },
                     pledge_bank:{
                         bank_name:'',
@@ -306,9 +306,15 @@
                     let _this = this;
                     _this.user_deposit.loading=true;
                     getDeposit().then(( result )=>{
-                        _this.user_deposit.pledge_bank = result.data.data.bank_info;
-                        _this.user_deposit.form.bank_id = result.data.data.bank_info.id;
-                        _this.user_deposit.loading=false;
+                        if( result.data.code != 1 ){
+                            _this.$message.error(result.data.msg);
+                            _this.user_deposit.loading=false;
+                            _this.$store.dispatch('app/toggleDepositVisible',false)
+                        }else{
+                            _this.user_deposit.pledge_bank = result.data.data.bank_info;
+                            _this.user_deposit.form.bank_id = result.data.data.bank_info.id;
+                            _this.user_deposit.loading=false;
+                        }
                     });
                 }
             }

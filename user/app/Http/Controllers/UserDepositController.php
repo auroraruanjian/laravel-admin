@@ -59,6 +59,10 @@ class UserDepositController extends Controller
             ])
             ->first();
 
+        if( empty($data) ){
+            return $this->response(0,'充值方式不存在！');
+        }
+
         return $this->response(1,'success',[
             'bank_info' => $data
         ]);

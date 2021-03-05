@@ -14,7 +14,7 @@ class CreateTableAdminUsers extends Migration
     public function up()
     {
         Schema::create('admin_users', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('nickname')->comment('用户昵称');
             $table->string('username')->unique()->comment('用户名');
             $table->string('password');

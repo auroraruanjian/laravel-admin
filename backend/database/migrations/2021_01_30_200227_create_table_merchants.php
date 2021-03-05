@@ -51,7 +51,7 @@ class CreateTableMerchants extends Migration
         $this->_addMerchantOrders( $id );
         $this->_addMerchantDeposit( $id );
         $this->_addMerchantWithdrawal( $id );
-        $this->_addMerchantSelfDeposit( $id );
+        //$this->_addMerchantSelfDeposit( $id );
         $this->_addMerchantSelfWithdrawal( $id );
         $this->_addMerchantProfit( $id );
     }

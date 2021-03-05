@@ -64,7 +64,7 @@ class CreateTableOrderType extends Migration
                 'operation'      => 1,
                 'hold_operation' => 0,
                 'category'       => 1,
-                'description'    => '代收成功，商户金额增加',
+                'description'    => '代收成功，金额增加',
             ],
             [
                 'name'           => '代收佣金',

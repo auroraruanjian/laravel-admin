@@ -123,12 +123,12 @@
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column align="header-center" label="后余额/冻结">
+                <el-table-column align="header-center" label="前余额/冻结">
                     <template slot-scope="scope">
                         {{ scope.row.pre_balance }}/{{ scope.row.pre_hold_balance }}
                     </template>
                 </el-table-column>
-                <el-table-column align="header-center" label="前余额/冻结">
+                <el-table-column align="header-center" label="后余额/冻结">
                     <template slot-scope="scope">
                         {{ scope.row.balance }}/{{ scope.row.hold_balance }}
                     </template>
@@ -136,7 +136,7 @@
                 <el-table-column align="header-center" label="IP地址" prop="ip"></el-table-column>
                 <el-table-column align="header-center" label="客户端" prop="client_type"></el-table-column>
                 <el-table-column align="header-center" label="备注" prop="comment"></el-table-column>
-                <el-table-column align="header-center" label="管理员" prop="admin_user_id"></el-table-column>
+                <el-table-column align="header-center" label="管理员" prop="admin_username"></el-table-column>
             </el-table>
 
             <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getOrders" />

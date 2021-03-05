@@ -132,7 +132,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_self_deposit/',
             'name' => '散户充值审核',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'users/index']),
+            'extra' => json_encode(['icon' => 'users', 'component' => 'users/user_self_deposit']),
         ]);
     }
 

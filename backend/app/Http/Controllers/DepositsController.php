@@ -113,7 +113,7 @@ class DepositsController extends Controller
             $deposit->manual_postscript = $request->get('manual_postscript');
             $deposit->third_order_no = $request->get('third_order_no');
             $deposit->status = 1;
-            $deposit->accountant_admin = auth()->user()->username;
+            $deposit->accountant_admin_id = auth()->user()->id;
             $deposit->deal_at = (string)Carbon::now();
 
             if($deposit->save()){
@@ -148,7 +148,7 @@ class DepositsController extends Controller
                 }
 
                 $deposit->status = $status;
-                $deposit->cash_admin = auth()->user()->username;
+                $deposit->cash_admin_id = auth()->user()->id;
                 $deposit->done_at = (string)Carbon::now();
                 $deposit->order_id = $order->id;
 
