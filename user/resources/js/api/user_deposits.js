@@ -8,10 +8,17 @@ export function getAllRecord( data ) {
     });
 }
 
+export function getDeposit() {
+    return fetch({
+        url: 'user_deposit/apply',
+        method: 'get',
+    });
+}
+
 export function applyDeposit( data ) {
     return fetch({
         url: 'user_deposit/apply',
         method: 'post',
-        params:data
+        data
     });
 }

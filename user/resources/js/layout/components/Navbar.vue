@@ -22,7 +22,7 @@
                     余额: <span class="value_text">0</span> 元 &nbsp;&nbsp;&nbsp;
                     冻结余额: <span class="value_text">0</span> % &nbsp;&nbsp;&nbsp;
                 </span>
-                <el-button type="success" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;" @click="user_deposit.dialogVisible=true">充值</el-button>
+                <el-button type="success" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;" @click="$store.dispatch('app/toggleDepositVisible',true)">充值</el-button>
                 <el-button type="danger" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">提现</el-button>
 
                 <el-button type="primary" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">刷新</el-button>
@@ -94,14 +94,23 @@
             </div>
         </el-dialog>
 
-        <el-dialog :visible.sync="user_deposit.dialogVisible" title="充值申请" width="500px" >
-            <el-form :model="user_deposit.form" label-width="15%" label-position="right">
-                <el-form-item label="金额" class="is-required">
-                    <el-input v-model="user_deposit.form.amount" placeholder="请输入4~10位字符，以字母开头" />
+        <el-dialog :visible="depositVisible" title="充值申请" width="600px" v-loading="user_deposit.loading" >
+            <el-form :model="user_deposit.form" ref="user_deposit" label-width="20%" label-position="right"  :rules="user_deposit.rules">
+                <el-form-item label="收款银行">
+                    <el-input v-model="user_deposit.pledge_bank.bank_name" :disabled="true" />
+                </el-form-item>
+                <el-form-item label="收款人姓名">
+                    <el-input v-model="user_deposit.pledge_bank.account_name" :disabled="true" />
+                </el-form-item>
+                <el-form-item label="收款人卡号">
+                    <el-input v-model="user_deposit.pledge_bank.account_number" :disabled="true"  />
+                </el-form-item>
+                <el-form-item label="金额" class="is-required" prop="amount">
+                    <el-input v-model.number="user_deposit.form.amount" placeholder="请输入4~10位字符，以字母开头" />
                 </el-form-item>
             </el-form>
             <div style="text-align:right;">
-                <el-button type="danger" @click="user_deposit.dialogVisible=false">取消</el-button>
+                <el-button type="danger" @click="$store.dispatch('app/toggleDepositVisible',false)">取消</el-button>
                 <el-button type="primary" @click="userDepostConfirm">新增</el-button>
             </div>
         </el-dialog>
@@ -115,7 +124,7 @@
     import Screenfull from '@/components/Screenfull'
     import QRCode  from 'qrcode'
     import { wechat_login,unbind_wechat } from '@/api/auth'
-    import { applyDeposit } from '@/api/user_deposits'
+    import { getDeposit,applyDeposit } from '@/api/user_deposits'
 
     export default {
         components: {
@@ -131,6 +140,7 @@
             ...mapState({
                 device: state => state.app.device,
                 wechat_status:state => state.user.wechat_status,
+                depositVisible:state => state.app.depositVisible
             }),
         },
         data(){
@@ -144,9 +154,25 @@
                     qrcode_loading:'',
                 },
                 user_deposit:{
-                    dialogVisible:false,
+                    loading:false,
                     form:{
+                        bank_id:0,
                         amount:0,
+                    },
+                    pledge_bank:{
+                        bank_name:'',
+                        account_name:'',
+                        account_number:'',
+                    },
+                    rules:{
+                        amount:[
+                            {
+                                type: 'number',
+                                required: true,
+                                message: '请输入正确的金额！',
+                                trigger: 'change'
+                            }
+                        ]
                     }
                 },
                 // 接单状态
@@ -257,18 +283,35 @@
 
             },
             async userDepostConfirm(){
-                let result = await applyDeposit(this.user_deposit.form);
-                let type = 'danger';
-                if(  result.data.code == 1 ){
-                    type = 'success';
-                }
-                this.$message({
-                    type: type,
-                    message: result.data.msg
-                });
+                this.$refs['user_deposit'].validate( async (valid) => {
+                    if (valid) {
+                        let result = await applyDeposit(this.user_deposit.form);
+                        let type = 'error';
+                        if(  result.data.code == 1 ){
+                            type = 'success';
+                        }
+                        this.$message({
+                            type: type,
+                            message: result.data.msg
+                        });
 
-                this.user_deposit.dialogVisible = false;
+                        this.$store.dispatch('app/toggleDepositVisible',false)
+                    }
+                });
             },
+        },
+        watch:{
+            depositVisible( value ) {
+                if( value ){
+                    let _this = this;
+                    _this.user_deposit.loading=true;
+                    getDeposit().then(( result )=>{
+                        _this.user_deposit.pledge_bank = result.data.data.bank_info;
+                        _this.user_deposit.form.bank_id = result.data.data.bank_info.id;
+                        _this.user_deposit.loading=false;
+                    });
+                }
+            }
         },
         beforeDestroy() {
             this.wechat_close();

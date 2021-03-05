@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671224a9-92fb-49c6-aaaa-b3090c3b09d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/UserPledgeController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/resources/js/api/user_pledge.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/resources/js/views/users/user_pledge.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/UserBanksController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/UserBanksController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200228_create_table_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200228_create_table_users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_02_17_231454_create_table_user_deposits.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_02_17_231454_create_table_user_deposits.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/app/Http/Controllers/UserDepositController.php" beforeDir="false" afterPath="$PROJECT_DIR$/user/app/Http/Controllers/UserDepositController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/resources/js/api/user_deposits.js" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/api/user_deposits.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/resources/js/layout/components/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/resources/js/store/modules/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/store/modules/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/resources/js/views/user_deposit/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/views/user_deposit/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +188,7 @@
       <workItem from="1614618565141" duration="35025000" />
       <workItem from="1614815726718" duration="20000" />
       <workItem from="1614820368243" duration="11400000" />
-      <workItem from="1614888568292" duration="14435000" />
+      <workItem from="1614888568292" duration="21215000" />
     </task>
     <task id="LOCAL-00001" summary="代理后台">
       <created>1612015158568</created>
@@ -406,14 +407,20 @@
       <option name="project" value="LOCAL" />
       <updated>1614898537139</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="后台增加添加保证金收款银行卡">
+      <created>1614907970458</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1614907970458</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="代理后台" />
     <MESSAGE value="商户后台" />
     <MESSAGE value="商户系统手续费" />
     <MESSAGE value="用户管理" />
@@ -438,7 +445,8 @@
     <MESSAGE value="收款方式" />
     <MESSAGE value="散户后台银行卡收款方式" />
     <MESSAGE value="后台银行卡收款方式" />
-    <option name="LAST_COMMIT_MESSAGE" value="后台银行卡收款方式" />
+    <MESSAGE value="后台增加添加保证金收款银行卡" />
+    <option name="LAST_COMMIT_MESSAGE" value="后台增加添加保证金收款银行卡" />
   </component>
   <component name="WindowStateProjectService">
     <state x="508" y="27" width="542" height="469" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1614897287495">
@@ -448,25 +456,25 @@
     <state x="469" y="27" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1688.881@67.27.1688.881" timestamp="1612034266406" />
     <state x="507" y="27" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1847.895@67.27.1847.895" timestamp="1614374630162" />
     <state x="508" y="27" width="542" height="469" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1851.899@67.27.1851.899" timestamp="1614897287495" />
-    <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1614907748476">
+    <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1614916435234">
       <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="674" y="231" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1706.890@67.27.1706.890" timestamp="1614882724740" />
     <state x="724" y="232" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1847.895@67.27.1847.895" timestamp="1614389260828" />
-    <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1851.899@67.27.1851.899" timestamp="1614907748476" />
+    <state x="725" y="233" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1851.899@67.27.1851.899" timestamp="1614916435234" />
     <state x="933" y="325" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1614718555536">
       <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1584.886@67.27.1584.886" timestamp="1611856336075" />
     <state x="933" y="325" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1851.899@67.27.1851.899" timestamp="1614718555536" />
-    <state x="265" y="27" width="920" height="890" key="CommitChangelistDialog2" timestamp="1614898537015">
+    <state x="265" y="27" width="920" height="890" key="CommitChangelistDialog2" timestamp="1614907970337">
       <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="402" y="27" width="1008" height="881" key="CommitChangelistDialog2/67.27.1688.881@67.27.1688.881" timestamp="1612042062654" />
     <state x="403" y="27" key="CommitChangelistDialog2/67.27.1691.878@67.27.1691.878" timestamp="1612286982679" />
     <state x="406" y="27" width="920" height="890" key="CommitChangelistDialog2/67.27.1706.890@67.27.1706.890" timestamp="1614664164959" />
     <state x="434" y="27" width="1101" height="895" key="CommitChangelistDialog2/67.27.1847.895@67.27.1847.895" timestamp="1614535373092" />
-    <state x="265" y="27" width="920" height="899" key="CommitChangelistDialog2/67.27.1851.899@67.27.1851.899" timestamp="1614898537015" />
+    <state x="265" y="27" width="920" height="899" key="CommitChangelistDialog2/67.27.1851.899@67.27.1851.899" timestamp="1614907970337" />
     <state x="241" y="101" width="1350" height="734" key="DiffContextDialog" timestamp="1613583289972">
       <screen x="67" y="27" width="1851" height="899" />
     </state>
@@ -489,7 +497,7 @@
     <state x="655" y="387" width="398" height="159" key="NewPhpFileDialog/67.27.1584.881@67.27.1584.881" timestamp="1611952294366" />
     <state x="753" y="393" width="398" height="159" key="NewPhpFileDialog/67.27.1847.895@67.27.1847.895" timestamp="1614079698597" />
     <state x="754" y="395" key="NewPhpFileDialog/67.27.1851.899@67.27.1851.899" timestamp="1614720105309" />
-    <state x="685" y="27" width="843" height="899" key="find.popup" timestamp="1614896967828">
+    <state x="685" y="27" width="843" height="899" key="find.popup" timestamp="1614910349814">
       <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="595" y="27" width="638" height="886" key="find.popup/67.27.1584.886@67.27.1584.886" timestamp="1611942128131" />
@@ -498,7 +506,7 @@
     <state x="632" y="27" width="771" height="890" key="find.popup/67.27.1693.890@67.27.1693.890" timestamp="1612993895589" />
     <state x="636" y="160" width="777" height="624" key="find.popup/67.27.1706.890@67.27.1706.890" timestamp="1614659256111" />
     <state x="683" y="161" width="841" height="624" key="find.popup/67.27.1847.895@67.27.1847.895" timestamp="1614547273468" />
-    <state x="685" y="27" width="843" height="899" key="find.popup/67.27.1851.899@67.27.1851.899" timestamp="1614896967828" />
+    <state x="685" y="27" width="843" height="899" key="find.popup/67.27.1851.899@67.27.1851.899" timestamp="1614910349814" />
     <state x="609" y="212" key="run.anything.popup" timestamp="1614635773086">
       <screen x="67" y="27" width="1706" height="890" />
     </state>

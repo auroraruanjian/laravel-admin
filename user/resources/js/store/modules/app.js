@@ -4,7 +4,8 @@ const state = {
         opened: true,//Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
         withoutAnimation: false
     },
-    device: 'desktop'
+    device: 'desktop',
+    depositVisible:false,
 }
 
 const mutations = {
@@ -24,6 +25,9 @@ const mutations = {
     },
     TOGGLE_DEVICE: (state, device) => {
         state.device = device
+    },
+    TOGGLE_DEPOSITVISIBLE:(state, status) => {
+        state.depositVisible = status
     }
 }
 
@@ -36,6 +40,9 @@ const actions = {
     },
     toggleDevice({ commit }, device) {
         commit('TOGGLE_DEVICE', device)
+    },
+    toggleDepositVisible({ commit }, status) {
+        commit('TOGGLE_DEPOSITVISIBLE', status)
     }
 }
 

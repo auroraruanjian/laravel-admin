@@ -24,15 +24,15 @@
                         </el-form>
                     </el-col>
                     <el-col :span="6" style="text-align: right;">
-                        <el-button type="success" size="small" @click="depositApply">购入Q币</el-button>
+                        <el-button type="success" size="small" @click="$store.dispatch('app/toggleDepositVisible',true)">购入Q币</el-button>
                         <el-button type="primary" size="small" plain @click="getAllRecord">刷新</el-button>
                     </el-col>
                 </el-row>
             </div>
 
             <el-table :data="user_deposits" style="width: 100%;margin-top:30px;" border fixed>
-                <el-table-column align="header-center" label="金额" prop="amount"></el-table-column>
                 <el-table-column align="header-center" label="订单编号" prop="id"></el-table-column>
+                <el-table-column align="header-center" label="金额" prop="amount"></el-table-column>
                 <el-table-column align="header-center" label="订单类型"></el-table-column>
                 <el-table-column align="header-center" label="订单状态" prop="status">
                     <template slot-scope="scope" >
@@ -45,7 +45,6 @@
                 <el-table-column align="header-center" label="创建时间" prop="created_at"></el-table-column>
                 <el-table-column align="center" label="操作">
                     <template slot-scope="scope" >
-                        <el-button type="success" @click="handleReceipted(scope.row.id)" v-if="scope.row.status==0" size="small">已收款</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -59,7 +58,7 @@
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import { getAllRecord } from '@/api/user_deposits'
-import { mapGetters } from 'vuex'
+import { mapGetters,mapState } from 'vuex'
 
 export default {
     name: "UserDepositIndex",
@@ -80,7 +79,10 @@ export default {
     computed: {
         ...mapGetters([
             'username'
-        ])
+        ]),
+        ...mapState({
+            depositVisible:state => state.app.depositVisible
+        }),
     },
     components: { Pagination },
     directives: { permission },
@@ -102,31 +104,13 @@ export default {
             }
             this.loading =  false;
         },
-        depositApply(){
-
-        },
-        handleReceipted( id ){
-            this.$confirm('是否已确定收款?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(async () => {
-                // let result = await postChanagestatus({
-                //     id:id,
-                //     status:true,
-                // });
-                // let type = 'danger';
-                // if(  result.data.code == 1 ){
-                //     type = 'success';
-                // }
-                // this.$message({
-                //     type: type,
-                //     message: result.data.msg
-                // });
-            });
-        },
     },
     watch: {
+        depositVisible( value ){
+            if( !value ){
+                this.getAllRecord();
+            }
+        }
     }
 }
 </script>

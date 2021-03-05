@@ -16,7 +16,6 @@ class CreateTableUserDeposits extends Migration
         Schema::create('user_deposits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->comment('用户ID');
-            $table->smallInteger('payment_channel_detail_id')->comment('支付通道ID');
 
             $table->decimal('amount', 15, 4)->comment('交易金额');
             $table->decimal('real_amount', 15, 4)->nullable()->comment('实际支付金额');
@@ -39,9 +38,6 @@ class CreateTableUserDeposits extends Migration
             $table->string('account_number', 50)->default('')->comment('商户号或银行卡号');
             $table->string('error_type', 64)->default('')->comment('违规类型');
 
-            $table->tinyInteger('callback_status')->default(0)->comment('第三方回调状态，大于 0 为成功');
-            $table->timestamp('callback_at')->nullable()->comment('第三方回调时间');
-
             $table->string('remark', 64)->default('')->comment('订单备注');
             $table->string('admin_remark', 64)->default('')->comment('管理员备注');
             $table->jsonb('extra')->default(json_encode([]))->comment('扩展字段');
@@ -53,7 +49,6 @@ class CreateTableUserDeposits extends Migration
             $table->index('created_at');
             $table->index(['status', 'report_status']);
             $table->index(['status', 'created_at']);
-            $table->index(['payment_channel_detail_id', 'created_at']);
         });
 
         DB::statement('ALTER SEQUENCE IF EXISTS "deposits_id_seq" RESTART WITH 1000000');
