@@ -53,7 +53,7 @@ class CreateTableUsers extends Migration
             'parent_id'   => 0,
             'rule'        => 'user_system',
             'name'        => '散户系统',
-            'extra'       => json_encode(['icon' => 'list','component'=>'Layout']),
+            'extra'       => json_encode(['icon' => 'users','component'=>'Layout']),
         ]);
 
         $this->_addUserIndex( $id );
@@ -113,7 +113,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_deposit/',
             'name' => '散户代收订单',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'deposit/user']),
+            'extra' => json_encode(['icon' => 'deposit', 'component' => 'deposit/user']),
         ]);
     }
 
@@ -123,7 +123,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_withdrawal/',
             'name' => '散户代付订单',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'users/index']),
+            'extra' => json_encode(['icon' => 'withdrawal', 'component' => 'users/index']),
         ]);
     }
     private function _addUserSelfDeposit( $parent_id )
@@ -132,7 +132,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_self_deposit/',
             'name' => '散户充值审核',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'users/user_self_deposit']),
+            'extra' => json_encode(['icon' => 'money', 'component' => 'users/user_self_deposit']),
         ]);
     }
 
@@ -142,7 +142,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_self_withdrawal/',
             'name' => '散户提款审核',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'users/index']),
+            'extra' => json_encode(['icon' => 'money', 'component' => 'users/index']),
         ]);
     }
 
@@ -152,7 +152,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_payment_method/',
             'name' => '散户收款方式',
-            'extra'       => json_encode(['icon' => 'users','component'=>'SubPage']),
+            'extra'       => json_encode(['icon' => 'payment','component'=>'SubPage']),
         ]);
 
         DB::table('admin_role_permissions')->insert([
@@ -219,7 +219,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_profit/',
             'name' => '散户收益统计',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'users/index']),
+            'extra' => json_encode(['icon' => 'orders_record', 'component' => 'users/index']),
         ]);
     }
 

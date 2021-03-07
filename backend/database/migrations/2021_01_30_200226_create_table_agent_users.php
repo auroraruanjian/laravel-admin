@@ -49,7 +49,7 @@ class CreateTableAgentUsers extends Migration
             'parent_id'   => 0,
             'rule'        => 'agent_system',
             'name'        => '代理系统',
-            'extra'       => json_encode(['icon' => 'list','component'=>'Layout']),
+            'extra'       => json_encode(['icon' => 'agent','component'=>'Layout']),
         ]);
 
         $this->_addAgentIndex( $id );
@@ -133,7 +133,7 @@ class CreateTableAgentUsers extends Migration
             'parent_id'   => $parent_id,
             'rule'        => 'agent_profit/',
             'name'        => '代理收益统计',
-            'extra'       => json_encode(['icon' => 'users','component'=>'SubPage','redirect'=>'/agent_profit/index']),
+            'extra'       => json_encode(['icon' => 'money','component'=>'SubPage','redirect'=>'/agent_profit/index']),
         ]);
 
         DB::table('admin_role_permissions')->insert([

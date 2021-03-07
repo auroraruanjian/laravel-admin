@@ -35,7 +35,7 @@
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-1">
                                 <i class="grid-con-icon">
-                                    <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+                                    <svg-icon icon-class="withdrawal" class-name="card-panel-icon" />
                                 </i>
 
                                 <div class="grid-cont-right">
@@ -49,7 +49,7 @@
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-2">
                                 <i class="grid-con-icon">
-                                    <svg-icon icon-class="message" class-name="card-panel-icon" />
+                                    <svg-icon icon-class="money" class-name="card-panel-icon" />
                                 </i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">321</div>
@@ -62,7 +62,7 @@
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-3">
                                 <i class="grid-con-icon">
-                                    <svg-icon icon-class="chart" class-name="card-panel-icon" />
+                                    <svg-icon icon-class="payment" class-name="card-panel-icon" />
                                 </i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">5000</div>

@@ -21,7 +21,7 @@ class AdminController extends Controller
                 "rule"          => "user_banks",
                 "name"          => "收款方式",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "list",
                     "component" => "Layout"
                 ],
                 "description"   => "",
@@ -30,7 +30,7 @@ class AdminController extends Controller
                         "rule"=> "user_banks/index",
                         "name"=> "收款银行卡",
                         "extra"=> [
-                            "icon"      => "list",
+                            "icon"      => "bank_card",
                             "component" => "user_banks/index",
                         ],
                     ],
@@ -38,7 +38,7 @@ class AdminController extends Controller
                         "rule"=> "user_banks/wechat",
                         "name"=> "收款微信",
                         "extra"=> [
-                            "icon"      => "list",
+                            "icon"      => "wechat",
                             "component" => "user_banks/index",
                         ],
                     ],
@@ -46,7 +46,7 @@ class AdminController extends Controller
                         "rule"=> "user_banks/alipay",
                         "name"=> "收款支付宝",
                         "extra"=> [
-                            "icon"      => "list",
+                            "icon"      => "alipay",
                             "component" => "user_banks/index",
                         ],
                     ],
@@ -57,7 +57,7 @@ class AdminController extends Controller
                 "rule"          => "deposit",
                 "name"          => "Q币售出",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "orders",
                     "redirect"  => "/deposit/index",
                     "component" => "Layout"
                 ],
@@ -78,7 +78,7 @@ class AdminController extends Controller
                 "rule"          => "orders",
                 "name"          => "Q币买卖",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "deposit",
                     "redirect"  => "/orders/index",
                     "component" => "Layout"
                 ],
@@ -99,7 +99,7 @@ class AdminController extends Controller
                 "rule"          => "withdrawal",
                 "name"          => "Q币买入",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "withdrawal",
                     "redirect"  => "/withdrawal/index",
                     "component" => "Layout"
                 ],
@@ -120,7 +120,7 @@ class AdminController extends Controller
                 "rule"          => "user_deposit",
                 "name"          => "保证金充值",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "user_deposit",
                     "redirect"  => "/user_deposit/index",
                     "component" => "Layout"
                 ],
@@ -130,7 +130,7 @@ class AdminController extends Controller
                         "rule"=> "user_deposit/index",
                         "name"=> "保证金充值",
                         "extra"=> [
-                            "icon"      => "list",
+                            "icon"      => "user_deposit",
                             "component" => "user_deposit/index",
                             'hidden'    => true,
                         ],
@@ -141,7 +141,7 @@ class AdminController extends Controller
                 "rule"          => "user_withdrawal",
                 "name"          => "收益提取",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "user_withdrawal",
                     "component" => "Layout",
                     "redirect"  => "/user_withdrawal/index",
                 ],

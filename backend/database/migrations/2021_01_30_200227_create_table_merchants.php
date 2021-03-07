@@ -44,7 +44,7 @@ class CreateTableMerchants extends Migration
             'parent_id'   => 0,
             'rule'        => 'merchant_system',
             'name'        => '商户系统',
-            'extra'       => json_encode(['icon' => 'list','component'=>'Layout']),
+            'extra'       => json_encode(['icon' => 'merchant','component'=>'Layout']),
         ]);
 
         $this->_addMerchantIndex( $id );
@@ -103,7 +103,7 @@ class CreateTableMerchants extends Migration
             'parent_id'   => $parent_id,
             'rule'        => 'merchant_deposit/index',
             'name'        => '商户代收订单',
-            'extra'       => json_encode(['icon' => 'client','component'=>'deposit/merchant']),
+            'extra'       => json_encode(['icon' => 'deposit','component'=>'deposit/merchant']),
         ]);
     }
 
@@ -113,7 +113,7 @@ class CreateTableMerchants extends Migration
             'parent_id'   => $parent_id,
             'rule'        => 'merchant_withdrawal/index',
             'name'        => '商户代付订单',
-            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+            'extra'       => json_encode(['icon' => 'withdrawal','component'=>'merchant/index']),
         ]);
     }
 
@@ -123,7 +123,7 @@ class CreateTableMerchants extends Migration
             'parent_id'   => $parent_id,
             'rule'        => 'merchant_self_deposit/index',
             'name'        => '商户充值审核',
-            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+            'extra'       => json_encode(['icon' => 'money','component'=>'merchant/index']),
         ]);
     }
 
@@ -133,7 +133,7 @@ class CreateTableMerchants extends Migration
             'parent_id'   => $parent_id,
             'rule'        => 'merchant_self_withdrawal/index',
             'name'        => '商户提款审核',
-            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+            'extra'       => json_encode(['icon' => 'money','component'=>'merchant/index']),
         ]);
     }
 
@@ -143,7 +143,7 @@ class CreateTableMerchants extends Migration
             'parent_id'   => $parent_id,
             'rule'        => 'merchant_profit/index',
             'name'        => '商户盈亏统计',
-            'extra'       => json_encode(['icon' => 'client','component'=>'merchant/index']),
+            'extra'       => json_encode(['icon' => 'orders_record','component'=>'merchant/index']),
         ]);
     }
 

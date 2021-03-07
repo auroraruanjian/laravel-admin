@@ -60,7 +60,7 @@ class UserDepositController extends Controller
             ->first();
 
         if( empty($data) ){
-            return $this->response(0,'充值方式不存在！');
+            return $this->response(0,'充值方式不存在,请联系管理员！');
         }
 
         return $this->response(1,'success',[

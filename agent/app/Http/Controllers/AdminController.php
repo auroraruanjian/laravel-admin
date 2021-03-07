@@ -170,7 +170,7 @@ class AdminController extends Controller
                         "rule"=> "merchant/index",
                         "name"=> "代收商户列表",
                         "extra"=> [
-                            "icon"      => "list",
+                            "icon"      => "merchant",
                             "component" => "merchant/index",
                             'hidden'    => true,
                         ],
@@ -181,7 +181,7 @@ class AdminController extends Controller
                 "rule"          => "child_agent",
                 "name"          => "子代理管理",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "agent",
                     "redirect"  => "/child_agent/index",
                     "component" => "Layout"
                 ],
@@ -202,7 +202,7 @@ class AdminController extends Controller
                 "rule"          => "report",
                 "name"          => "统计管理",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "chart",
                     "component" => "Layout"
                 ],
                 "description"   => "",
@@ -211,7 +211,7 @@ class AdminController extends Controller
                         "rule"=> "report/profit",
                         "name"=> "收益统计",
                         "extra"=> [
-                            "icon"=> "permission",
+                            "icon"=> "money",
                             "component"=> "report/profit"
                         ],
                     ],
@@ -219,7 +219,7 @@ class AdminController extends Controller
                         "rule"=> "report/merchantRecord",
                         "name"=> "商户流水统计",
                         "extra"=> [
-                            "icon"=> "permission",
+                            "icon"=> "orders",
                             "component"=> "report/merchantRecord"
                         ],
                     ]
@@ -229,7 +229,7 @@ class AdminController extends Controller
                 "rule"          => "withdrawal",
                 "name"          => "提现管理",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "withdrawal",
                     "component" => "Layout"
                 ],
                 "description"   => "",
@@ -238,7 +238,7 @@ class AdminController extends Controller
                         "rule"=> "withdrawal/index",
                         "name"=> "提现",
                         "extra"=> [
-                            "icon"=> "permission",
+                            "icon"=> "withdrawal",
                             "component"=> "withdrawal/index"
                         ],
                     ],
@@ -246,7 +246,7 @@ class AdminController extends Controller
                         "rule"=> "withdrawal/record",
                         "name"=> "提现记录",
                         "extra"=> [
-                            "icon"=> "permission",
+                            "icon"=> "list",
                             "component"=> "withdrawal/record"
                         ],
                     ]
@@ -256,7 +256,7 @@ class AdminController extends Controller
                 "rule"          => "funds",
                 "name"          => "账变记录",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "orders",
                     "component" => "Layout"
                 ],
                 "description"   => "",
@@ -265,7 +265,7 @@ class AdminController extends Controller
                 "rule"          => "systemConfig",
                 "name"          => "系统设置",
                 "extra"         => [
-                    "icon"      => "users",
+                    "icon"      => "setting",
                     "component" => "Layout"
                 ],
                 "description"   => "",
