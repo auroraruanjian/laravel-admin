@@ -17,7 +17,8 @@ class UsersSeeder extends Seeder
                 'agent_id'      => 1,
                 'username'      => 'nick188',
                 'nickname'      => '测试',
-                'password'      => bcrypt('123456'),
+                'password'          => bcrypt('123456'),
+                'security_password' => bcrypt('123456'),
                 'status'        => true,
                 'extra'         => json_encode([
                     'rebates'   => [

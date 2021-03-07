@@ -58,8 +58,8 @@ class CreateTableUsers extends Migration
 
         $this->_addUserIndex( $id );
         $this->_addUserOrders( $id );
-        $this->_addUserDeposit( $id );
-        $this->_addUserWithdrawal( $id );
+        //$this->_addUserDeposit( $id );
+        //$this->_addUserWithdrawal( $id );
         $this->_addUserSelfDeposit( $id );
         $this->_addUserSelfWithdrawal( $id );
         $this->_addUserPaymentMethod( $id );
