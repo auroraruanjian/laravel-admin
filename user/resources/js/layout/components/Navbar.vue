@@ -6,11 +6,13 @@
 
         <div class="right-menu">
             <template v-if="device!=='mobile'">
-                <span style="height: 100%;line-height: 50px;vertical-align: text-bottom;color: #303133;font-size: 14px;">
+                <span style="height: 100%;line-height: 50px;vertical-align: text-bottom;color: #fff;font-size: 14px;">
                     <el-link type="text" @click.native="$router.push({path:'/user_deposit/index'});"><i class="el-icon-view el-icon--right"></i> 未处理订单: 0</el-link>    &nbsp;&nbsp;&nbsp;
                     <el-switch
                         v-model="order_status"
                         active-text="停单"
+                        active-color="#ff8c00"
+                        inactive-color="#cccccc"
                         inactive-text="接单">
                     </el-switch> &nbsp;&nbsp;&nbsp;
                     <el-switch
@@ -22,8 +24,8 @@
                     余额: <span class="value_text">0</span> 元 &nbsp;&nbsp;&nbsp;
                     冻结余额: <span class="value_text">0</span> % &nbsp;&nbsp;&nbsp;
                 </span>
-                <el-button type="success" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;" @click="$store.dispatch('app/toggleDepositVisible',true)">充值</el-button>
-                <el-button type="danger" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">提现</el-button>
+<!--                <el-button type="success" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;" @click="$store.dispatch('app/toggleDepositVisible',true)">充值</el-button>-->
+<!--                <el-button type="danger" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">提现</el-button>-->
 
                 <el-button type="primary" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">刷新</el-button>
                 <el-button type="warning" icon="el-icon-edit" size="mini" plain style="vertical-align: text-bottom;margin-bottom: 9px;">我的密钥</el-button>
@@ -330,7 +332,7 @@
         height: 50px;
         overflow: hidden;
         position: relative;
-        background: #fff;
+        background: #50b948;
         box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
         .hamburger-container {
@@ -340,6 +342,7 @@
             cursor: pointer;
             transition: background .3s;
             -webkit-tap-highlight-color:transparent;
+            fill: #fff;
 
             &:hover {
                 background: rgba(0, 0, 0, .025)
@@ -411,5 +414,12 @@
                 }
             }
         }
+    }
+
+    /deep/ .el-switch__label{
+        color:#fff;
+    }
+    /deep/ .el-switch__label.is-active{
+        color:#fff;
     }
 </style>
