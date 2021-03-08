@@ -31,14 +31,14 @@ class CreateTablePaymentMethod extends Migration
             'parent_id'   => 0,
             'rule'        => 'payment',
             'name'        => '支付接口管理',
-            'extra'       => json_encode(['icon' => 'payment','component'=>'Layout']),
+            'extra'       => json_encode(['icon' => 'component','component'=>'Layout']),
         ]);
 
         $payment_method_id = DB::table('admin_role_permissions')->insertGetId([
             'parent_id'   => $id,
             'rule'        => 'payment_method/index',
             'name'        => '支付类型管理',
-            'extra'       => json_encode(['icon' => 'payment_method','component'=>'payment/method']),
+            'extra'       => json_encode(['icon' => 'example','component'=>'payment/method']),
         ]);
 
         DB::table('admin_role_permissions')->insert([

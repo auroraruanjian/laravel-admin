@@ -3,9 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="671224a9-92fb-49c6-aaaa-b3090c3b09d9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/resources/js/components/Breadcrumb/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/components/Breadcrumb/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/resources/js/layout/components/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Navbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/resources/js/layout/components/Sidebar/Logo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/user/resources/js/layout/components/Sidebar/Logo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2020_02_24_084854_create_table_payment_method.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2020_02_24_084854_create_table_payment_method.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2020_02_24_092933_create_table_payment_category.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2020_02_24_092933_create_table_payment_category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2020_02_24_100659_create_table_payment_channel.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2020_02_24_100659_create_table_payment_channel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200226_create_table_agent_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200226_create_table_agent_users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200227_create_table_merchants.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200227_create_table_merchants.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200228_create_table_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/2021_01_30_200228_create_table_users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/merchant/app/Http/Controllers/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/merchant/resources/js/views/dashboard/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/merchant/resources/js/views/dashboard/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +135,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../code" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -189,7 +194,7 @@
       <workItem from="1614976738387" duration="5540000" />
       <workItem from="1615090277996" duration="17149000" />
       <workItem from="1615107462150" duration="1180000" />
-      <workItem from="1615122370967" duration="8384000" />
+      <workItem from="1615122370967" duration="12425000" />
     </task>
     <task id="LOCAL-00001" summary="代理后台">
       <created>1612015158568</created>
@@ -443,14 +448,20 @@
       <option name="project" value="LOCAL" />
       <updated>1615129383650</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="更新图标">
+      <created>1615137361243</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1615137361243</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="用户管理" />
     <MESSAGE value="基本流程" />
     <MESSAGE value="收益提取" />
     <MESSAGE value="散户充值" />
@@ -475,7 +486,8 @@
     <MESSAGE value="后台增加添加保证金收款银行卡" />
     <MESSAGE value="散户银行卡充值" />
     <MESSAGE value="散户提款" />
-    <option name="LAST_COMMIT_MESSAGE" value="散户提款" />
+    <MESSAGE value="更新图标" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新图标" />
   </component>
   <component name="WindowStateProjectService">
     <state x="508" y="27" width="542" height="469" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1614897287495">
@@ -496,11 +508,12 @@
     </state>
     <state x="808" y="321" width="525" height="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1584.886@67.27.1584.886" timestamp="1611856336075" />
     <state x="933" y="325" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1851.899@67.27.1851.899" timestamp="1614718555536" />
-    <state x="249" y="27" width="920" height="883" key="CommitChangelistDialog2" timestamp="1615129383453">
-      <screen x="67" y="27" width="1706" height="891" />
+    <state x="249" y="27" width="920" height="883" key="CommitChangelistDialog2" timestamp="1615137361157">
+      <screen x="67" y="27" width="1706" height="879" />
     </state>
     <state x="402" y="27" width="1008" height="881" key="CommitChangelistDialog2/67.27.1688.881@67.27.1688.881" timestamp="1612042062654" />
     <state x="403" y="27" key="CommitChangelistDialog2/67.27.1691.878@67.27.1691.878" timestamp="1612286982679" />
+    <state x="249" y="27" key="CommitChangelistDialog2/67.27.1706.879@67.27.1706.879" timestamp="1615137361157" />
     <state x="406" y="27" width="920" height="890" key="CommitChangelistDialog2/67.27.1706.890@67.27.1706.890" timestamp="1614664164959" />
     <state x="249" y="27" width="920" height="883" key="CommitChangelistDialog2/67.27.1706.891@67.27.1706.891" timestamp="1615129383453" />
     <state x="434" y="27" width="1101" height="895" key="CommitChangelistDialog2/67.27.1847.895@67.27.1847.895" timestamp="1614535373092" />
@@ -511,15 +524,16 @@
     <state x="226" y="100" width="1350" height="734" key="DiffContextDialog/67.27.1688.881@67.27.1688.881" timestamp="1612042061700" />
     <state x="241" y="101" key="DiffContextDialog/67.27.1847.895@67.27.1847.895" timestamp="1612372820787" />
     <state x="241" y="101" width="1480" height="749" key="DiffContextDialog/67.27.1851.899@67.27.1851.899" timestamp="1615107525620" />
-    <state x="776" y="268" width="424" height="484" key="FileChooserDialogImpl" timestamp="1615108042973">
+    <state x="776" y="268" width="424" height="484" key="FileChooserDialogImpl" timestamp="1615185621460">
       <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="614" y="265" width="380" height="487" key="FileChooserDialogImpl/67.27.1429.886@67.27.1429.886" timestamp="1612104405094" />
     <state x="681" y="262" width="380" height="402" key="FileChooserDialogImpl/67.27.1605.874@67.27.1605.874" timestamp="1611839811999" />
     <state x="713" y="264" width="424" height="484" key="FileChooserDialogImpl/67.27.1688.881@67.27.1688.881" timestamp="1612030125334" />
+    <state x="720" y="247" key="FileChooserDialogImpl/67.27.1706.821@67.27.1706.821" timestamp="1615173984791" />
     <state x="720" y="266" key="FileChooserDialogImpl/67.27.1706.890@67.27.1706.890" timestamp="1614880426256" />
     <state x="774" y="267" width="424" height="484" key="FileChooserDialogImpl/67.27.1847.895@67.27.1847.895" timestamp="1614529400323" />
-    <state x="776" y="268" width="424" height="484" key="FileChooserDialogImpl/67.27.1851.899@67.27.1851.899" timestamp="1615108042973" />
+    <state x="776" y="268" width="424" height="484" key="FileChooserDialogImpl/67.27.1851.899@67.27.1851.899" timestamp="1615185621460" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1614262968639" />
     <state x="754" y="395" width="398" height="159" key="NewPhpFileDialog" timestamp="1614720105309">
       <screen x="67" y="27" width="1851" height="899" />
@@ -527,8 +541,8 @@
     <state x="655" y="387" width="398" height="159" key="NewPhpFileDialog/67.27.1584.881@67.27.1584.881" timestamp="1611952294366" />
     <state x="753" y="393" width="398" height="159" key="NewPhpFileDialog/67.27.1847.895@67.27.1847.895" timestamp="1614079698597" />
     <state x="754" y="395" key="NewPhpFileDialog/67.27.1851.899@67.27.1851.899" timestamp="1614720105309" />
-    <state x="637" y="27" width="777" height="891" key="find.popup" timestamp="1615131275055">
-      <screen x="67" y="27" width="1706" height="891" />
+    <state x="685" y="27" width="843" height="899" key="find.popup" timestamp="1615196423039">
+      <screen x="67" y="27" width="1851" height="899" />
     </state>
     <state x="595" y="27" width="638" height="886" key="find.popup/67.27.1584.886@67.27.1584.886" timestamp="1611942128131" />
     <state x="602" y="158" width="624" height="624" key="find.popup/67.27.1605.874@67.27.1605.874" timestamp="1611849106866" />
@@ -537,7 +551,7 @@
     <state x="636" y="160" width="777" height="624" key="find.popup/67.27.1706.890@67.27.1706.890" timestamp="1614659256111" />
     <state x="637" y="27" width="777" height="891" key="find.popup/67.27.1706.891@67.27.1706.891" timestamp="1615131275055" />
     <state x="683" y="161" width="841" height="624" key="find.popup/67.27.1847.895@67.27.1847.895" timestamp="1614547273468" />
-    <state x="685" y="27" width="843" height="899" key="find.popup/67.27.1851.899@67.27.1851.899" timestamp="1614987875829" />
+    <state x="685" y="27" width="843" height="899" key="find.popup/67.27.1851.899@67.27.1851.899" timestamp="1615196423039" />
     <state x="655" y="214" key="run.anything.popup" timestamp="1614922578014">
       <screen x="67" y="27" width="1851" height="899" />
     </state>

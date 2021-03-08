@@ -39,7 +39,7 @@ class CreateTablePaymentChannel extends Migration
             'parent_id'   => $row->id,
             'rule'        => 'payment_channel/index',
             'name'        => '支付通道管理',
-            'extra'       => json_encode(['icon' => 'payment_method','component'=>'payment/channel']),
+            'extra'       => json_encode(['icon' => 'channel','component'=>'payment/channel']),
         ]);
 
         DB::table('admin_role_permissions')->insert([

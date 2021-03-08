@@ -103,7 +103,7 @@ class CreateTableUsers extends Migration
             'parent_id' => $parent_id,
             'rule' => 'user_orders/',
             'name' => '散户账变',
-            'extra' => json_encode(['icon' => 'users', 'component' => 'orders/user']),
+            'extra' => json_encode(['icon' => 'orders', 'component' => 'orders/user']),
         ]);
     }
 

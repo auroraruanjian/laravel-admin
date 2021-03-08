@@ -95,7 +95,7 @@ class CreateTableAgentUsers extends Migration
             'parent_id'   => $parent_id,
             'rule'        => 'agent_withdrawal/',
             'name'        => '代理提现审核',
-            'extra'       => json_encode(['icon' => 'users','component'=>'SubPage','redirect'=>'/agent_withdrawal/index']),
+            'extra'       => json_encode(['icon' => 'withdrawal','component'=>'SubPage','redirect'=>'/agent_withdrawal/index']),
         ]);
 
         DB::table('admin_role_permissions')->insert([
@@ -114,7 +114,7 @@ class CreateTableAgentUsers extends Migration
             'parent_id'   => $parent_id,
             'rule'        => 'agent_orders/',
             'name'        => '代理账变',
-            'extra'       => json_encode(['icon' => 'users','component'=>'SubPage','redirect'=>'/agent_orders/index']),
+            'extra'       => json_encode(['icon' => 'orders','component'=>'SubPage','redirect'=>'/agent_orders/index']),
         ]);
 
         DB::table('admin_role_permissions')->insert([

@@ -39,7 +39,7 @@ class CreateTablePaymentCategory extends Migration
             'parent_id'   => $row->id,
             'rule'        => 'payment_category/index',
             'name'        => '支付渠道管理',
-            'extra'       => json_encode(['icon' => 'payment_method','component'=>'payment/category']),
+            'extra'       => json_encode(['icon' => 'category','component'=>'payment/category']),
         ]);
 
         DB::table('admin_role_permissions')->insert([
