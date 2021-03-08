@@ -19,9 +19,11 @@ class Person extends Base
         // TODO: Implement prepare_pay() method.
         // TODO： 显示散户信息
         return [
-            PAY_VIEW_TYPE_HTML,
+            PAY_VIEW_TYPE_BANK_CARD,
             'Success',
-            []
+            array_merge($data,[
+                'expire_time'   => strtotime('+5 minutes')
+            ])
         ];
     }
 

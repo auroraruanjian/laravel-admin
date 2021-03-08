@@ -9,6 +9,8 @@ define('PAY_VIEW_TYPE_RAW',2);
 define('PAY_VIEW_TYPE_URL',3);
 // 支付页类型二维码
 define('PAY_VIEW_TYPE_QRCODE',4);
+// 银行卡展示页面
+define('PAY_VIEW_TYPE_BANK_CARD',5);
 
 /**
  * 获取系统配置，从redis获取缓存2秒

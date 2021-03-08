@@ -52,7 +52,7 @@ class Payment
             ])
             ->count() > 0
         ){
-            return [-8,'订单号已存在' , []];
+            //return [-8,'订单号已存在' , []];
         }
 
         // 获取支付通道
@@ -67,6 +67,7 @@ class Payment
         $account_number = '';
         $payee_user_id  = 0;    // 接收人ID 0：系统
 
+        $user_pay_method = [];
         if( $channel_detail['category_ident'] == 'person' ){
             // 获取匹配模式
             $person_order_model = getSysConfig('person_order_model');
@@ -74,12 +75,21 @@ class Payment
             if( $person_order_model == 1 ){
                 // 如果是银行转账,则获取 散户银行卡
                 if( $channel_detail['payment_method_ident'] == 'transfer' ){
-                    $user_payment_method = UserBanks::select(['id','user_id','account_number','limit_amount'])->where([
-                        ['type','=','1'],
-                        ['status','=','1'],
-                        ['is_delete','=','1'],
-                        ['is_open','=','1'],
+                    $user_payment_method = UserBanks::select([
+                        'user_banks.id',
+                        'user_banks.user_id',
+                        'user_banks.account_name',
+                        'user_banks.account_number',
+                        'user_banks.branch',
+                        'user_banks.limit_amount',
+                        'banks.name as bank_name',
                     ])
+                        ->leftJoin('banks','banks.id','user_banks.banks_id')
+                        ->where([
+                            ['status','=','1'],
+                            ['is_delete','=','1'],
+                            ['is_open','=','1'],
+                        ])
                         ->get()
                         ->toArray();
 
@@ -92,9 +102,10 @@ class Payment
                     // TODO: 检测散户保证金是否充足
 
                     //
+                    $user_pay_method = $user_payment_method[0];
 
-                    $payee_user_id  = $user_payment_method[0]['user_id'];
-                    $account_number = $user_payment_method[0]['account_number'];
+                    $payee_user_id  = $user_pay_method['user_id'];
+                    $account_number = $user_pay_method['account_number'];
                 }
             }
         }else{
@@ -164,12 +175,13 @@ class Payment
             return [-11,'模型获取失败！' , []];
         }
 
-        // TODO: 构造支付参数
-        list($pay_type,$message,$pay_data) =  $this->pay_model->prepare_pay([
+        $prepare_data = [
             // 支付金额
             'amount'    => $this->decrypt_data['amount'],
             // 平台订单号
             'order_no'  => id_encode($deposits_model->id),
+            // 商户订单号
+            'merchant_order_no' => $this->decrypt_data['order_no'],
             // 商品名
             'good_name' => $this->decrypt_data['goods_name'],
             // 支付类型
@@ -178,7 +190,20 @@ class Payment
             'bank_code' => $this->decrypt_data['bank_code']??'',
             // 客户IP
             'ip'        => $this->decrypt_data['ip'],
-        ]);
+        ];
+        if( $channel_detail['category_ident'] == 'person' ) {
+            if( $channel_detail['payment_method_ident'] == 'transfer' ){
+                $prepare_data = array_merge($prepare_data,[
+                    'account_name'  => $user_pay_method['account_name']??'',
+                    'account_number'=> $user_pay_method['account_number']??'',
+                    'branch'        => $user_pay_method['branch']??'',
+                    'bank_name'     => $user_pay_method['bank_name']??'',
+                ]);
+            }
+        }
+
+        // TODO: 构造支付参数
+        list($pay_type,$message,$pay_data) =  $this->pay_model->prepare_pay($prepare_data);
 
         if( $pay_type == PAY_VIEW_TYPE_ERROR ){
             return [ -12, $message, []];

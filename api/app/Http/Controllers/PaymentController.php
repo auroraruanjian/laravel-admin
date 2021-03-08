@@ -54,6 +54,11 @@ class PaymentController extends Controller
 
          // 解析参数
         switch( $data['type'] ){
+            case PAY_VIEW_TYPE_BANK_CARD:
+                return view('bank', [
+                    //'request_url'   => $this->payment_api->pay_model->request_url,
+                    'data'          => $data['data'],
+                ]);
             case PAY_VIEW_TYPE_HTML:
                 return view('pay', [
                     'request_url'   => $this->payment_api->pay_model->request_url,
